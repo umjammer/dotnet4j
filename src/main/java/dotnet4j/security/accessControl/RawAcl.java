@@ -11,7 +11,7 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
-import dotnet4j.io.compat.Utilities;
+import vavi.util.ByteUtil;
 
 
 /**
@@ -48,12 +48,12 @@ public class RawAcl implements Iterable<GenericAce> {
         if (revision != AclRevision && revision != AclRevisionDS)
             throw new IllegalArgumentException("Invalid ACL - unknown revision");
 
-        int binaryLength = Utilities.toInt16LittleEndian(binaryForm, offset + 2);
+        int binaryLength = ByteUtil.readLeShort(binaryForm, offset + 2);
         if (offset > binaryForm.length - binaryLength)
             throw new IllegalArgumentException("Invalid ACL - truncated");
 
         int pos = offset + 8;
-        int numAces = Utilities.toInt16LittleEndian(binaryForm, offset + 4);
+        int numAces = ByteUtil.readLeShort(binaryForm, offset + 4);
         genericAces = new ArrayList<>(numAces);
         for (int i = 0; i < numAces; ++i) {
             GenericAce newAce = GenericAce.createFromBinaryForm(binaryForm, pos);
@@ -82,9 +82,9 @@ public class RawAcl implements Iterable<GenericAce> {
 
         binaryForm[offset] = revision;
         binaryForm[offset + 1] = 0;
-        Utilities.writeBytesLittleEndian((short) getBinaryLength(), binaryForm, offset + 2);
-        Utilities.writeBytesLittleEndian((short) genericAces.size(), binaryForm, offset + 4);
-        Utilities.writeBytesLittleEndian((short) 0, binaryForm, offset + 6);
+        ByteUtil.writeLeShort((short) getBinaryLength(), binaryForm, offset + 2);
+        ByteUtil.writeLeShort((short) genericAces.size(), binaryForm, offset + 4);
+        ByteUtil.writeLeShort((short) 0, binaryForm, offset + 6);
 
         int pos = offset + 8;
         for (GenericAce ace : genericAces) {

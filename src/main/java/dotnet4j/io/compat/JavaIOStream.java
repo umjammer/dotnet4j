@@ -31,6 +31,11 @@ public class JavaIOStream extends Stream {
     private int position = 0;
 
     /** */
+    public JavaIOStream(InputStream is) {
+        this(is, null, false);
+    }
+
+    /** */
     public JavaIOStream(InputStream is, OutputStream os) {
         this(is, os, false);
     }

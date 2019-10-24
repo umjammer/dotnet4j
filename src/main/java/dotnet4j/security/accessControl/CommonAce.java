@@ -25,7 +25,8 @@ package dotnet4j.security.accessControl;
 
 import java.util.EnumSet;
 
-import dotnet4j.io.compat.Utilities;
+import vavi.util.ByteUtil;
+
 import dotnet4j.security.principal.SecurityIdentifier;
 
 
@@ -59,13 +60,13 @@ public class CommonAce extends QualifiedAce {
     CommonAce(byte[] binaryForm, int offset) {
         super(binaryForm, offset);
 
-        int len = Utilities.toInt16LittleEndian(binaryForm, offset + 2);
+        int len = ByteUtil.readLeShort(binaryForm, offset + 2);
         if (offset > binaryForm.length - len)
             throw new IllegalArgumentException("Invalid ACE - truncated");
         if (len < 8 + SecurityIdentifier.MinBinaryLength)
             throw new IllegalArgumentException("Invalid ACE");
 
-        accessMask = Utilities.toInt32LittleEndian(binaryForm, offset + 4);
+        accessMask = ByteUtil.readLeInt(binaryForm, offset + 4);
         securityIdentifier = new SecurityIdentifier(binaryForm, offset + 8);
 
         int opaqueLen = len - (8 + securityIdentifier.getBinaryLength());
@@ -84,8 +85,8 @@ public class CommonAce extends QualifiedAce {
         int len = getBinaryLength();
         binaryForm[offset] = (byte) this.aceType.ordinal();
         binaryForm[offset + 1] = (byte) AceFlags.valueOf(this.aceFlags);
-        Utilities.writeBytesLittleEndian((short) len, binaryForm, offset + 2);
-        Utilities.writeBytesLittleEndian(accessMask, binaryForm, offset + 4);
+        ByteUtil.writeLeShort((short) len, binaryForm, offset + 2);
+        ByteUtil.writeLeInt(accessMask, binaryForm, offset + 4);
 
         securityIdentifier.getBinaryForm(binaryForm, offset + 8);
 

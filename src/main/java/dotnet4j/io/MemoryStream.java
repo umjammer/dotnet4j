@@ -17,6 +17,9 @@ import java.util.Arrays;
  * @author ft on 28.03.17.
  */
 public class MemoryStream extends Stream implements Serializable {
+
+    private static final long serialVersionUID = -7301303954168934077L;
+
     private byte[] buffer;
 
     private int capacity;
@@ -304,7 +307,7 @@ public class MemoryStream extends Stream implements Serializable {
                     mustZero = false;
             }
             if (mustZero)
-                Arrays.fill(buffer, length, i, (byte) 0);
+                Arrays.fill(this.buffer, length, i, (byte) 0);
             length = i;
         }
         System.arraycopy(buffer, offset, this.buffer, position, count);
@@ -317,6 +320,17 @@ public class MemoryStream extends Stream implements Serializable {
         writable = false;
         expandable = false;
         closed = true;
+    }
+
+    public int readByte() {
+        if (closed)
+            throw new dotnet4j.io.IOException("object disposed");
+
+        if (position >= length) {
+            return -1;
+        }
+
+        return this.buffer[position++];
     }
 
     public void writeByte(byte value) {
@@ -334,7 +348,7 @@ public class MemoryStream extends Stream implements Serializable {
                     mustZero = false;
             }
             if (mustZero)
-                Arrays.fill(buffer, length, position, (byte) 0);
+                Arrays.fill(this.buffer, length, position, (byte) 0);
             length = newLength;
         }
         buffer[position++] = value;

@@ -27,7 +27,8 @@ package dotnet4j.security.accessControl;
 import java.util.EnumSet;
 import java.util.UUID;
 
-import dotnet4j.io.compat.Utilities;
+import vavi.util.ByteUtil;
+
 import dotnet4j.security.principal.SecurityIdentifier;
 
 
@@ -84,7 +85,7 @@ public class ObjectAce extends QualifiedAce {
     ObjectAce(byte[] binaryForm, int offset) {
         super(binaryForm, offset);
 
-        int len = Utilities.toInt16LittleEndian(binaryForm, offset + 2);
+        int len = ByteUtil.readLeShort(binaryForm, offset + 2);
         int lenMinimum = 12 + SecurityIdentifier.MinBinaryLength;
 
         if (offset > binaryForm.length - len)
@@ -92,8 +93,8 @@ public class ObjectAce extends QualifiedAce {
         if (len < lenMinimum)
             throw new IllegalArgumentException("Invalid ACE");
 
-        accessMask = Utilities.toInt32LittleEndian(binaryForm, offset + 4);
-        objectAceFlags = ObjectAceFlags.valueOf(Utilities.toInt32LittleEndian(binaryForm, offset + 8));
+        accessMask = ByteUtil.readLeInt(binaryForm, offset + 4);
+        objectAceFlags = ObjectAceFlags.valueOf(ByteUtil.readLeInt(binaryForm, offset + 8));
 
         if (getObjectAceTypePresent())
             lenMinimum += 16;
@@ -104,11 +105,11 @@ public class ObjectAce extends QualifiedAce {
 
         int pos = 12;
         if (getObjectAceTypePresent()) {
-            objectAceType = Utilities.toGuidLittleEndian(binaryForm, offset + pos);
+            objectAceType = ByteUtil.readLeUUID(binaryForm, offset + pos);
             pos += 16;
         }
         if (isInheritedObjectAceTypePresent()) {
-            inheritedObjectAceType = Utilities.toGuidLittleEndian(binaryForm, offset + pos);
+            inheritedObjectAceType = ByteUtil.readLeUUID(binaryForm, offset + pos);
             pos += 16;
         }
 
@@ -168,19 +169,19 @@ public class ObjectAce extends QualifiedAce {
         int len = getBinaryLength();
         binaryForm[offset++] = (byte) this.aceType.ordinal();
         binaryForm[offset++] = (byte) AceFlags.valueOf(this.aceFlags);
-        Utilities.writeBytesLittleEndian((short) len, binaryForm, offset);
+        ByteUtil.writeLeShort((short) len, binaryForm, offset);
         offset += 2;
-        Utilities.writeBytesLittleEndian(accessMask, binaryForm, offset);
+        ByteUtil.writeLeInt(accessMask, binaryForm, offset);
         offset += 4;
-        Utilities.writeBytesLittleEndian((int) ObjectAceFlags.valueOf(objectAceFlags), binaryForm, offset);
+        ByteUtil.writeLeInt((int) ObjectAceFlags.valueOf(objectAceFlags), binaryForm, offset);
         offset += 4;
 
         if (objectAceFlags.contains(ObjectAceFlags.ObjectAceTypePresent)) {
-            Utilities.writeBytesLittleEndian(objectAceType, binaryForm, offset);
+            ByteUtil.writeLeUUID(objectAceType, binaryForm, offset);
             offset += 16;
         }
         if (objectAceFlags.contains(ObjectAceFlags.InheritedObjectAceTypePresent)) {
-            Utilities.writeBytesLittleEndian(inheritedObjectAceType, binaryForm, offset);
+            ByteUtil.writeLeUUID(inheritedObjectAceType, binaryForm, offset);
             offset += 16;
         }
 

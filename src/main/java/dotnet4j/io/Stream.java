@@ -73,6 +73,9 @@ public abstract class Stream implements Closeable, AutoCloseable
      *         been reached.
      */
     public abstract int read(byte[] buffer, int offset, int length);
+    /**
+     * The byte cast to a int, or -1 if the end of the stream has been reached.
+     */
     public int readByte()
     {
         byte[] one = new byte[1];

@@ -9,7 +9,8 @@ package dotnet4j.security.accessControl;
 import java.security.Permission;
 import java.util.EnumSet;
 
-import dotnet4j.io.compat.Utilities;
+import vavi.util.ByteUtil;
+
 import dotnet4j.security.principal.SecurityIdentifier;
 
 
@@ -81,12 +82,12 @@ public class RawSecurityDescriptor extends Permission {
         super("RawSecurityDescriptor");
 
         resourcemgrControl = binaryForm[offset + 0x01];
-        controlFlags = ControlFlags.valueOf(Utilities.toInt16LittleEndian(binaryForm, offset + 0x02));
+        controlFlags = ControlFlags.valueOf(ByteUtil.readLeShort(binaryForm, offset + 0x02));
 
-        int ownerPos = Utilities.toInt32LittleEndian(binaryForm, offset + 0x04);
-        int groupPos = Utilities.toInt32LittleEndian(binaryForm, offset + 0x08);
-        int saclPos = Utilities.toInt32LittleEndian(binaryForm, offset + 0x0C);
-        int daclPos = Utilities.toInt32LittleEndian(binaryForm, offset + 0x10);
+        int ownerPos = ByteUtil.readLeInt(binaryForm, offset + 0x04);
+        int groupPos = ByteUtil.readLeInt(binaryForm, offset + 0x08);
+        int saclPos = ByteUtil.readLeInt(binaryForm, offset + 0x0C);
+        int daclPos = ByteUtil.readLeInt(binaryForm, offset + 0x10);
 
         if (ownerPos != 0)
             owner = new SecurityIdentifier(binaryForm, ownerPos);
