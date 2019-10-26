@@ -61,15 +61,15 @@ public class SecurityIdentifier implements Principal {
         if ((offset < 0) || (offset > binaryForm.length - 2))
             throw new IllegalArgumentException("offset");
 
-        int revision = binaryForm[offset + 0];
-        int numSubAuthorities = binaryForm[offset + 1];
+        int revision = binaryForm[offset + 0] & 0xff;
+        int numSubAuthorities = binaryForm[offset + 1] & 0xff;
         if (revision != 1 || numSubAuthorities > 15)
             throw new IllegalArgumentException("Value was invalid.");
         if (binaryForm.length - offset < (8 + (numSubAuthorities * 4)))
             throw new IllegalArgumentException("offset");
 
         buffer = new byte[8 + (numSubAuthorities * 4)];
-        System.arraycopy(binaryForm, offset, buffer, 0, binaryForm.length - offset);
+        System.arraycopy(binaryForm, offset, buffer, 0, 8 + (numSubAuthorities * 4));
     }
 
     /** */

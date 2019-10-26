@@ -134,6 +134,19 @@ public class JavaIOStream extends Stream {
     }
 
     @Override
+    public int readByte() {
+        try {
+            int r = is.read();
+            if (r > 0) {
+                position += r;
+            }
+            return r;
+        } catch (IOException e) {
+            throw new dotnet4j.io.IOException(e);
+        }
+    }
+
+    @Override
     public void write(byte[] buffer, int offset, int count) {
         try {
             os.write(buffer, offset, count);
@@ -141,6 +154,12 @@ public class JavaIOStream extends Stream {
         } catch (IOException e) {
             throw new dotnet4j.io.IOException(e);
         }
+    }
+
+    @Override
+    public void writeByte(byte value) {
+        super.writeByte(value);
+        position++;
     }
 }
 

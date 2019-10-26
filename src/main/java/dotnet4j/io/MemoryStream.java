@@ -330,7 +330,7 @@ public class MemoryStream extends Stream implements Serializable {
             return -1;
         }
 
-        return this.buffer[position++];
+        return this.buffer[position++] & 0xff;
     }
 
     public void writeByte(byte value) {

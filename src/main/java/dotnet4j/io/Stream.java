@@ -82,7 +82,7 @@ public abstract class Stream implements Closeable, AutoCloseable
         int result = read(one,0,1);
         if (result == 0)
             return -1;
-        return one[0];
+        return one[0] & 0xff;
     }
     public abstract void write(byte[] buffer, int offset, int count);
     public void writeByte(byte value)

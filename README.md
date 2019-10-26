@@ -1,7 +1,17 @@
-Due to my job, I have switched from .NET to Java.
+# dotnet4j
 
-I think Java is a pretty cool language, but having developed in .NET for quite a white, I find it's standard I/O and 
-NIO classes really uncomfortable to use. 
+Helper library for .Net to Java migration.
 
-This project aims to wrap an I/O System similar to .NET's around Java's NIO, initended for me and people with a similar opinion.
-However, it is in no way complete, but it does what I want. :)
+ * System.IO
+ * System.Security.AccessControl
+ * System.Security.Principal
+ * Microsoft.Win32
+
+## Migration Convention
+
+ * -> IndexOutOfBoundsException
+ * -> NullPointerException
+
+## References
+
+ * [cs2j]()
