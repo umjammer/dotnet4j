@@ -25,6 +25,9 @@ package dotnet4j.io.compat;
 
 public class Utilities {
 
+    private Utilities() {
+    }
+
     /**
      * @param obj1 nullable
      * @param obj2 nullable
@@ -35,5 +38,45 @@ public class Utilities {
         } else {
             return obj1.equals(obj2);
         }
+    }
+
+    public static int getCombinedHashCode(Object obj0, Object obj1, Object... objs) {
+        int result = 0;
+        int hash = combineHashCode(toHashCode(obj0), toHashCode(obj1));
+        for (int i = 0; i < objs.length; i++) {
+            result = combineHashCode(hash, toHashCode(objs[i]));
+            hash = result;
+        }
+        return result;
+    }
+
+    private static int toHashCode(Object o) {
+        if (Integer.TYPE.isInstance(o)) {
+            return Integer.TYPE.cast(o);
+        } else if (Integer.class.isInstance(o)) {
+            return Integer.class.cast(o);
+        } else if (Byte.TYPE.isInstance(o)) {
+            return Byte.hashCode(Byte.TYPE.cast(o));
+        } else if (Byte.class.isInstance(o)) {
+            return Byte.hashCode(Byte.class.cast(o));
+        } else if (Character.TYPE.isInstance(o)) {
+            return Character.hashCode(Character.TYPE.cast(o));
+        } else if (Character.class.isInstance(o)) {
+            return Character.hashCode(Character.class.cast(o));
+        } else if (Short.TYPE.isInstance(o)) {
+            return Short.hashCode(Short.TYPE.cast(o));
+        } else if (Short.class.isInstance(o)) {
+            return Short.hashCode(Short.class.cast(o));
+        } else if (Long.TYPE.isInstance(o)) {
+            return Long.hashCode(Long.TYPE.cast(o));
+        } else if (Long.class.isInstance(o)) {
+            return Long.hashCode(Long.class.cast(o));
+        } else {
+            return o.hashCode();
+        }
+    }
+
+    private static int combineHashCode(int a, int b) {
+        return 997 * a ^ 991 * b;
     }
 }

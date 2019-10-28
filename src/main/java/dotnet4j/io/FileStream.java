@@ -83,6 +83,18 @@ public class FileStream extends Stream
         // TODO bufferSize
     }
 
+    /** */
+    public FileStream(String path,
+            FileMode mode,
+            FileAccess access,
+            FileShare share,
+            int bufferSize,
+            boolean b,
+            FileOptions options) {
+        this(path, mode, access, share);
+        // TODO Auto-generated constructor stub
+    }
+
     public String getName() {
         return myPath;
     }

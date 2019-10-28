@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import vavi.io.LittleEndianDataOutputStream;
-import vavi.util.StringUtil;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -39,6 +38,7 @@ import dotnet4j.io.compat.StreamOutputStream;
  * @author Gonzalo Paniagua Javier (gonzalo@ximian.com)
  * @author Sebastien Pouliot <sebastien@ximian.com>
  * @author Marek Safar (marek.safar@gmail.com)
+ * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  */
 public class MemoryStreamTest {
 //    class SignaledMemoryStream extends MemoryStream {
