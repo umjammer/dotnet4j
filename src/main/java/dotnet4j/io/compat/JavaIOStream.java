@@ -117,6 +117,7 @@ public class JavaIOStream extends Stream {
     @Override
     public int read(byte[] buffer, int offset, int length) {
         try {
+//System.err.println(buffer.length + ", " + offset + ", " + length + ", " + is.available());
             int r = is.read(buffer, offset, length);
 //System.err.println(StringUtil.getDump(buffer, 16));
             if (r > 0) {
@@ -137,8 +138,8 @@ public class JavaIOStream extends Stream {
     public int readByte() {
         try {
             int r = is.read();
-            if (r > 0) {
-                position += r;
+            if (r >= 0) {
+                position++;
             }
             return r;
         } catch (IOException e) {
