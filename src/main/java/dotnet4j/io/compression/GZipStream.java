@@ -67,12 +67,14 @@ public class GZipStream extends JavaIOStream {
                                                                    InputStream in;
 
                                                                    public void initialize(InputStream in) throws IOException {
-                                                                       this.in = new GZIPInputStream(in);
                                                                    }
 
                                                                    byte[] buf = new byte[8192];
 
                                                                    public void execute() throws IOException {
+                                                                       if (in == null) {
+                                                                           this.in = new GZIPInputStream(in);
+                                                                       }
                                                                        int r = in.read(buf);
                                                                        os.write(buf, 0, r);
                                                                    }
