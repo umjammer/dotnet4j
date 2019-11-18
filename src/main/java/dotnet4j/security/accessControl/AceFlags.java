@@ -8,6 +8,8 @@ package dotnet4j.security.accessControl;
 
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 
@@ -18,37 +20,38 @@ import java.util.stream.Collectors;
  * @version 0.00 2019/10/17 nsano initial version <br>
  */
 public enum AceFlags {
-    ObjectInherit(0x01),
-    ContainerInherit(0x02),
-    NoPropagateInherit(0x04),
-    InheritOnly(0x08),
-    Inherited(0x10),
-    SuccessfulAccess(0x40),
-    FailedAccess(0x80);
+    ObjectInherit,
+    ContainerInherit,
+    NoPropagateInherit,
+    InheritOnly,
+    Inherited,
+    _dummy_20,
+    SuccessfulAccess,
+    FailedAccess;
 
     public static final EnumSet<AceFlags> InheritanceFlags = EnumSet
             .of(ObjectInherit, ContainerInherit, NoPropagateInherit, InheritOnly);
 
     public static final EnumSet<AceFlags> AuditFlags = EnumSet.of(SuccessfulAccess, FailedAccess);
 
-    private int value;
-
-    public int getValue() {
-        return value;
+    // TODO
+    public Supplier<Integer> supplier() {
+        return () -> 1 << ordinal();
     }
 
-    private AceFlags(int value) {
-        this.value = value;
-    }
+    // TODO
+    public Function<Integer, Boolean> function() {
+        return v -> (v & supplier().get()) != 0;
+    };
 
     public static EnumSet<AceFlags> valueOf(int value) {
         return Arrays.stream(values())
-                .filter(v -> (v.getValue() & value) != 0)
+                .filter(v -> v.function().apply(value))
                 .collect(Collectors.toCollection(() -> EnumSet.noneOf(AceFlags.class)));
     }
 
     public static long valueOf(EnumSet<AceFlags> flags) {
-        return flags.stream().collect(Collectors.summarizingInt(e -> e.getValue())).getSum();
+        return flags.stream().collect(Collectors.summarizingInt(e -> e.supplier().get())).getSum();
     }
 }
 

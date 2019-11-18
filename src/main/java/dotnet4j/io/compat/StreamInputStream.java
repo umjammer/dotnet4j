@@ -29,8 +29,13 @@ public class StreamInputStream extends InputStream {
     @Override
     public int read() throws IOException {
          int r = stream.readByte();
-//System.err.printf("%02x: %c\n", r, (r & 0xff));
-         return r == -1 ? -1 : r & 0xff;
+         return r;
+    }
+
+    @Override
+    public int read(byte[] b, int ofs, int len) throws IOException {
+         int r = stream.read(b, ofs, len);
+         return r == 0 ? -1 : r;
     }
 }
 

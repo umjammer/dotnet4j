@@ -79,7 +79,7 @@ public abstract class KnownAce extends GenericAce {
 
         StringBuilder ret = new StringBuilder();
         for (SddlAccessRight right : rights) {
-            ret.append(right.Name);
+            ret.append(right._name);
         }
 
         return ret.toString();

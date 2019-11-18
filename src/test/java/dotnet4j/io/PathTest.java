@@ -67,7 +67,7 @@ public class PathTest {
         } else if ('\\' == DSC) {
             os = OsType.Windows;
             path1 = "c:\\foo\\test.txt";
-            path2 = "c:\\windows";//System.getenv("SYSTEMROOT");
+            path2 = "c:\\windows";// System.getenv("SYSTEMROOT");
             path3 = "system32";
         } else {
             os = OsType.Mac;
@@ -95,7 +95,7 @@ public class PathTest {
     public void changeExtension() {
         String[] files = new String[3];
         files[OsType.Unix.ordinal()] = "/foo/test.doc";
-        files[OsType.Windows.ordinal()] = "c:\\\\foo\\\\test.doc";
+        files[OsType.Windows.ordinal()] = "c:\\foo\\test.doc";
         files[OsType.Mac.ordinal()] = "foo:test.doc";
 
         String testPath = Path.changeExtension(path1, "doc");
@@ -151,11 +151,11 @@ public class PathTest {
     @Test
     public void changeExtension_Path_InvalidPathChars() {
         try {
-            Path.changeExtension("fi\\0le.ext", ".extension");
+            Path.changeExtension("fi\0le.ext", ".extension");
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // Illegal characters : path
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -166,7 +166,7 @@ public class PathTest {
     public void combine() {
         String[] files = new String[3];
         files[OsType.Unix.ordinal()] = "/etc/init.d";
-        files[OsType.Windows.ordinal()] = /*System.getenv("SYSTEMROOT")*/"c:\\windows" + "\\system32";
+        files[OsType.Windows.ordinal()] = /* System.getenv("SYSTEMROOT") */"c:\\windows" + "\\system32";
         files[OsType.Mac.ordinal()] = "foo:bar";
 
         String testPath = Path.combine(path2, path3);
@@ -217,11 +217,11 @@ public class PathTest {
     @Test
     public void combine_Path1_InvalidPathChars() {
         try {
-            Path.combine("a\\0", "one");
+            Path.combine("a\0", "one");
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // Illegal characters : path
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -234,7 +234,7 @@ public class PathTest {
             Path.combine(null, "one");
             fail("#1");
         } catch (NullPointerException ex) {
-            assertEquals(NullPointerException.class.isInstance(ex), "#2");
+            assertTrue(NullPointerException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertEquals("path1", ex.ParamName, "#5");
@@ -244,11 +244,11 @@ public class PathTest {
     @Test
     public void combine_Path2_InvalidPathChars() {
         try {
-            Path.combine("one", "a\\0");
+            Path.combine("one", "a\0");
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // Illegal characters : path
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -261,7 +261,7 @@ public class PathTest {
             Path.combine("one", null);
             fail("#1");
         } catch (NullPointerException ex) {
-            assertEquals(NullPointerException.class.isInstance(ex), "#2");
+            assertTrue(NullPointerException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertEquals("path2", ex.ParamName, "#5");
@@ -272,7 +272,7 @@ public class PathTest {
     public void getDirectoryName() {
         String[] files = new String[3];
         files[OsType.Unix.ordinal()] = "/foo";
-        files[OsType.Windows.ordinal()] = "c:\\\\foo";
+        files[OsType.Windows.ordinal()] = "c:\\foo";
         files[OsType.Mac.ordinal()] = "foo";
 
         String testDirName = Path.getDirectoryName(path1);
@@ -281,7 +281,7 @@ public class PathTest {
         assertEquals(files[os.ordinal()], testDirName, "#A2");
 
         if (isWindows()) {
-            assertEquals("C:\\\\foo", Path.getDirectoryName("C:\\\\foo\\\\foo.txt"), "#B1");
+            assertEquals("C:\\foo", Path.getDirectoryName("C:\\foo\\foo.txt"), "#B1");
             assertEquals(null, Path.getDirectoryName("C:"), "#B2");
             assertEquals(null, Path.getDirectoryName("C:\\"), "#B3");
             assertEquals("C:\\", Path.getDirectoryName("C:\\dir"), "#B4");
@@ -291,12 +291,10 @@ public class PathTest {
             assertEquals("C:", Path.getDirectoryName("C:foo.txt"), "#B8");
             assertEquals("C:dir", Path.getDirectoryName("C:dir\\"), "#B9");
 
-            assertEquals("\\\\foo\\\\bar", Path.getDirectoryName("/foo//bar/dingus"), "#C1");
-            assertEquals("foo\\\\bar", Path.getDirectoryName("foo/bar/"), "#C2");
-            assertEquals("foo\\\\bar", Path.getDirectoryName("foo/bar\\xxx"), "#C3");
-            assertEquals("\\\\\\\\host\\\\dir\\\\dir2",
-                         Path.getDirectoryName("\\\\\\\\host\\\\dir\\\\\\\\dir2\\\\path"),
-                         "#C4");
+            assertEquals("\\foo\\bar", Path.getDirectoryName("/foo//bar/dingus"), "#C1");
+            assertEquals("foo\\bar", Path.getDirectoryName("foo/bar/"), "#C2");
+            assertEquals("foo\\bar", Path.getDirectoryName("foo/bar\\xxx"), "#C3");
+            assertEquals("\\\\host\\dir\\dir2", Path.getDirectoryName("\\\\host\\dir\\\\dir2\\path"), "#C4");
 
             // UNC tests
             assertEquals(null, Path.getDirectoryName("\\\\"), "#D1");
@@ -322,7 +320,7 @@ public class PathTest {
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // The path is not of a legal form
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -332,11 +330,11 @@ public class PathTest {
     @Test
     public void getDirectoryName_Path_InvalidPathChars() {
         try {
-            Path.getDirectoryName("hi\\0world");
+            Path.getDirectoryName("hi\0world");
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // Illegal characters : path
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -355,7 +353,7 @@ public class PathTest {
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // The path is not of a legal form
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -416,11 +414,11 @@ public class PathTest {
     @Test
     public void getExtension_Path_InvalidPathChars() {
         try {
-            Path.getExtension("hi\\0world.txt");
+            Path.getExtension("hi\0world.txt");
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // Illegal characters : path.
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -443,11 +441,11 @@ public class PathTest {
     @Test
     public void getFileName_Path_InvalidPathChars() {
         try {
-            Path.getFileName("hi\\0world");
+            Path.getFileName("hi\0world");
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // Illegal characters : path
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -470,11 +468,11 @@ public class PathTest {
     @Test
     public void getFileNameWithoutExtension_Path_InvalidPathChars() {
         try {
-            Path.getFileNameWithoutExtension("hi\\0world");
+            Path.getFileNameWithoutExtension("hi\0world");
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // Illegal characters : path
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -558,29 +556,29 @@ public class PathTest {
     @EnabledOnOs(OS.WINDOWS)
     public void getFullPath_Windows() {
 
-        String root = "C:\\\\";
+        String root = "C:\\";
         String[][] test = new String[][] {
             // @formatter:off
             { "root////././././././../root/././../root", "root" },
-            { "root/", "root\\\\" },
-            { "root/./", "root\\\\" },
-            { "root/./", "root\\\\" },
+            { "root/", "root\\" },
+            { "root/./", "root\\" },
+            { "root/./", "root\\" },
             { "root/../", "" },
             { "root/../", "" },
             { "root/../..", "" },
-            { "root/.hiddenfile", "root\\\\.hiddenfile" },
-            { "root/. /", "root\\\\" },
+            { "root/.hiddenfile", "root\\.hiddenfile" },
+            { "root/. /", "root\\" },
             { "root/.. /", "" },
-            { "root/..weirdname", "root\\\\..weirdname" },
+            { "root/..weirdname", "root\\..weirdname" },
             { "root/..", "" },
             { "root/../a/b/../../..", "" },
             { "root/./..", "" },
             { "..", "" },
             { ".", "" },
-            { "root//dir", "root\\\\dir" },
-            { "root/.              /", "root\\\\" },
+            { "root//dir", "root\\dir" },
+            { "root/.              /", "root\\" },
             { "root/..             /", "" },
-            { "root/./", "root\\\\" },
+            { "root/./", "root\\" },
             { "root/..                      /", "" },
             { ".//", "" }
             // @formatter:on
@@ -697,7 +695,7 @@ public class PathTest {
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // The path is not of a legal form
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -714,11 +712,11 @@ public class PathTest {
     @Test
     public void getFullPath_Path_InvalidPathChars() {
         try {
-            Path.getFullPath("hi\\0world");
+            Path.getFullPath("hi\0world");
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // Illegal characters : path
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -731,7 +729,7 @@ public class PathTest {
             Path.getFullPath(null);
             fail("#1");
         } catch (NullPointerException ex) {
-            assertEquals(NullPointerException.class.isInstance(ex), "#2");
+            assertTrue(NullPointerException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertEquals("path", ex.ParamName, "#5");
@@ -745,7 +743,7 @@ public class PathTest {
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // The path is not of a legal form
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -788,7 +786,7 @@ public class PathTest {
             expected = String.valueOf(current.charAt(0));
         } else {
             current = "J:\\Some\\Strange Directory\\Name";
-            expected = "J:\\\\";
+            expected = "J:\\";
         }
 
         String pathRoot = Path.getPathRoot(current);
@@ -810,22 +808,22 @@ public class PathTest {
 
         if (isWindows()) {
             assertEquals("z:", Path.getPathRoot("z:"), "GetPathRoot w#01");
-            assertEquals("c:\\\\", Path.getPathRoot("c:\\\\abc\\\\def"), "GetPathRoot w#02");
-            assertEquals("\\\\", Path.getPathRoot("\\\\"), "GetPathRoot w#03");
-            assertEquals("\\\\\\\\", Path.getPathRoot("\\\\\\\\"), "GetPathRoot w#04");
-            assertEquals("\\\\", Path.getPathRoot("/"), "GetPathRoot w#05");
-            assertEquals("\\\\\\\\", Path.getPathRoot("//"), "GetPathRoot w#06");
+            assertEquals("c:\\", Path.getPathRoot("c:\\abc\\def"), "GetPathRoot w#02");
+            assertEquals("\\", Path.getPathRoot("\\"), "GetPathRoot w#03");
+            assertEquals("\\\\", Path.getPathRoot("\\\\"), "GetPathRoot w#04");
+            assertEquals("\\", Path.getPathRoot("/"), "GetPathRoot w#05");
+            assertEquals("\\\\", Path.getPathRoot("//"), "GetPathRoot w#06");
             assertEquals("", Path.getPathRoot("readme.txt"), "GetPathRoot w#07");
             assertEquals("", Path.getPathRoot("c"), "GetPathRoot w#08");
-            assertEquals("", Path.getPathRoot("abc\\\\def"), "GetPathRoot w#09");
-            assertEquals("\\\\", Path.getPathRoot("\\\\abc\\\\def"), "GetPathRoot w#10");
-            assertEquals("\\\\\\\\abc\\\\def", Path.getPathRoot("\\\\\\\\abc\\\\def"), "GetPathRoot w#11");
+            assertEquals("", Path.getPathRoot("abc\\def"), "GetPathRoot w#09");
+            assertEquals("\\", Path.getPathRoot("\\abc\\def"), "GetPathRoot w#10");
+            assertEquals("\\\\abc\\def", Path.getPathRoot("\\\\abc\\def"), "GetPathRoot w#11");
             assertEquals("", Path.getPathRoot("abc//def"), "GetPathRoot w#12");
-            assertEquals("\\\\", Path.getPathRoot("/abc/def"), "GetPathRoot w#13");
-            assertEquals("\\\\\\\\abc\\\\def", Path.getPathRoot("//abc/def"), "GetPathRoot w#14");
+            assertEquals("\\", Path.getPathRoot("/abc/def"), "GetPathRoot w#13");
+            assertEquals("\\\\abc\\def", Path.getPathRoot("//abc/def"), "GetPathRoot w#14");
             assertEquals("C:\\", Path.getPathRoot("C:\\"), "GetPathRoot w#15");
             assertEquals("C:\\", Path.getPathRoot("C:\\\\"), "GetPathRoot w#16");
-            assertEquals("\\\\\\\\abc\\\\def", Path.getPathRoot("\\\\\\\\abc\\\\def\\\\ghi"), "GetPathRoot w#17");
+            assertEquals("\\\\abc\\def", Path.getPathRoot("\\\\abc\\def\\ghi"), "GetPathRoot w#17");
         } else {
             // TODO: Same tests for Unix.
         }
@@ -838,7 +836,7 @@ public class PathTest {
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // The path is not of a legal form
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -852,7 +850,7 @@ public class PathTest {
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // Illegal characters : path
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -866,7 +864,7 @@ public class PathTest {
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // The path is not of a legal form
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -942,21 +940,21 @@ public class PathTest {
         assertTrue(!Path.isPathRooted(":"), "IsPathRooted #08");
 
         if (isWindows()) {
-            assertTrue(Path.isPathRooted("\\\\"), "IsPathRooted #09");
-            assertTrue(Path.isPathRooted("\\\\\\\\"), "IsPathRooted #10");
+            assertTrue(Path.isPathRooted("\\"), "IsPathRooted #09");
+            assertTrue(Path.isPathRooted("\\\\"), "IsPathRooted #10");
             assertTrue(Path.isPathRooted("z:"), "IsPathRooted #11");
-            assertTrue(Path.isPathRooted("z:\\\\"), "IsPathRooted #12");
-            assertTrue(Path.isPathRooted("z:\\\\topdir"), "IsPathRooted #13");
+            assertTrue(Path.isPathRooted("z:\\"), "IsPathRooted #12");
+            assertTrue(Path.isPathRooted("z:\\topdir"), "IsPathRooted #13");
             // This looks MS BUG. It is treated as absolute path
             assertTrue(Path.isPathRooted("z:curdir"), "IsPathRooted #14");
-            assertTrue(Path.isPathRooted("\\\\abc\\\\def"), "IsPathRooted #15");
+            assertTrue(Path.isPathRooted("\\abc\\def"), "IsPathRooted #15");
         } else {
             if (System.getenv("MONO_IOMAP") == "all") {
-                assertTrue(Path.isPathRooted("\\\\"), "IsPathRooted #16");
-                assertTrue(Path.isPathRooted("\\\\\\\\"), "IsPathRooted #17");
+                assertTrue(Path.isPathRooted("\\"), "IsPathRooted #16");
+                assertTrue(Path.isPathRooted("\\\\"), "IsPathRooted #17");
             } else {
-                assertTrue(!Path.isPathRooted("\\\\"), "IsPathRooted #09");
-                assertTrue(!Path.isPathRooted("\\\\\\\\"), "IsPathRooted #10");
+                assertTrue(!Path.isPathRooted("\\"), "IsPathRooted #09");
+                assertTrue(!Path.isPathRooted("\\\\"), "IsPathRooted #10");
                 assertTrue(!Path.isPathRooted("z:"), "IsPathRooted #11");
             }
         }
@@ -970,11 +968,11 @@ public class PathTest {
     @Test
     public void isPathRooted_Path_InvalidPathChars() {
         try {
-            Path.isPathRooted("hi\\0world");
+            Path.isPathRooted("hi\0world");
             fail("#1");
         } catch (IllegalArgumentException ex) {
             // Illegal characters : path.
-            assertEquals(IllegalArgumentException.class.isInstance(ex), "#2");
+            assertTrue(IllegalArgumentException.class.isInstance(ex), "#2");
             assertNull(ex.getCause(), "#3");
             assertNotNull(ex.getMessage(), "#4");
 //            assertNull(ex.ParamName, "#5");
@@ -992,7 +990,7 @@ public class PathTest {
     }
 
     @Test
-    public void CanonicalizeDots() {
+    public void canonicalizeDots() {
         String current = Path.getFullPath(".");
         assertTrue(!current.endsWith("."), "TestCanonicalizeDotst #01");
         String parent = Path.getFullPath("..");
@@ -1051,7 +1049,11 @@ public class PathTest {
     public void InvalidPathChars_Values() {
         char[] invalid = Path.InvalidPathChars;
         if (isWindows()) {
-            assertEquals(36, invalid.length, "Length");
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                assertEquals(36, invalid.length, "Length");
+            } else {
+                assertEquals(1, invalid.length, "Length");
+            }
 
             for (char c : invalid) {
                 int i = c;
@@ -1129,7 +1131,11 @@ public class PathTest {
     public void getInvalidPathChars_Values() {
         char[] invalid = Path.getInvalidPathChars();
         if (isWindows()) {
-            assertEquals(36, invalid.length);
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                assertEquals(36, invalid.length);
+            } else {
+                assertEquals(1, invalid.length);
+            }
             for (char c : invalid) {
                 int i = c;
                 if (i < 32)
@@ -1152,12 +1158,21 @@ public class PathTest {
     public void getInvalidPathChars_Order() {
         if (isWindows()) {
             char[] invalid = Path.getInvalidPathChars();
-            char[] expected = new char[] {
+            char[] expected1 = new char[] {
                 '\u0022', '\u003C', '\u003E', '\u007C', '\u0000', '\u0001', '\u0002', '\u0003', '\u0004', '\u0005', '\u0006',
                 '\u0007', '\u0008', '\u0009', '\n', '\u000B', '\u000C', '\r', '\u000E', '\u000F', '\u0010', '\u0011', '\u0012',
                 '\u0013', '\u0014', '\u0015', '\u0016', '\u0017', '\u0018', '\u0019', '\u001A', '\u001B', '\u001C', '\u001D',
                 '\u001E', '\u001F'
             };
+            char[] expected2 = new char[] {
+                '\u0000'
+            };
+            char[] expected;
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                expected = expected1;
+            } else {
+                expected = expected2;
+            }
             assertEquals(expected.length, invalid.length);
             for (int i = 0; i < expected.length; i++) {
                 assertEquals(expected[i], invalid[i], "Character at position " + i);
@@ -1183,7 +1198,7 @@ public class PathTest {
             if (i == 8)
                 assertEquals('.', s.charAt(i), "8");
             else
-                assertTrue(Arrays.binarySearch(invalid, s.charAt(i)) == -1, String.valueOf(i));
+                assertTrue(Arrays.binarySearch(invalid, s.charAt(i)) < 0, String.valueOf(s.charAt(i)));
         }
     }
 

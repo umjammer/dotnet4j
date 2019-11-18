@@ -20,7 +20,7 @@ import dotnet4j.io.Stream;
  */
 public class StreamOutputStream extends OutputStream {
 
-    Stream stream;
+    private Stream stream;
 
     public StreamOutputStream(Stream stream) {
         this.stream = stream;
@@ -29,6 +29,11 @@ public class StreamOutputStream extends OutputStream {
     @Override
     public void write(int b) throws IOException {
         stream.writeByte((byte) b);
+    }
+
+    @Override
+    public void write(byte[] buffer, int offset, int count) {
+        stream.write(buffer, offset, count);
     }
 }
 

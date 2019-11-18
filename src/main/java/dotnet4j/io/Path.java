@@ -127,18 +127,18 @@ public class Path {
         return path1 + path2;
     }
 
-    //
-    // This routine:
-    // * Removes duplicat path separators from a string
-    // * If the String starts with \\, preserves the first two (hostname on
-    // Windows)
-    // * Removes the trailing path separator.
-    // * Returns the DirectorySeparatorChar for the single input
-    // DirectorySeparatorChar or AltDirectorySeparatorChar
-    //
-    // Unlike CanonicalizePath, this does not do any path resolution
-    // (which GetDirectoryName is not supposed to do).
-    //
+    /**
+     * This routine:
+     * <li> Removes duplicat path separators from a string
+     * <li> If the String starts with \\, preserves the first two (hostname on
+     * Windows)
+     * <li> Removes the trailing path separator.
+     * <li> Returns the DirectorySeparatorChar for the single input
+     * DirectorySeparatorChar or AltDirectorySeparatorChar
+     *
+     * Unlike CanonicalizePath, this does not do any path resolution
+     * (which GetDirectoryName is not supposed to do).
+     */
     static String cleanPath(String s) {
         int l = s.length();
         int sub = 0;
@@ -313,15 +313,14 @@ public class Path {
         } else {
             if (!isPathRooted(path)) {
 
-                String cwd = System.getProperty("user.dir");
+                String cwd = System.getProperty("user.dir").replace(java.io.File.separatorChar, DirectorySeparatorChar);
                 if (cwd.charAt(cwd.length() - 1) == DirectorySeparatorChar)
                     path = cwd + path;
                 else
                     path = cwd + DirectorySeparatorChar + path;
             } else if (DirectorySeparatorChar == '\\' && path.length() >= 2 && isDirectorySeparator(path.charAt(0)) &&
-                       !isDirectorySeparator(path.charAt(1))) { // like
-                                                                // `\abc\def'
-                String current = System.getProperty("user.dir");
+                       !isDirectorySeparator(path.charAt(1))) { // like `\abc\def'
+                String current = System.getProperty("user.dir").replace(java.io.File.separatorChar, DirectorySeparatorChar);
                 if (current.charAt(1) == VolumeSeparatorChar)
                     path = current.substring(0, 2) + path;
                 else
@@ -389,9 +388,8 @@ public class Path {
                 if (path.length() >= 3 && (isDirectorySeparator(path.charAt(2))))
                     len++;
             } else
-                return System.getenv("user.dir").substring(0, 2); // +
-                                                                  // path.substring(0,
-                                                                  // len);
+                return System.getenv("user.dir").replace(java.io.File.separatorChar, DirectorySeparatorChar).substring(0, 2);
+                // + path.substring(0, len);
             return path.substring(0, len);
         }
     }
@@ -503,7 +501,7 @@ public class Path {
         // returns a 8.3 filename (total size 12)
         StringBuilder sb = new StringBuilder(12);
         // using strong crypto but without creating the file
-        byte[] buffer = StringUtil.getRandomString().substring(11).getBytes();
+        byte[] buffer = StringUtil.getRandomString().substring(0, 11).getBytes();
 
         for (int i = 0; i < buffer.length; i++) {
             if (sb.length() == 8)
@@ -778,8 +776,7 @@ public class Path {
         int index;
         while ((index = searchPattern.indexOf("..")) != -1) {
 
-            if (index + 2 == searchPattern.length()) // Terminal ".." . Files
-                                                     // names cannot end in ".."
+            if (index + 2 == searchPattern.length()) // Terminal ".." . Files names cannot end in ".."
                 throw new IllegalArgumentException(System.getenv("Arg_InvalidSearchPattern"));
 
             if ((searchPattern.charAt(index + 2) == DirectorySeparatorChar) ||

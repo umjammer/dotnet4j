@@ -1,9 +1,9 @@
 package dotnet4j.io;
 
-import java.io.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.*;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
@@ -181,6 +181,10 @@ public class FileStream extends Stream
         int m = 0;
         try {
             m = channel.read(tmp);
+//Debug.println(m + ", " + offset + ", " + length + " / " + channel.size() + ", " + channel.size() + ", " + channel.position());
+            if (m == -1) {
+                return 0;
+            }
         } catch (IOException e) {
             e.printStackTrace();
             throw new dotnet4j.io.IOException(e);

@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.util.zip.DeflaterInputStream;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
+import java.util.zip.InflaterOutputStream;
 
 import dotnet4j.io.Stream;
 import dotnet4j.io.compat.JavaIOStream;
@@ -33,7 +34,7 @@ public class DeflateStream extends JavaIOStream {
 
     static OutputStream toOutputStream(Stream stream, CompressionMode compressionMode) {
         OutputStream os = new StreamOutputStream(stream);
-        return compressionMode == CompressionMode.Compress ? new DeflaterOutputStream(os) : new DeflaterOutputStream(os);
+        return compressionMode == CompressionMode.Compress ? new DeflaterOutputStream(os) : new InflaterOutputStream(os);
     }
 
     /**

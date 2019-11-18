@@ -273,7 +273,7 @@ public abstract class GenericAce implements Cloneable {
             if (right == null)
                 throw new IllegalArgumentException("Invalid SDDL string.");
 
-            ret |= right.Value;
+            ret |= right._value;
             pos += 2;
         }
 
