@@ -45,6 +45,7 @@ import dotnet4j.io.compat.StringUtilities;
  * @author Sebastien Pouliot <sebastien@ximian.com>
  * @version Saturday, August 11, 2001
  *
+ * TODO test not passed, don't use
  */
 public class Path {
 
@@ -67,6 +68,7 @@ public class Path {
     private static final boolean dirEqualsVolume;
 
     // class methods
+
     public static String changeExtension(String path, String extension) {
         if (path == null)
             return null;

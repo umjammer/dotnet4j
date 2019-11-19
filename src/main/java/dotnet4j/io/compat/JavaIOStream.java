@@ -49,7 +49,7 @@ public class JavaIOStream extends Stream {
 
     @Override
     public boolean canRead() {
-        return is != null && getLength() > 0;
+        return is != null;
     }
 
     @Override
@@ -88,7 +88,7 @@ public class JavaIOStream extends Stream {
                 is.close();
                 is = null;
             }
-            if (is != null) {
+            if (os != null) {
                 os.close();
                 os = null;
             }
@@ -97,6 +97,10 @@ public class JavaIOStream extends Stream {
 
     @Override
     public void flush() {
+        if (os == null) {
+            throw new dotnet4j.io.IOException("closed");
+        }
+
         try {
             os.flush();
         } catch (IOException e) {
@@ -116,18 +120,22 @@ public class JavaIOStream extends Stream {
 
     @Override
     public int read(byte[] buffer, int offset, int length) {
+        if (is == null) {
+            throw new dotnet4j.io.IOException("closed");
+        }
+
         try {
-//System.err.println(buffer.length + ", " + offset + ", " + length + ", " + is.available());
+//Debug.println(buffer.length + ", " + offset + ", " + length + ", " + is.available());
             int r = is.read(buffer, offset, length);
-//System.err.println(StringUtil.getDump(buffer, 16));
+//Debug.println(StringUtil.getDump(buffer, 16));
             if (r > 0) {
                 position += r;
             }
             if (r == -1) {
-//System.err.println("EOF");
+//Debug.println("EOF");
                 return 0; // C# Spec.
             }
-//System.err.println("position: " + position);
+//Debug.println("position: " + position);
             return r;
         } catch (IOException e) {
             throw new dotnet4j.io.IOException(e);
@@ -136,6 +144,10 @@ public class JavaIOStream extends Stream {
 
     @Override
     public int readByte() {
+        if (is == null) {
+            throw new dotnet4j.io.IOException("closed");
+        }
+
         try {
             int r = is.read();
             if (r >= 0) {
@@ -149,7 +161,12 @@ public class JavaIOStream extends Stream {
 
     @Override
     public void write(byte[] buffer, int offset, int count) {
+        if (os == null) {
+            throw new dotnet4j.io.IOException("closed");
+        }
+
         try {
+//Debug.println("w: " + count + ", " + os);
             os.write(buffer, offset, count);
             position += count;
         } catch (IOException e) {
@@ -159,6 +176,10 @@ public class JavaIOStream extends Stream {
 
     @Override
     public void writeByte(byte value) {
+        if (os == null) {
+            throw new dotnet4j.io.IOException("closed");
+        }
+
         super.writeByte(value);
         position++;
     }

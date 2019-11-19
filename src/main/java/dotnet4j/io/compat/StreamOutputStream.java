@@ -32,8 +32,19 @@ public class StreamOutputStream extends OutputStream {
     }
 
     @Override
-    public void write(byte[] buffer, int offset, int count) {
+    public void write(byte[] buffer, int offset, int count) throws IOException {
+//Debug.println("w: " + count + ", " + stream);
         stream.write(buffer, offset, count);
+    }
+
+    @Override
+    public void flush() throws IOException {
+        stream.flush();
+    }
+
+    @Override
+    public void close() throws IOException {
+        stream.close();
     }
 }
 

@@ -37,6 +37,11 @@ public class StreamInputStream extends InputStream {
          int r = stream.read(b, ofs, len);
          return r == 0 ? -1 : r;
     }
+
+    @Override
+    public void close() throws IOException {
+        stream.close();
+    }
 }
 
 /* */
