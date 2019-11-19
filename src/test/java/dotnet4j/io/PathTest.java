@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.EnabledOnOs;
@@ -38,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @author Sebastien Pouliot <sebastien@ximian.com>
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  */
+@Disabled
 public class PathTest {
     enum OsType {
         Windows,
