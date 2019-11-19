@@ -10,7 +10,7 @@ Helper library for .Net to Java migration.
  * Microsoft.Win32
  * [lzo.net](https://github.com/zivillian/lzo.net)
 
-Note: this is a fork of feyris-tan/dotnetIo4j
+Note: this is a fork of [feyris-tan/dotnetIo4j](https://github.com/feyris-tan/dotnetIo4j)
 
 ## Projects that use this library
 

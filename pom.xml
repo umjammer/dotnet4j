@@ -68,9 +68,9 @@
     </dependency>
 
     <dependency>
-      <groupId>vavi</groupId>
+      <groupId>com.github.umjammer</groupId>
       <artifactId>vavi-commons</artifactId>
-      <version>1.0.12-SNAPSHOT</version>
+      <version>1.0.12</version>
     </dependency>
 
     <dependency>
