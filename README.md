@@ -1,6 +1,6 @@
-# dotnet4j
+[![Release](https://jitpack.io/v/umjammer/dotnet4j.svg)](https://jitpack.io/#umjammer/dotnet4j) [![Actions Status](https://github.com/umjammer/dotnet4j/workflows/Java%20CI/badge.svg)](https://github.com/umjammer/dotnet4j/actions) [![Parent](https://img.shields.io/badge/Parent-vavi--nio--file--discutils-pink)](https://github.com/umjammer/vavi-nio-file-discutils)
 
-[![Release](https://jitpack.io/v/umjammer/dotnet4j.svg)](https://jitpack.io/#umjammer/dotnet4j) [![Actions Status](https://github.com/umjammer/dotnet4j/workflows/Java%20CI/badge.svg)](https://github.com/umjammer/dotnet4j/actions)
+# dotnet4j
 
 Helper library for .Net to Java migration.
 
