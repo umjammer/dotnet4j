@@ -1,7 +1,7 @@
 
 package dotnet4j.security.principal;
 
-import dotnet4j.io.compat.Utilities;
+import dotnet4j.util.compat.Utilities;
 
 
 /**

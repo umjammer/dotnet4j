@@ -4,7 +4,7 @@
  * Programmed by Naohide Sano
  */
 
-package dotnet4j.io.compat;
+package dotnet4j.util.compat;
 
 import java.nio.CharBuffer;
 import java.util.Comparator;

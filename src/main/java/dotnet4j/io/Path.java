@@ -28,7 +28,7 @@ import java.util.Random;
 
 import vavi.util.StringUtil;
 
-import dotnet4j.io.compat.StringUtilities;
+import dotnet4j.util.compat.StringUtilities;
 
 
 /**

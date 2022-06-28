@@ -20,7 +20,7 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-package dotnet4j.io.compat;
+package dotnet4j.util.compat;
 
 
 public class Utilities {
