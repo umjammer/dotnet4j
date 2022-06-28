@@ -19,9 +19,13 @@ public final class Directory
             throw new IOException(name + " is not a directory!");
         }
         boolean result = victim.delete();
-        if (result == false)
+        if (!result)
         {
             throw new IOException("Delete directory failed.");
         }
+    }
+
+    public static boolean exists(String name) {
+        return new java.io.File(name).exists();
     }
 }

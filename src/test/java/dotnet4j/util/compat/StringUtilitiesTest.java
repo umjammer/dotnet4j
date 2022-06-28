@@ -18,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 
 /**
- *StringTest.cs - NUnit Test Cases for the System.String class
+ * StringTest.cs - NUnit Test Cases for the System.String class
  *
  * @author Jeffrey Stedfast <fejj@ximian.com>
  * @author David Brandt <bucky@keystreams.com>
- * @author Kornel Pal <http://www.kornelpal.hu/>
+ * @author <a href="http://www.kornelpal.hu/">Kornel Pal</a>
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  */
 class StringUtilitiesTest {
@@ -136,13 +136,11 @@ class StringUtilitiesTest {
 
     @Test // IndexOfAny (Char [])
     public void indexOfAny1_AnyOf_Null() {
-        try {
-            StringUtilities.indexOfAny("mono", (char[]) null);
+        Exception ex = assertThrows(NullPointerException.class, () -> {
+            StringUtilities.indexOfAny("mono", null);
             fail("#1");
-        } catch (NullPointerException ex) {
-            assertTrue(NullPointerException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 
     @Test // indexOfAny (Char [], Int32)
@@ -185,52 +183,42 @@ class StringUtilitiesTest {
 
     @Test // IndexOfAny (Char [], Int32)
     public void indexOfAny2_AnyOf_Null() {
-        try {
-            StringUtilities.indexOfAny("mono", (char[]) null, 0);
+        Exception ex = assertThrows(NullPointerException.class, () -> {
+            StringUtilities.indexOfAny("mono", null, 0);
             fail("#1");
-        } catch (NullPointerException ex) {
-            assertTrue(NullPointerException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 
     @Test // IndexOfAny (Char [], Int32)
     public void indexOfAny2_StartIndex_Negative() {
         String s = "abcdefghijklm";
 
-        try {
+        Exception ex = assertThrows(IndexOutOfBoundsException.class, () -> {
+            // Specified argument was out of the range of valid
+            // values
             StringUtilities.indexOfAny(s,
-                                       new char[] {
-                                           'd'
-                                       },
+                                       new char[] {'d'},
                                        -1,
                                        1);
             fail("#1");
-        } catch (IndexOutOfBoundsException ex) {
-            // Specified argument was out of the range of valid
-            // values
-            assertTrue(IndexOutOfBoundsException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 
     @Test // IndexOfAny (Char [], Int32, Int32)
     public void indexOfAny2_StartIndex_Overflow() {
         String s = "abcdefghijklm";
 
-        try {
-            StringUtilities.indexOfAny(s,
-                                       new char[] {
-                                           'd'
-                                       },
-                                       s.length() + 1);
-            fail("#1");
-        } catch (IndexOutOfBoundsException ex) {
+        Exception ex = assertThrows(IndexOutOfBoundsException.class, () -> {
             // Specified argument was out of the range of valid
             // values
-            assertTrue(IndexOutOfBoundsException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+            StringUtilities.indexOfAny(s,
+                                       new char[] {'d'},
+                                       s.length() + 1);
+            fail("#1");
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 
     @Test // IndexOfAny (Char [], Int32, Int32)
@@ -275,118 +263,94 @@ class StringUtilitiesTest {
 
     @Test // IndexOfAny (Char [], Int32, Int32)
     public void indexOfAny3_AnyOf_Null() {
-        try {
-            StringUtilities.indexOfAny("mono", (char[]) null, 0, 0);
+        Exception ex = assertThrows(NullPointerException.class, () -> {
+            StringUtilities.indexOfAny("mono", null, 0, 0);
             fail("#1");
-        } catch (NullPointerException ex) {
-            assertTrue(NullPointerException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 
     @Test // IndexOfAny (Char [], Int32, Int32)
     public void indexOfAny3_Count_Negative() {
-        try {
+        Exception ex = assertThrows(IndexOutOfBoundsException.class, () -> {
+            // Count must be positive and count must refer to a
+            // location within the String/array/collection
             StringUtilities.indexOfAny("Mono",
-                                       new char[] {
-                                           'o'
-                                       },
+                                       new char[] {'o'},
                                        1,
                                        -1);
             fail("#1");
-        } catch (IndexOutOfBoundsException ex) {
-            // Count must be positive and count must refer to a
-            // location within the String/array/collection
-            assertTrue(IndexOutOfBoundsException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 
     @Test // IndexOfAny (Char [], Int32, Int32)
     public void indexOfAny3_Length_Overflow() {
         String s = "abcdefghijklm";
 
-        try {
+        Exception ex = assertThrows(IndexOutOfBoundsException.class, () -> {
+            // Count must be positive and count must refer to a
+            // location within the String/array/collection
             StringUtilities.indexOfAny(s,
-                                       new char[] {
-                                           'd'
-                                       },
+                                       new char[] {'d'},
                                        1,
                                        s.length());
             fail("#1");
-        } catch (IndexOutOfBoundsException ex) {
-            // Count must be positive and count must refer to a
-            // location within the String/array/collection
-            assertTrue(IndexOutOfBoundsException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 
     @Test // IndexOfAny (Char [], Int32, Int32)
     public void indexOfAny3_StartIndex_Negative() {
-        try {
+        Exception ex = assertThrows(IndexOutOfBoundsException.class, () -> {
+            // Specified argument was out of the range of valid
+            // values
             StringUtilities.indexOfAny("Mono",
-                                       new char[] {
-                                           'o'
-                                       },
+                                       new char[] {'o'},
                                        -1,
                                        1);
             fail("#1");
-        } catch (IndexOutOfBoundsException ex) {
-            // Specified argument was out of the range of valid
-            // values
-            assertTrue(IndexOutOfBoundsException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 
     @Test // IndexOfAny (Char [], Int32, Int32)
     public void indexOfAny3_StartIndex_Overflow() {
         String s = "abcdefghijklm";
 
-        try {
+        Exception ex = assertThrows(IndexOutOfBoundsException.class, () -> {
+            // Specified argument was out of the range of valid
+            // values
             StringUtilities.indexOfAny(s,
-                                       new char[] {
-                                           'o'
-                                       },
+                                       new char[] {'o'},
                                        s.length() + 1,
                                        1);
             fail("#1");
-        } catch (IndexOutOfBoundsException ex) {
-            // Specified argument was out of the range of valid
-            // values
-            assertTrue(IndexOutOfBoundsException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 
     @Test
     public void lastIndexOfAny() {
         String s1 = ".bcdefghijklm";
 
-        try {
+        Exception ex = assertThrows(NullPointerException.class, () -> {
             StringUtilities.lastIndexOfAny(s1, null);
             fail("#A1");
-        } catch (NullPointerException ex) {
-            assertTrue(NullPointerException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
 
-        try {
+        ex = assertThrows(NullPointerException.class, () -> {
             StringUtilities.lastIndexOfAny(s1, null, s1.length());
             fail("#B1");
-        } catch (NullPointerException ex) {
-            assertTrue(NullPointerException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
 
-        try {
+        ex = assertThrows(NullPointerException.class, () -> {
             StringUtilities.lastIndexOfAny(s1, null, s1.length(), 1);
             fail("#C1");
-        } catch (NullPointerException ex) {
-            assertTrue(NullPointerException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
 
         char[] c1 = {
             'a', 'e', 'i', 'o', 'u'
@@ -397,61 +361,49 @@ class StringUtilitiesTest {
         assertEquals(4, StringUtilities.lastIndexOfAny(s1, c1, s1.length() - 6, 4), "#D4");
         assertEquals(-1, StringUtilities.lastIndexOfAny(s1, c1, s1.length() - 6, 3), "#D5");
 
-        try {
+        ex = assertThrows(IndexOutOfBoundsException.class, () -> {
+            // Index was out of range. Must be non-negative and
+            // less than the size of the collection
             StringUtilities.lastIndexOfAny(s1, c1, -1);
             fail("#E1");
-        } catch (IndexOutOfBoundsException ex) {
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
+
+        ex = assertThrows(IndexOutOfBoundsException.class, () -> {
             // Index was out of range. Must be non-negative and
             // less than the size of the collection
-            assertTrue(IndexOutOfBoundsException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
-
-        try {
             StringUtilities.lastIndexOfAny(s1, c1, -1, 1);
             fail("#F1");
-        } catch (IndexOutOfBoundsException ex) {
-            // Index was out of range. Must be non-negative and
-            // less than the size of the collection
-            assertTrue(IndexOutOfBoundsException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 
     @Test
     public void lastIndexOfAny_Length_Overflow() {
-        try {
+        Exception ex = assertThrows(IndexOutOfBoundsException.class, () -> {
+            // Count must be positive and count must refer to a
+            // location within the String/array/collection
             StringUtilities.lastIndexOfAny("Mono",
-                                           new char[] {
-                                               'o'
-                                           },
+                                           new char[] {'o'},
                                            1,
                                            Integer.MAX_VALUE);
             fail("#1");
-        } catch (IndexOutOfBoundsException ex) {
-            // Count must be positive and count must refer to a
-            // location within the String/array/collection
-            assertTrue(IndexOutOfBoundsException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 
     @Test
     public void lastIndexOfAny_StartIndex_Overflow() {
-        try {
+        Exception ex = assertThrows(IndexOutOfBoundsException.class, () -> {
+            // Index was out of range. Must be non-negative and
+            // less than the size of the collection
             StringUtilities.lastIndexOfAny("Mono",
-                                           new char[] {
-                                               'o'
-                                           },
+                                           new char[] {'o'},
                                            Integer.MAX_VALUE,
                                            1);
             fail("#1");
-        } catch (IndexOutOfBoundsException ex) {
-            // Index was out of range. Must be non-negative and
-            // less than the size of the collection
-            assertTrue(IndexOutOfBoundsException.class.isInstance(ex), "#2");
-            assertNull(ex.getCause(), "#3");
-        }
+        }, "#2");
+        assertNull(ex.getCause(), "#3");
     }
 }
 

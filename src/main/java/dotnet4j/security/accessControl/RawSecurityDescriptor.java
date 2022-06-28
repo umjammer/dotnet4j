@@ -126,7 +126,7 @@ public class RawSecurityDescriptor extends Permission {
     @Override
     public boolean equals(Object obj) {
         return obj == null ? false : getSddlForm(AccessControlSections.All)
-                .equals(RawSecurityDescriptor.class.cast(obj).getSddlForm(AccessControlSections.All));
+                .equals(((RawSecurityDescriptor) obj).getSddlForm(AccessControlSections.All));
     }
 
     @Override
@@ -149,19 +149,19 @@ public class RawSecurityDescriptor extends Permission {
         StringBuilder result = new StringBuilder();
 
         if (includeSections.contains(AccessControlSections.Owner) && owner != null) {
-            result.append("O:" + owner.getSddlForm());
+            result.append("O:").append(owner.getSddlForm());
         }
 
         if (includeSections.contains(AccessControlSections.Group) && group != null) {
-            result.append("G:" + group.getSddlForm());
+            result.append("G:").append(group.getSddlForm());
         }
 
         if (includeSections.contains(AccessControlSections.Access) && genericDacl != null) {
-            result.append("D:" + genericDacl.getSddlForm(controlFlags, true));
+            result.append("D:").append(genericDacl.getSddlForm(controlFlags, true));
         }
 
         if (includeSections.contains(AccessControlSections.Audit) && genericSacl != null) {
-            result.append("S:" + genericSacl.getSddlForm(controlFlags, false));
+            result.append("S:").append(genericSacl.getSddlForm(controlFlags, false));
         }
 
         return result.toString();

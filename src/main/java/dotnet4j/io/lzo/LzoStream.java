@@ -38,7 +38,7 @@ import dotnet4j.io.compression.CompressionMode;
 public class LzoStream extends Stream {
     protected Stream _source;
 
-    private Optional<Long> _length;
+    private long _length;
 
     private final boolean _leaveOpen;
 
@@ -101,7 +101,7 @@ public class LzoStream extends Stream {
         if (!stream.canRead())
             throw new IllegalArgumentException("write-only stream cannot be used for decompression");
         _source = stream;
-        if (!BufferedStream.class.isInstance(stream))
+        if (!(stream instanceof BufferedStream))
             _source = new BufferedStream(stream);
         _leaveOpen = leaveOpen;
         decodeFirstByte();
@@ -379,13 +379,13 @@ public class LzoStream extends Stream {
 
     private int readInternal(byte[] buffer, int offset, int count) {
         assert count > 0;
-        if (_length.isPresent() && _outputPosition >= _length.get())
+        if (_outputPosition >= _length)
             return -1;
         int read;
         if (_decodedBuffer == null) {
             if ((read = decode(buffer, offset, count)) >= 0)
                 return read;
-            _length = Optional.of(_outputPosition);
+            _length = _outputPosition;
             return -1;
         }
         int decodedLength = _decodedBuffer.length;
@@ -420,9 +420,7 @@ public class LzoStream extends Stream {
     }
 
     public long getLength() {
-        if (_length.isPresent())
-            return _length.get();
-        throw new UnsupportedOperationException();
+        return _length;
     }
 
     public long getPosition() {
@@ -439,7 +437,7 @@ public class LzoStream extends Stream {
     }
 
     public int read(byte[] buffer, int offset, int count) {
-        if (_length.isPresent() && _outputPosition >= _length.get())
+        if (_outputPosition >= _length)
             return 0;
         int result = 0;
         while (count > 0) {
@@ -458,7 +456,7 @@ public class LzoStream extends Stream {
     }
 
     public void setLength(long value) {
-        _length = Optional.of(value);
+        _length = value;
     }
 
     public void write(byte[] buffer, int offset, int count) {

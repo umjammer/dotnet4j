@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import dotnet4j.io.compat.StreamInputStream;
 
@@ -23,22 +24,20 @@ import dotnet4j.io.compat.StreamInputStream;
 public class StreamReader extends BufferedReader {
 
     public StreamReader(Stream stream) {
-        this(stream, Charset.forName("utf-8"), false);
+        this(stream, StandardCharsets.UTF_8, false);
     }
 
     /** TODO */
     public StreamReader(Stream stream, boolean detectEncodingFromByteOrderMarks) {
-        this(stream, Charset.forName("utf-8"), detectEncodingFromByteOrderMarks);
+        this(stream, StandardCharsets.UTF_8, detectEncodingFromByteOrderMarks);
     }
 
-    /**
-     */
+    /** */
     public StreamReader(Stream stream, Charset encoding) {
         this(stream, encoding, false);
     }
 
-    /**
-     */
+    /** */
     public StreamReader(Stream stream, Charset encoding, boolean detectEncodingFromByteOrderMarks) {
         super(new InputStreamReader(new StreamInputStream(stream), encoding));
     }
@@ -67,7 +66,7 @@ public class StreamReader extends BufferedReader {
     }
 
     /**
-     * @return
+     * @return end of stream or not
      */
     public boolean isEndOfStream() {
         try {

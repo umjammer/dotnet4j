@@ -16,55 +16,44 @@ import dotnet4j.io.FileNotFoundException;
 import dotnet4j.io.FileStream;
 import dotnet4j.io.IOException;
 
+
 /**
  * Created by ft on 28.03.17.
  */
-public class FileTest
-{
+public class FileTest {
     private final String filename = "test.bin";
     private final String dirname = "testdir";
 
     @Test
-    public void createAndDeleteFile() throws Exception {
+    public void createAndDeleteFile() {
         FileStream fileStream = File.create(filename);
         fileStream.close();
         File.delete(filename);
     }
 
     @Test
-    public void deleteFileThatDoesNotExistsShouldFail()
-    {
-        try
-        {
+    public void deleteFileThatDoesNotExistsShouldFail() {
+        try {
             File.delete("inexistant.file");
             fail();
-        }
-        catch(FileNotFoundException fnfe)
-        {
-            return;
+        } catch (FileNotFoundException ignored) {
         }
     }
 
     @Test
-    public void fileClassShouldNotDeleteDirectories()
-    {
+    public void fileClassShouldNotDeleteDirectories() {
         Directory.createDirectory(dirname);
-        try
-        {
+        try {
             File.delete(dirname);
             fail();
-        }
-        catch(IOException ioe)
-        {
+        } catch (IOException ioe) {
             if (ioe instanceof FileNotFoundException) fail("Got FileNotFound instead of IO!");
             Directory.deleteDirectory(dirname);
-            return;
         }
     }
 
     @Test
-    public void fileExists()
-    {
+    public void fileExists() {
         File.create(filename).close();
         if (!File.exists(filename)) fail("File.exists reported false even though it was created.");
 
@@ -73,8 +62,7 @@ public class FileTest
     }
 
     @Test
-    public void fileDoesNotExistIfItIsADirectory()
-    {
+    public void fileDoesNotExistIfItIsADirectory() {
         Directory.createDirectory(dirname);
 
         boolean fileExists = File.exists(dirname);
@@ -85,43 +73,40 @@ public class FileTest
     }
 
     @Test
-    public void openRead()
-    {
+    public void openRead() {
         byte[] buffer = new byte[1024];
         new Random().nextBytes(buffer);
 
-        File.writeAllBytes(filename,buffer);
+        File.writeAllBytes(filename, buffer);
 
         FileStream fs = File.openRead(filename);
         byte[] cmpBuffer = new byte[1024];
-        assert fs.read(cmpBuffer,0,1024) == 1024;
+        assert fs.read(cmpBuffer, 0, 1024) == 1024;
         fs.close();
 
         File.delete(filename);
 
-        assertArrayEquals(buffer,cmpBuffer);
+        assertArrayEquals(buffer, cmpBuffer);
     }
 
     @Test
-    public void readAllBytes()
-    {
+    public void readAllBytes() {
         byte[] buffer = new byte[1024];
         new Random().nextBytes(buffer);
 
-        File.writeAllBytes(filename,buffer);
+        File.writeAllBytes(filename, buffer);
 
         byte[] cmpBuffer = File.readAllBytes(filename);
 
         File.delete(filename);
 
-        assertArrayEquals(buffer,cmpBuffer);
+        assertArrayEquals(buffer, cmpBuffer);
     }
 
     @Test
-    public void open()
-    {
+    public void open() {
         File.openWrite(filename).close();
-        File.open(filename,FileMode.OpenOrCreate,FileAccess.Read).close();
+        File.open(filename, FileMode.OpenOrCreate, FileAccess.Read).close();
 
         File.delete(filename);
     }

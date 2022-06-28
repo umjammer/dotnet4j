@@ -292,7 +292,7 @@ public class DeflateStreamTest {
         }
     }
 
-    class Bug19313Stream extends MemoryStream {
+    static class Bug19313Stream extends MemoryStream {
         public Bug19313Stream(byte[] buffer) {
             super(buffer);
         }

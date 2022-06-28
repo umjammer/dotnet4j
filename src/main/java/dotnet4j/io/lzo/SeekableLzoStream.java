@@ -22,7 +22,7 @@ import dotnet4j.io.compression.CompressionMode;
  */
 public class SeekableLzoStream extends LzoStream {
 
-    class Snapshot {
+    static class Snapshot {
         public final long OutputPosition;
 
         public final long InputPosition;

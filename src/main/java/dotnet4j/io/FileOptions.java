@@ -22,7 +22,7 @@ public enum FileOptions {
     SequentialScan(134217728),
     WriteThrough(-2147483648);
 
-    private int value;
+    private final int value;
 
     public int getValue() {
         return value;

@@ -76,7 +76,7 @@ public class DeflateStream extends JavaIOStream {
     public void close() throws IOException {
         if (os != null) {
             // DeflaterOutputStream#flush doesn't flush
-            DeflaterOutputStream.class.cast(os).finish();
+            ((DeflaterOutputStream) os).finish();
         }
         super.close();
         if (!leaveOpen) {

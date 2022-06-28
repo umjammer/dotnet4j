@@ -16,7 +16,7 @@ public enum AccessControlSections {
     /** 所有者。 */
     Owner(0x4);
 
-    int value;
+    final int value;
 
     AccessControlSections(int value) {
         this.value = value;

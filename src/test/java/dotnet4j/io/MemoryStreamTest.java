@@ -8,7 +8,7 @@ package dotnet4j.io;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -59,7 +59,7 @@ public class MemoryStreamTest {
 //        }
 //    }
 
-    class ExceptionalStream extends MemoryStream {
+    static class ExceptionalStream extends MemoryStream {
         public static final String Message = "ExceptionalMessage";
 
         public boolean _throw = false;
@@ -167,7 +167,7 @@ public class MemoryStreamTest {
 
         assertEquals(0L, ms.getLength(), "#01");
         assertEquals(0, ms.getCapacity(), "#02");
-        assertEquals(true, ms.canWrite(), "#03");
+        assertTrue(ms.canWrite(), "#03");
     }
 
     @Test
@@ -235,17 +235,17 @@ public class MemoryStreamTest {
         try {
             ms.writeByte((byte) 23);
             fail("#05");
-        } catch (IOException e) {}
+        } catch (IOException ignored) {}
 
         try {
             ms.setCapacity(100);
             fail("#06");
-        } catch (IOException e) {}
+        } catch (IOException ignored) {}
 
         try {
             ms.setCapacity(51);
             fail("#07");
-        } catch (IOException e) {}
+        } catch (IOException ignored) {}
 
         assertEquals(50, ms.toArray().length, "#08");
     }
@@ -627,7 +627,7 @@ public class MemoryStreamTest {
         try {
             ms.read(null, 0, 1);
             fail("#03");
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException ignored) {}
 
         try {
             ms.write(null, 0, 1);
@@ -652,7 +652,6 @@ public class MemoryStreamTest {
             MemoryStream ms = new MemoryStream(100);
             ms.close();
             long x = ms.getPosition();
-            ;
         });
     }
 
@@ -733,7 +732,7 @@ public class MemoryStreamTest {
         try {
             ms.seek(0, SeekOrigin.Begin);
             fail();
-        } catch (IOException e) {}
+        } catch (IOException ignored) {}
     }
 
     @Test
@@ -1007,7 +1006,7 @@ public class MemoryStreamTest {
     @Tag("NotWorking")
     public void serializeTest() throws Exception {
         MemoryStream input = new MemoryStream();
-        byte[] bufferIn = "some test".getBytes(Charset.forName("UTF8"));
+        byte[] bufferIn = "some test".getBytes(StandardCharsets.UTF_8);
         input.write(bufferIn, 0, bufferIn.length);
         input.setPosition(0);
 
@@ -1075,7 +1074,7 @@ public class MemoryStreamTest {
         0x00, 0x00, 0x00, 0x00, 0x00,
     };
 
-    class MyMemoryStream extends MemoryStream {
+    static class MyMemoryStream extends MemoryStream {
 
         public boolean disposedCalled = false;
 
@@ -1085,7 +1084,7 @@ public class MemoryStreamTest {
     }
 
     @Test // https://bugzilla.novell.com/show_bug.cgi?id=322672
-    public void baseDisposeCalled() throws Exception {
+    public void baseDisposeCalled() {
         MyMemoryStream ms = new MyMemoryStream();
         assertFalse(ms.disposedCalled, "Before");
         ms.close();
@@ -1232,23 +1231,23 @@ public class MemoryStreamTest {
     public void writableOverride() throws Exception {
         byte[] buffer = new byte[3];
         final MemoryStream stream = new MemoryStream(buffer, false);
-        assertThrows(IOException.class, () -> { stream.write(buffer, 0, buffer.length); }, "#1");
-        assertThrows(NullPointerException.class, () -> { stream.write(null, 0, buffer.length); }, "#1.1");
+        assertThrows(IOException.class, () -> stream.write(buffer, 0, buffer.length), "#1");
+        assertThrows(NullPointerException.class, () -> stream.write(null, 0, buffer.length), "#1.1");
         stream.close();
-        assertThrows(IOException.class, () -> { stream.write(buffer, 0, buffer.length); }, "#2");
+        assertThrows(IOException.class, () -> stream.write(buffer, 0, buffer.length), "#2");
         MemoryStream stream2 = new MemoryStream(buffer, true);
         stream2.close();
         assertFalse(stream2.canWrite(), "#3");
 
         ExceptionalStream estream = new ExceptionalStream(buffer, false);
-        assertDoesNotThrow(() -> { estream.write(buffer, 0, buffer.length); }, "#4");
+        assertDoesNotThrow(() -> estream.write(buffer, 0, buffer.length), "#4");
         estream.allowWrite = false;
         estream.setPosition(0);
-        assertThrows(IOException.class, () -> { estream.write(buffer, 0, buffer.length); }, "#5");
+        assertThrows(IOException.class, () -> estream.write(buffer, 0, buffer.length), "#5");
         estream.allowWrite = true;
         estream.close();
         assertTrue(estream.canWrite(), "#6");
-        assertThrows(IOException.class, () -> { stream.write(buffer, 0, buffer.length); }, "#7");
+        assertThrows(IOException.class, () -> stream.write(buffer, 0, buffer.length), "#7");
     }
 
 //    @Test

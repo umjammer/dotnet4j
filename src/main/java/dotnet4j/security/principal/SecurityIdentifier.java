@@ -35,7 +35,7 @@ public class SecurityIdentifier implements Principal {
         int a = r.nextInt();
         int b = r.nextInt();
         int c = r.nextInt();
-        domainSid = String.format("%d-%d-%d", a & 0xffffffffl, b & 0xffffffffl, c & 0xffffffffl);
+        domainSid = String.format("%d-%d-%d", a & 0xffffffffL, b & 0xffffffffL, c & 0xffffffffL);
     }
 
     /** */
@@ -89,10 +89,10 @@ public class SecurityIdentifier implements Principal {
         StringBuilder s = new StringBuilder();
 
         long authority = getSidAuthority();
-        s.append("S-1-" + authority);
+        s.append("S-1-").append(authority);
 
         for (byte i = 0; i < getSidSubAuthorityCount(); ++i)
-            s.append("-" + getSidSubAuthority(i));
+            s.append("-").append(getSidSubAuthority(i));
 
         return s.toString();
     }
@@ -173,7 +173,7 @@ public class SecurityIdentifier implements Principal {
         try {
             authority = tryParseAuthority(elements[2]);
         } catch (NumberFormatException e) {
-            throw (IllegalArgumentException) new IllegalArgumentException("Value was invalid.").initCause(e);
+            throw new IllegalArgumentException("Value was invalid.", e);
         }
         buffer[2] = (byte) ((authority >> 40) & 0xFF);
         buffer[3] = (byte) ((authority >> 32) & 0xFF);
@@ -187,7 +187,7 @@ public class SecurityIdentifier implements Principal {
             try {
                 subAuthority = tryParseSubAuthority(elements[i + 3]);
             } catch (NumberFormatException e) {
-                throw (IllegalArgumentException) new IllegalArgumentException("Value was invalid.").initCause(e);
+                throw new IllegalArgumentException("Value was invalid.", e);
             }
 
             // Note sub authorities little-endian!

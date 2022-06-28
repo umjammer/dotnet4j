@@ -19,5 +19,5 @@ public enum AceType {
     SystemAlarmCallback,
     SystemAuditCallbackObject,
     SystemAlarmCallbackObject,
-    MaxDefinedAceType;
+    MaxDefinedAceType
 }

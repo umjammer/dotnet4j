@@ -97,10 +97,10 @@ public class StringUtilities {
         String substr = str.substring(startIndex, startIndex + count);
         Optional<Integer> r = CharBuffer.wrap(anyOf)
                 .chars()
-                .mapToObj(c -> substr.indexOf(c))
+                .mapToObj(substr::indexOf)
                 .filter(i -> i >= 0)
                 .min(Comparator.naturalOrder());
-        return r.isPresent() ? r.get() + startIndex : -1;
+        return r.map(integer -> integer + startIndex).orElse(-1);
     }
 
     /** */
@@ -121,7 +121,7 @@ public class StringUtilities {
         if (str.length() == 0) {
             return -1;
         }
-        if ((startIndex & 0xffffffffl) >= str.length()) {
+        if (startIndex < 0 || startIndex >= str.length()) {
             throw new IndexOutOfBoundsException("startIndex");
         }
         if (count < 0 || (count - 1) > startIndex) {
@@ -131,10 +131,15 @@ public class StringUtilities {
         String substr = str.substring(startIndex - count + 1, startIndex + 1);
         Optional<Integer> r = CharBuffer.wrap(anyOf)
                 .chars()
-                .mapToObj(c -> substr.lastIndexOf(c))
+                .mapToObj(substr::lastIndexOf)
                 .filter(i -> i >= 0)
                 .max(Comparator.naturalOrder());
-        return r.isPresent() ? r.get() + (startIndex - count + 1) : -1;
+        return r.map(integer -> integer + (startIndex - count + 1)).orElse(-1);
+    }
+
+    /** */
+    public static boolean isNullOrEmpty(String str) {
+        return str == null || str.isEmpty();
     }
 }
 

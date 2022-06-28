@@ -99,9 +99,7 @@ public class MemoryStream extends Stream implements Serializable {
 
     @Override
     public boolean canRead() {
-        if (closed)
-            return false;
-        return true;
+        return !closed;
     }
 
     @Override
@@ -318,7 +316,7 @@ public class MemoryStream extends Stream implements Serializable {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         buffer = null;
         writable = false;
         expandable = false;
@@ -379,7 +377,7 @@ public class MemoryStream extends Stream implements Serializable {
     }
 
     /**
-     * @return
+     * @return memory
      */
     public byte[] getBuffer() {
         if (!publiclyVisible) {

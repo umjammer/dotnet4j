@@ -9,6 +9,7 @@ package dotnet4j.io;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -22,7 +23,7 @@ public class StreamWriter extends Writer {
     private Stream stream;
 
     // TODO
-    private Charset encoding = Charset.forName("utf-8");
+    private Charset encoding = StandardCharsets.UTF_8;
 
     public StreamWriter(Stream stream) {
         this.stream = stream;
@@ -35,7 +36,7 @@ public class StreamWriter extends Writer {
     }
 
     @Override
-    public void write(char[] cbuf, int off, int len) throws IOException {
+    public void write(char[] cbuf, int off, int len) {
         for (char c : cbuf) {
             stream.writeByte((byte) c);
             stream.writeByte((byte) c); // TODO
@@ -43,7 +44,7 @@ public class StreamWriter extends Writer {
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush() {
         stream.flush();
     }
 
