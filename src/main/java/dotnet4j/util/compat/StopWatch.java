@@ -7,6 +7,8 @@ package dotnet4j.util.compat;
 
 public class StopWatch {
 
+    public static final long Frequency = 2000_000_000;
+
     private long startTicks;
 
     public StopWatch() {
@@ -31,5 +33,11 @@ public class StopWatch {
 
     private static long ticksNow() {
         return System.currentTimeMillis();
+    }
+
+    public static StopWatch startNew() {
+        StopWatch sw = new StopWatch();
+        sw.start();
+        return sw;
     }
 }
