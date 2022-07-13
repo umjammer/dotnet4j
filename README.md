@@ -1,4 +1,6 @@
-[![Release](https://jitpack.io/v/umjammer/dotnet4j.svg)](https://jitpack.io/#umjammer/dotnet4j) [![Actions Status](https://github.com/umjammer/dotnet4j/workflows/Java%20CI/badge.svg)](https://github.com/umjammer/dotnet4j/actions) [![Parent](https://img.shields.io/badge/Parent-vavi--nio--file--discutils-pink)](https://github.com/umjammer/vavi-nio-file-discutils)
+[![Release](https://jitpack.io/v/umjammer/dotnet4j.svg)](https://jitpack.io/#umjammer/dotnet4j)
+[![Actions Status](https://github.com/umjammer/dotnet4j/workflows/Java%20CI/badge.svg)](https://github.com/umjammer/dotnet4j/actions)
+[![Parent](https://img.shields.io/badge/Parent-vavi--nio--file--discutils-pink)](https://github.com/umjammer/vavi-nio-file-discutils)
 
 # dotnet4j
 
@@ -22,9 +24,15 @@ Note: this is a fork of [feyris-tan/dotnetIo4j](https://github.com/feyris-tan/do
  * [mono](https://github.com/mono/mono)
  * [microsoft](https://github.com/microsoft/referencesource)
  * [microsoft](https://referencesource.microsoft.com/)
+ * https://github.com/tunnelvisionlabs/java-threading
+ * https://www.crystalnet-tech.com/Products/dotNet4Java/Default (not oss)
 
 ## Migration Convention (TBD)
 
  * -> IllegalArgumentException
  * -> IndexOutOfBoundsException
  * -> NullPointerException
+
+## TODO
+
+ * threading test
