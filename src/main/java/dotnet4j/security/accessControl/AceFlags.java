@@ -42,7 +42,7 @@ public enum AceFlags {
     // TODO
     public Function<Integer, Boolean> function() {
         return v -> (v & supplier().get()) != 0;
-    };
+    }
 
     public static EnumSet<AceFlags> valueOf(int value) {
         return Arrays.stream(values())

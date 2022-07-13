@@ -31,7 +31,6 @@ import dotnet4j.io.compat.StreamOutputStream;
  */
 public class GZipStream extends JavaIOStream {
 
-    @SuppressWarnings("resource")
     static InputStream toInputStream(Stream stream, CompressionMode compressionMode) {
         try {
             InputStream is = new StreamInputStream(stream);
@@ -50,7 +49,7 @@ public class GZipStream extends JavaIOStream {
                                                                          out.write(buf, 0, r);
                                                                      }
 
-                                                                     public void finish() throws IOException {
+                                                                     public void finish() {
                                                                      }
                                                                  });
         } catch (IOException e) {
@@ -58,7 +57,6 @@ public class GZipStream extends JavaIOStream {
         }
     }
 
-    @SuppressWarnings("resource")
     static OutputStream toOutputStream(Stream stream, CompressionMode compressionMode) {
         try {
             OutputStream os = new StreamOutputStream(stream);
@@ -66,7 +64,7 @@ public class GZipStream extends JavaIOStream {
                                                                : new InputEngineOutputStream(new InputEngine() {
                                                                    InputStream in;
 
-                                                                   public void initialize(InputStream in) throws IOException {
+                                                                   public void initialize(InputStream in) {
                                                                    }
 
                                                                    byte[] buf = new byte[8192];
@@ -79,7 +77,7 @@ public class GZipStream extends JavaIOStream {
                                                                        os.write(buf, 0, r);
                                                                    }
 
-                                                                   public void finish() throws IOException {
+                                                                   public void finish() {
                                                                    }
                                                                });
         } catch (IOException e) {

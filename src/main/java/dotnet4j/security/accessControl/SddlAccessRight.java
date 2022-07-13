@@ -4,7 +4,7 @@ package dotnet4j.security.accessControl;
 import java.util.ArrayList;
 import java.util.List;
 
-import dotnet4j.io.compat.Utilities;
+import dotnet4j.util.compat.Utilities;
 
 
 /**

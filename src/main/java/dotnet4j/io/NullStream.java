@@ -49,7 +49,7 @@ class NullStream extends Stream
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
 
     }
 

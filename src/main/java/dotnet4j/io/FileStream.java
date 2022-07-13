@@ -103,29 +103,20 @@ public class FileStream extends Stream
     public boolean canRead()
     {
         if (channel == null) return false;
-        if (myAccess == FileAccess.Read || myAccess == FileAccess.ReadWrite)
-        {
-            return true;
-        }
-        return false;
+        return myAccess == FileAccess.Read || myAccess == FileAccess.ReadWrite;
     }
 
     @Override
     public boolean canSeek()
     {
-        if (channel == null) return false;
-        return true;
+        return channel != null;
     }
 
     @Override
     public boolean canWrite()
     {
         if (channel == null) return false;
-        if (myAccess == FileAccess.Write || myAccess == FileAccess.ReadWrite)
-        {
-            return true;
-        }
-        return false;
+        return myAccess == FileAccess.Write || myAccess == FileAccess.ReadWrite;
     }
 
     @Override

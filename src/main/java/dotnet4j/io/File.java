@@ -1,5 +1,7 @@
 package dotnet4j.io;
 
+import java.nio.charset.Charset;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -76,5 +78,15 @@ public final class File
     public static FileStream open(String path, FileMode fm, FileAccess fa)
     {
         return new FileStream(path,fm,fa);
+    }
+
+    public static String readAllText(String fname, Charset encoding) {
+        StreamReader target = new StreamReader(new FileStream(fname, FileMode.Open), encoding);
+        return target.readToEnd();
+    }
+
+    public static void writeAllText(String path, String contents) {
+        StreamWriter target = new StreamWriter(new FileStream(path, FileMode.CreateNew));
+        target.writeLine(contents);
     }
 }

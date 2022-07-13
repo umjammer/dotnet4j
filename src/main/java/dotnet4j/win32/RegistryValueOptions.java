@@ -9,5 +9,5 @@ public enum RegistryValueOptions {
      *
      * @see "F:Microsoft.Win32.RegistryValueKind.ExpandString"
      */
-    DoNotExpandEnvironmentNames;
+    DoNotExpandEnvironmentNames
 }

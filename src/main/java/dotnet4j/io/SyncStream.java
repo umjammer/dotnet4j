@@ -3,11 +3,12 @@ package dotnet4j.io;
 import java.io.*;
 import java.io.IOException;
 
+
 /**
  * Created by schiemas on 14.07.16.
  */
-class SyncStream extends Stream implements Closeable
-{
+class SyncStream extends Stream implements Closeable {
+
     private Stream _stream;
 
     public SyncStream(Stream stream) {
@@ -37,24 +38,21 @@ class SyncStream extends Stream implements Closeable
 
     @Override
     public long getLength() {
-        synchronized (_stream)
-        {
+        synchronized (_stream) {
             return _stream.getLength();
         }
     }
 
     @Override
     public long getPosition() {
-        synchronized (_stream)
-        {
+        synchronized (_stream) {
             return _stream.getPosition();
         }
     }
 
     @Override
     public void setPosition(long value) {
-        synchronized (_stream)
-        {
+        synchronized (_stream) {
             _stream.setPosition(value);
         }
     }
@@ -81,8 +79,7 @@ class SyncStream extends Stream implements Closeable
 
     @Override
     public void close() throws IOException {
-        synchronized (_stream)
-        {
+        synchronized (_stream) {
             _stream.close();
         }
     }
@@ -103,40 +100,35 @@ class SyncStream extends Stream implements Closeable
 
     @Override
     public int readByte() {
-        synchronized (_stream)
-        {
+        synchronized (_stream) {
             return _stream.readByte();
         }
     }
 
     @Override
     public long seek(long offset, SeekOrigin origin) {
-        synchronized (_stream)
-        {
-            return _stream.seek(offset,origin);
+        synchronized (_stream) {
+            return _stream.seek(offset, origin);
         }
     }
 
     @Override
     public void setLength(long value) {
-        synchronized (_stream)
-        {
+        synchronized (_stream) {
             _stream.setLength(value);
         }
     }
 
     @Override
     public void write(byte[] buffer, int offset, int count) {
-        synchronized (_stream)
-        {
+        synchronized (_stream) {
             _stream.write(buffer, offset, count);
         }
     }
 
     @Override
     public void writeByte(byte value) {
-        synchronized (_stream)
-        {
+        synchronized (_stream) {
             _stream.writeByte(value);
         }
     }

@@ -38,7 +38,7 @@ import java.io.IOException;
  * yet consumed by the user) is never larger than the actual specified buffer
  * size.
  *
- * @auther gpaperin
+ * @author gpaperin
  */
 public class BufferedStream extends Stream {
 

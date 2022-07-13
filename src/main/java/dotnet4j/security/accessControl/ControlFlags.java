@@ -46,7 +46,7 @@ public enum ControlFlags {
     // TODO
     public Function<Integer, Boolean> function() {
         return v -> (v & supplier().get()) != 0;
-    };
+    }
 
 
     public static EnumSet<ControlFlags> valueOf(int value) {

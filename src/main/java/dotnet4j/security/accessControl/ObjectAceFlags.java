@@ -18,6 +18,6 @@ public enum ObjectAceFlags {
     }
 
     public static long valueOf(EnumSet<ObjectAceFlags> flags) {
-        return flags.stream().collect(Collectors.summarizingInt(e -> e.ordinal())).getSum();
+        return flags.stream().collect(Collectors.summarizingInt(Enum::ordinal)).getSum();
     }
 }

@@ -6,7 +6,7 @@
 
 package dotnet4j.security.accessControl;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.Permission;
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -37,7 +37,7 @@ public class RegistrySecurity extends Permission {
     public boolean equals(Object obj) {
         if (obj == null)
             return false;
-        return Arrays.equals(binaryForm, RegistrySecurity.class.cast(obj).binaryForm);
+        return Arrays.equals(binaryForm, ((RegistrySecurity) obj).binaryForm);
     }
 
     @Override
@@ -66,12 +66,12 @@ public class RegistrySecurity extends Permission {
 
     /** TODO impl */
     public String getSecurityDescriptorSddlForm(EnumSet<AccessControlSections> sections) {
-        return new String(binaryForm, Charset.forName("ASCII"));
+        return new String(binaryForm, StandardCharsets.US_ASCII);
     }
 
     /** TODO impl */
     public void setSecurityDescriptorSddlForm(String form, EnumSet<AccessControlSections> sections) {
 //System.err.println(form);
-        binaryForm = form.getBytes(Charset.forName("ASCII"));
+        binaryForm = form.getBytes(StandardCharsets.US_ASCII);
     }
 }

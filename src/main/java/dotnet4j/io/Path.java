@@ -28,15 +28,16 @@ import java.util.Random;
 
 import vavi.util.StringUtil;
 
-import dotnet4j.io.compat.StringUtilities;
+import dotnet4j.util.compat.StringUtilities;
 
 
 /**
- * System.IO.Path.cs
- *
- * Copyright (C) 2001 Moonlight Enterprises, All Rights Reserved Copyright (C)
- * 2002 Ximian, Inc. (http://www.ximian.com) Copyright (C) 2003 Ben Maurer
- * Copyright 2011 Xamarin Inc (http://www.xamarin.com).
+ * System.IO.Path
+ * <p>
+ * Copyright (C) 2001 Moonlight Enterprises, All Rights Reserved <br/>
+ * Copyright (C) 2002 (<a href="http://www.ximian.com">Ximian, Inc.</a>) <br/>
+ * Copyright (C) 2003 Ben Maurer <br/>
+ * Copyright 2011 (<a href="http://www.xamarin.com">Xamarin Inc.</a>) <br/>
  *
  * @author Jim Richardson, develop@wtfo-guru.com
  * @author Dan Lewis (dihlewis@yahoo.co.uk)
@@ -206,10 +207,10 @@ public class Path {
     public static String getDirectoryName(String path) {
         // LAMESPEC: For empty String MS docs say both
         // return null AND throw exception. Seems .NET throws.
-        if (path == "")
+        if (path.isEmpty())
             throw new IllegalArgumentException("Invalid path");
 
-        if (path == null || getPathRoot(path) == path)
+        if (path == null || getPathRoot(path).equals(path))
             return null;
 
         if (path.trim().length() == 0)
@@ -505,12 +506,12 @@ public class Path {
         // using strong crypto but without creating the file
         byte[] buffer = StringUtil.getRandomString().substring(0, 11).getBytes();
 
-        for (int i = 0; i < buffer.length; i++) {
+        for (byte value : buffer) {
             if (sb.length() == 8)
                 sb.append('.');
 
             // restrict to length of range [a..z0..9]
-            int b = (buffer[i] % 36);
+            int b = (value % 36);
             char c = (char) (b < 26 ? (b + 'a') : (b - 26 + '0'));
             sb.append(c);
         }
@@ -623,9 +624,9 @@ public class Path {
 
         for (int i = 0; i < dirs.length; i++) {
 
-            if ((i != 0 && dirs[i].length() == 0))
-                continue;
-            else if (dirs[i] == "..") {
+            if ((i != 0 && dirs[i].length() == 0)) {
+                // continue;
+            } else if (dirs[i].equals("..")) {
                 // don't overwrite path segments below the limit
                 if (target > limit)
                     target--;
@@ -634,11 +635,11 @@ public class Path {
         }
 
         // STEP 5: Combine everything.
-        if (target == 0 || (target == 1 && dirs[0] == ""))
+        if (target == 0 || (target == 1 && dirs[0].isEmpty()))
             return root;
         else {
             String ret = String.join(DirectorySeparatorStr, Arrays.copyOfRange(dirs, 0, target));
-            if (root != "" && ret.length() > 0 && ret.charAt(0) != '/')
+            if (!root.equals("") && ret.length() > 0 && ret.charAt(0) != '/')
                 ret = root + ret;
             return ret;
         }
