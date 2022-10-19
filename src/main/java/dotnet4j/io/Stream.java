@@ -33,19 +33,19 @@ public abstract class Stream implements Closeable, AutoCloseable {
     public abstract void setPosition(long value);
 
     public int getReadTimeout() {
-        throw new RuntimeException("timeout not supported");
+        throw new UnsupportedOperationException("timeout not supported");
     }
 
     public void setReadTimeout(int value) {
-        throw new RuntimeException("timeout not supported");
+        throw new UnsupportedOperationException("timeout not supported");
     }
 
     public int getWriteTimeout() {
-        throw new RuntimeException("timeout not supported");
+        throw new UnsupportedOperationException("timeout not supported");
     }
 
     public void setWriteTimeout(int value) {
-        throw new RuntimeException("timeout not supported");
+        throw new UnsupportedOperationException("timeout not supported");
     }
 
     public void copyTo(Stream destination) {
@@ -54,11 +54,11 @@ public abstract class Stream implements Closeable, AutoCloseable {
 
     public void copyTo(Stream destination, int bufferSize) {
         if (destination == null)
-            throw new RuntimeException("destination is null");
+            throw new NullPointerException("destination is null");
         if (!this.canRead())
-            throw new RuntimeException("source is not readable");
+            throw new IllegalArgumentException("source is not readable");
         if (!destination.canWrite())
-            throw new RuntimeException("destination is not writeable");
+            throw new IllegalArgumentException("destination is not writeable");
 
         byte[] buffer = new byte[bufferSize];
         int lastBlockSize = 0;
@@ -73,6 +73,14 @@ public abstract class Stream implements Closeable, AutoCloseable {
 
     public abstract void flush();
 
+    /**
+     * When overridden in a derived class, sets the position within the current stream.
+     *
+     * @param offset A byte offset relative to the origin parameter.
+     * @param origin A value of type {@link SeekOrigin} indicating the reference point
+     *               used to obtain the new position.
+     * @return The new position within the current stream.
+     */
     public abstract long seek(long offset, SeekOrigin origin);
 
     public abstract void setLength(long value);
@@ -86,7 +94,7 @@ public abstract class Stream implements Closeable, AutoCloseable {
     public abstract int read(byte[] buffer, int offset, int length);
 
     /**
-     * The byte (in c# unsigned) cast to a int (means 0 ~ 255), or -1 if the end
+     * The byte (in c# unsigned) cast to an int (means 0 ~ 255), or -1 if the end
      * of the stream has been reached.
      */
     public int readByte() {
@@ -97,12 +105,18 @@ public abstract class Stream implements Closeable, AutoCloseable {
         return one[0] & 0xff;
     }
 
+    /**
+     * When overridden in a derived class, writes a sequence of bytes to the current stream
+     * and advances the current position within this stream by the number of bytes written.
+     *
+     * @param buffer An array of bytes. This method copies count bytes from buffer to the current stream.
+     * @param offset The zero-based byte offset in buffer at which to begin copying bytes to the current stream.
+     * @param count The number of bytes to be written to the current stream.
+     */
     public abstract void write(byte[] buffer, int offset, int count);
 
     public void writeByte(byte value) {
-        write(new byte[] {
-            value
-        }, 0, 1);
+        write(new byte[] { value }, 0, 1);
     }
 
     @Contract("null -> fail")

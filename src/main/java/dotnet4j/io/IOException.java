@@ -6,7 +6,7 @@ package dotnet4j.io;
 public class IOException extends RuntimeException
 {
     public IOException() {
-        super("dotnetIo4j encountered an I/O error!");
+        super("dotnet4j encountered an I/O error!");
     }
 
     public IOException(String message) {

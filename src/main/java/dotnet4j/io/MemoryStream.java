@@ -4,7 +4,6 @@
 
 package dotnet4j.io;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 

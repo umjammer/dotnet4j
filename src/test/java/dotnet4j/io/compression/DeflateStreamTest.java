@@ -20,7 +20,7 @@ import dotnet4j.io.StreamReader;
 
 /**
  * Test Cases for the System.IO.Compression.DeflateStream class
- *
+ * <p>
  * *** WARNING ***
  * this library's DeflateStream decompression needs zip header (0x78, 0x9c)
  * so spec. is different from original C# DeflateStream

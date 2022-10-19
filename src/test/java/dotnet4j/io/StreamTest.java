@@ -37,7 +37,6 @@ class StreamTest {
             assertEquals(i, x);
         }
     }
-
 }
 
 /* */

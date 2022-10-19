@@ -9,11 +9,12 @@ import java.io.IOException;
  */
 class SyncStream extends Stream implements Closeable {
 
-    private Stream _stream;
+    private final Stream _stream;
 
     public SyncStream(Stream stream) {
         if (stream == null)
             throw new RuntimeException("stream is null");
+        _stream = stream;
     }
 
     @Override
