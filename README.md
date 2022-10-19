@@ -1,6 +1,7 @@
 [![Release](https://jitpack.io/v/umjammer/dotnet4j.svg)](https://jitpack.io/#umjammer/dotnet4j)
 [![Actions Status](https://github.com/umjammer/dotnet4j/workflows/Java%20CI/badge.svg)](https://github.com/umjammer/dotnet4j/actions)
 [![Parent](https://img.shields.io/badge/Parent-vavi--nio--file--discutils-pink)](https://github.com/umjammer/vavi-nio-file-discutils)
+![Java](https://img.shields.io/badge/Java-8-b07219)
 
 # dotnet4j
 
@@ -17,6 +18,7 @@ Note: this is a fork of [feyris-tan/dotnetIo4j](https://github.com/feyris-tan/do
 ## Projects that use this library
 
  * [vavi-nio-file-discutils](https://github.com/umjammer/vavi-nio-file-discutils)
+ * [vavi-apps-z80](https://github.com/umjammer/vavi-apps-z80)
 
 ## References
 
@@ -36,3 +38,4 @@ Note: this is a fork of [feyris-tan/dotnetIo4j](https://github.com/feyris-tan/do
 ## TODO
 
  * threading test
+ * file separator

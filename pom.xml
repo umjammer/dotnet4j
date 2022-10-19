@@ -6,7 +6,7 @@
 
   <groupId>moe.yo3explorer</groupId>
   <artifactId>dotnet4j</artifactId>
-  <version>1.2.1</version>
+  <version>1.2.2-SNAPSHOT</version>
 
   <packaging>jar</packaging>
 
