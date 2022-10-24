@@ -1,7 +1,5 @@
 package dotnet4j.io;
 
-import java.io.IOException;
-
 /**
  * Created by schiemas on 14.07.16.
  */

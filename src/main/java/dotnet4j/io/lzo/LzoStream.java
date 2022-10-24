@@ -22,8 +22,6 @@
 
 package dotnet4j.io.lzo;
 
-import java.util.Optional;
-
 import dotnet4j.io.BufferedStream;
 import dotnet4j.io.EndOfStreamException;
 import dotnet4j.io.IOException;

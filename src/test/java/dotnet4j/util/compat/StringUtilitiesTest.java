@@ -62,10 +62,10 @@ class StringUtilitiesTest {
 
         assertTrue(StringUtilities.compare(lesser, greater) < 0);
         assertTrue(StringUtilities.compare(greater, lesser) > 0);
-        assertTrue(StringUtilities.compare(lesser, lesser) == 0);
+        assertEquals(0, StringUtilities.compare(lesser, lesser));
         assertTrue(StringUtilities.compare(lesser, medium) < 0);
 
-        assertTrue(StringUtilities.compare(lesser, caps, true) == 0);
+        assertEquals(0, StringUtilities.compare(lesser, caps, true));
         assertTrue(StringUtilities.compare(lesser, caps, false) != 0);
         assertEquals(StringUtilities.compare("a", "b"), -1, "A01");
         assertEquals(StringUtilities.compare("b", "a"), 1, "A02");

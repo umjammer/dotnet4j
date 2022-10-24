@@ -1230,7 +1230,7 @@ public class MemoryStreamTest {
     @Test
     public void writableOverride() throws Exception {
         byte[] buffer = new byte[3];
-        final MemoryStream stream = new MemoryStream(buffer, false);
+        MemoryStream stream = new MemoryStream(buffer, false);
         assertThrows(IOException.class, () -> stream.write(buffer, 0, buffer.length), "#1");
         assertThrows(NullPointerException.class, () -> stream.write(null, 0, buffer.length), "#1.1");
         stream.close();

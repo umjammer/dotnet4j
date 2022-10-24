@@ -757,7 +757,7 @@ public class Path {
         return DirectorySeparatorStr;
     }
 
-    final int MAX_PATH = 260; // From WinDef.h
+    static final int MAX_PATH = 260; // From WinDef.h
 
     // this was copied from corefx since it's not available in referencesource
     static final char[] trimEndCharsWindows = {

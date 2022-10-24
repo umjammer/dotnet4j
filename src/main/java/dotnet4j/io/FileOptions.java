@@ -28,7 +28,7 @@ public enum FileOptions {
         return value;
     }
 
-    private FileOptions(int value) {
+    FileOptions(int value) {
         this.value = value;
     }
 }
