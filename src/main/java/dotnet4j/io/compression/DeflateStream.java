@@ -64,10 +64,12 @@ public class DeflateStream extends JavaIOStream {
         this.stream = stream;
     }
 
+    @Override
     public long getLength() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public long position() {
         throw new UnsupportedOperationException();
     }

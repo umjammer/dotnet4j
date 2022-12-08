@@ -29,8 +29,10 @@ public abstract class Stream implements Seekable, Closeable, AutoCloseable {
 
     public abstract long getLength();
 
+    @Override
     public abstract long position();
 
+    @Override
     public abstract void position(long value);
 
     public int getReadTimeout() {
@@ -62,7 +64,7 @@ public abstract class Stream implements Seekable, Closeable, AutoCloseable {
             throw new IllegalArgumentException("destination is not writeable");
 
         byte[] buffer = new byte[bufferSize];
-        int lastBlockSize = 0;
+        int lastBlockSize;
         do {
             lastBlockSize = read(buffer, 0, bufferSize);
             destination.write(buffer, 0, lastBlockSize);

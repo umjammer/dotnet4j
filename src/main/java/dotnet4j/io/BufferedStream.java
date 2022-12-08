@@ -146,18 +146,22 @@ public class BufferedStream extends Stream {
         return _bufferSize;
     }
 
+    @Override
     public boolean canRead() {
         return _stream != null && _stream.canRead();
     }
 
+    @Override
     public boolean canWrite() {
         return _stream != null && _stream.canWrite();
     }
 
+    @Override
     public boolean canSeek() {
         return _stream != null && _stream.canSeek();
     }
 
+    @Override
     public long getLength() {
         ensureNotClosed();
 
@@ -167,6 +171,7 @@ public class BufferedStream extends Stream {
         return _stream.getLength();
     }
 
+    @Override
     public long position() {
         ensureNotClosed();
         ensureCanSeek();
@@ -176,6 +181,7 @@ public class BufferedStream extends Stream {
         return _stream.position() + (_readPos - _readLen + _writePos);
     }
 
+    @Override
     public void position(long value) {
         if (value < 0)
             throw new IndexOutOfBoundsException("value is negative");
@@ -191,6 +197,7 @@ public class BufferedStream extends Stream {
         _stream.seek(value, SeekOrigin.Begin);
     }
 
+    @Override
     public void close() throws IOException {
         try {
             if (_stream != null) {
@@ -206,6 +213,7 @@ public class BufferedStream extends Stream {
         }
     }
 
+    @Override
     public void flush() {
         ensureNotClosed();
 
@@ -229,7 +237,7 @@ public class BufferedStream extends Stream {
             if (!_stream.canSeek())
                 return;
 
-            FlushRead();
+            flushRead();
 
             // User streams may have opted to throw from Flush if CanWrite is false
             // (although the abstract Stream does not do so).
@@ -257,7 +265,7 @@ public class BufferedStream extends Stream {
      * this stream's position. All write functions should call this function to
      * ensure that the buffered data is not lost.
      */
-    private void FlushRead() {
+    private void flushRead() {
         assert _writePos == 0 : "BufferedStream: Write buffer must be empty in FlushRead!";
 
         if (_readPos - _readLen != 0)
@@ -290,7 +298,7 @@ public class BufferedStream extends Stream {
         if (!_stream.canSeek())
             throw new UnsupportedOperationException();
 
-        FlushRead();
+        flushRead();
     }
 
     private void flushWrite() {
@@ -321,6 +329,7 @@ public class BufferedStream extends Stream {
         return readbytes;
     }
 
+    @Override
     public int read(byte[] array, int offset, int count) {
         if (array == null)
             throw new NullPointerException("array");
@@ -431,6 +440,7 @@ public class BufferedStream extends Stream {
         offset[0] += bytesToWrite;
     }
 
+    @Override
     public void write(byte[] array, int offset, int count) {
         if (array == null)
             throw new NullPointerException("array");
@@ -592,7 +602,8 @@ public class BufferedStream extends Stream {
         }
     }
 
-    public void writebyte(byte value) {
+    @Override
+    public void writeByte(byte value) {
         ensureNotClosed();
 
         if (_writePos == 0) {
@@ -612,6 +623,7 @@ public class BufferedStream extends Stream {
         assert _writePos < _bufferSize;
     }
 
+    @Override
     public long seek(long offset, SeekOrigin origin) {
         ensureNotClosed();
         ensureCanSeek();
@@ -668,6 +680,7 @@ public class BufferedStream extends Stream {
         return newPos;
     }
 
+    @Override
     public void setLength(long value) {
         if (value < 0)
             throw new IndexOutOfBoundsException("value is negative");

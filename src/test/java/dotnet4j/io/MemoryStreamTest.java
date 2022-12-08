@@ -76,14 +76,14 @@ public class MemoryStreamTest {
             allowWrite = true; // we are testing the inherited write property
         }
 
-        public int read(byte[] buffer, int offset, int count) {
+        @Override public int read(byte[] buffer, int offset, int count) {
             if (_throw)
                 throw new IOException(Message);
 
             return super.read(buffer, offset, count);
         }
 
-        public void write(byte[] buffer, int offset, int count) {
+        @Override public void write(byte[] buffer, int offset, int count) {
             if (_throw)
                 throw new IOException(Message);
 
@@ -100,7 +100,7 @@ public class MemoryStreamTest {
             allowRead = value;
         }
 
-        public boolean canRead() {
+        @Override public boolean canRead() {
             return allowRead;
         }
 
@@ -114,11 +114,11 @@ public class MemoryStreamTest {
             allowWrite = value;
         }
 
-        public boolean canWrite() {
+        @Override public boolean canWrite() {
             return allowWrite;
         }
 
-        public void flush() {
+        @Override public void flush() {
             if (_throw)
                 throw new IOException(Message);
 
@@ -168,6 +168,8 @@ public class MemoryStreamTest {
         assertEquals(0L, ms.getLength(), "#01");
         assertEquals(0, ms.getCapacity(), "#02");
         assertTrue(ms.canWrite(), "#03");
+
+        ms.close();
     }
 
     @Test
@@ -185,6 +187,8 @@ public class MemoryStreamTest {
         assertEquals(0, ms.position(), "#05");
         assertEquals(0, ms.getLength(), "#06");
         // End
+
+        ms.close();
     }
 
     @Test
@@ -192,6 +196,7 @@ public class MemoryStreamTest {
         MemoryStream ms = new MemoryStream(testStreamData);
         assertEquals(100, ms.getLength(), "#01");
         assertEquals(0, ms.position(), "#02");
+        ms.close();
     }
 
     @Test
@@ -214,6 +219,7 @@ public class MemoryStreamTest {
             return;
         }
         fail("#04");
+        ms.close();
     }
 
     @Test
@@ -248,12 +254,14 @@ public class MemoryStreamTest {
         } catch (IOException ignored) {}
 
         assertEquals(50, ms.toArray().length, "#08");
+        ms.close();
     }
 
     @Test
     public void constructorsSix() {
         assertThrows(IndexOutOfBoundsException.class, () -> {
             MemoryStream ms = new MemoryStream(-2);
+            ms.close();
         });
     }
 
@@ -540,6 +548,8 @@ public class MemoryStreamTest {
         ms.seek(0, SeekOrigin.Begin);
         testStream.read(readBytes, 0, 100);
         verifyTestData("W1", readBytes, 0, 100);
+
+        ms.close();
     }
 
     @Test
@@ -555,6 +565,8 @@ public class MemoryStreamTest {
         byte[] arrayBytes = testStream.toArray();
         assertEquals(100, arrayBytes.length, "#01");
         verifyTestData("WB2", arrayBytes, 0, 100);
+
+        ms.close();
     }
 
     @Test
@@ -567,6 +579,7 @@ public class MemoryStreamTest {
         assertEquals(6, ms.position(), "#02");
         ms.position(0);
         assertEquals(0, ms.position(), "#03");
+        ms.close();
     }
 
     @Test
@@ -577,6 +590,7 @@ public class MemoryStreamTest {
             assertEquals(101, ms.position(), "#01");
             assertEquals(100, ms.getLength(), "#02");
             ms.writeByte((byte) 1); // This should throw the exception
+            ms.close();
         });
     }
 
@@ -585,6 +599,7 @@ public class MemoryStreamTest {
         MemoryStream ms = new MemoryStream();
         byte[] buffer = ms.getBuffer();
         assertEquals(0, buffer.length, "#01");
+        ms.close();
     }
 
     @Test
@@ -598,6 +613,8 @@ public class MemoryStreamTest {
         assertEquals(200, ms.getLength(), "#02");
         buffer = ms.getBuffer();
         assertEquals(256, buffer.length, "#03"); // Minimun size after writing
+
+        ms.close();
     }
 
     @Test
@@ -705,6 +722,8 @@ public class MemoryStreamTest {
         if (!thrown)
             fail("#03");
 
+        ms.close();
+
         ms = new MemoryStream(256);
 
         ms.write(testStreamData, 0, 100);
@@ -723,6 +742,8 @@ public class MemoryStreamTest {
         ms.writeByte((byte) 0);
         assertEquals(769, ms.getLength(), "#07");
         assertEquals(769, ms.position(), "#08");
+
+        ms.close();
     }
 
     @Test
@@ -746,6 +767,7 @@ public class MemoryStreamTest {
         ms.setLength(80);
         assertEquals(80, ms.getLength(), "#03");
         assertEquals(80, ms.position(), "#04");
+        ms.close();
     }
 
     @Test
@@ -753,6 +775,7 @@ public class MemoryStreamTest {
         assertThrows(IOException.class, () -> {
             MemoryStream ms = new MemoryStream(testStreamData, false);
             ms.setLength(10);
+            ms.close();
         });
     }
 
@@ -781,6 +804,8 @@ public class MemoryStreamTest {
         // and then we assign capacity to the same. The idea is that we should
         // avoid creating a new internal buffer it's not needed.
 
+        ms.close();
+
         ms = new MemoryStream();
         ms.setCapacity(8);
         byte[] buff = new byte[] {
@@ -803,6 +828,8 @@ public class MemoryStreamTest {
         // Finally, growing it discards the prev buff
         ms.setCapacity(ms.getCapacity() + 1);
         assertFalse(Arrays.equals(buff_copy, ms.getBuffer()), "#H1");
+
+        ms.close();
     }
 
     boolean areBuffersEqual(byte[] buff1, byte[] buff2) {
@@ -849,6 +876,7 @@ public class MemoryStreamTest {
         ms.read(read, 0, 3);
         assertArrayEquals(cropped, read, "#C2");
         assertArrayEquals(cropped, values, "#C3");
+        ms.close();
     }
 
     @Test
@@ -856,6 +884,7 @@ public class MemoryStreamTest {
         assertThrows(IOException.class, () -> {
             MemoryStream ms = new MemoryStream(testStreamData, false);
             ms.write(testStreamData, 0, 100);
+            ms.close();
         });
     }
 
@@ -865,6 +894,7 @@ public class MemoryStreamTest {
             MemoryStream ms = new MemoryStream(testStreamData);
             ms.write(testStreamData, 0, 100);
             ms.write(testStreamData, 0, 100); // This one throws the exception
+            ms.close();
         });
     }
 
@@ -883,6 +913,8 @@ public class MemoryStreamTest {
         assertEquals(301, ms.position(), "#04");
         assertEquals(301, ms.getLength(), "#05");
         assertEquals(512, ms.getCapacity(), "#06");
+
+        ms.close();
     }
 
     @Test
@@ -941,18 +973,22 @@ public class MemoryStreamTest {
         ms.seek(4, SeekOrigin.End);
         ms.writeByte((byte) 0xFF);
         assertEquals("[1, 1, 1, 1, 0, 0, 0, 0, -1]", Arrays.toString(ms.toArray()), "Result");
+        ms.close();
     }
 
     @Test
     public void publiclyVisible() {
         MemoryStream ms = new MemoryStream();
         assertNotNull(ms.getBuffer(), "ctor()");
+        ms.close();
 
         ms = new MemoryStream(1);
         assertNotNull(ms.getBuffer(), "ctor(1)");
+        ms.close();
 
         ms = new MemoryStream(new byte[1], 0, 1, true, true);
         assertNotNull(ms.getBuffer(), "ctor(byte[],int,int,bool,bool");
+        ms.close();
     }
 
     @Test
@@ -960,6 +996,7 @@ public class MemoryStreamTest {
         assertThrows(IOException.class, () -> {
             MemoryStream ms = new MemoryStream(new byte[0]);
             assertNotNull(ms.getBuffer());
+            ms.close();
         });
     }
 
@@ -968,6 +1005,7 @@ public class MemoryStreamTest {
         assertThrows(IOException.class, () -> {
             MemoryStream ms = new MemoryStream(new byte[0], true);
             assertNotNull(ms.getBuffer());
+            ms.close();
         });
     }
 
@@ -976,6 +1014,7 @@ public class MemoryStreamTest {
         assertThrows(IOException.class, () -> {
             MemoryStream ms = new MemoryStream(new byte[1], 0, 1);
             assertNotNull(ms.getBuffer());
+            ms.close();
         });
     }
 
@@ -984,6 +1023,7 @@ public class MemoryStreamTest {
         assertThrows(IOException.class, () -> {
             MemoryStream ms = new MemoryStream(new byte[1], 0, 1, true);
             assertNotNull(ms.getBuffer());
+            ms.close();
         });
     }
 
@@ -992,6 +1032,7 @@ public class MemoryStreamTest {
         assertThrows(IOException.class, () -> {
             MemoryStream ms = new MemoryStream(new byte[1], 0, 1, true, false);
             assertNotNull(ms.getBuffer());
+            ms.close();
         });
     }
 
@@ -1000,6 +1041,7 @@ public class MemoryStreamTest {
         MemoryStream ms = new MemoryStream(1);
         ms.setCapacity(0);
         ms.toArray();
+        ms.close();
     }
 
     @Test // bug #80205
@@ -1029,6 +1071,7 @@ public class MemoryStreamTest {
         ms.setCapacity(0);
         ms.writeByte((byte) 1);
         byte[] bytes = ms.toArray();
+        ms.close();
     }
 
     @Test // bug #80205

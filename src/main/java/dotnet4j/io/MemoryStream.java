@@ -22,17 +22,12 @@ public class MemoryStream extends Stream implements Serializable {
     private byte[] buffer;
 
     private int capacity;
-
     private int position;
-
     private int origin;
-
     private int length;
 
     private boolean seekable;
-
     private boolean writable;
-
     private boolean expandable;
 
     private boolean closed;
@@ -322,6 +317,7 @@ public class MemoryStream extends Stream implements Serializable {
         closed = true;
     }
 
+    @Override
     public int readByte() {
         if (closed)
             throw new dotnet4j.io.IOException("object disposed");
@@ -333,6 +329,7 @@ public class MemoryStream extends Stream implements Serializable {
         return this.buffer[position++] & 0xff;
     }
 
+    @Override
     public void writeByte(byte value) {
         if (closed)
             throw new dotnet4j.io.IOException("object disposed");

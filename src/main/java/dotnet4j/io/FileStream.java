@@ -169,7 +169,7 @@ public class FileStream extends Stream
     @Override
     public int read(byte[] buffer, int offset, int length) {
         ByteBuffer tmp = ByteBuffer.wrap(buffer,offset,length);
-        int m = 0;
+        int m;
         try {
             m = channel.read(tmp);
 //Debug.println(m + ", " + offset + ", " + length + " / " + channel.size() + ", " + channel.size() + ", " + channel.position());
