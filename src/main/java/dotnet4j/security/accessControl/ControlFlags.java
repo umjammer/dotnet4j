@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @version 0.00 2019/10/17 nsano initial version <br>
  */
 public enum ControlFlags {
-//    None(0x0000),
+    //    None(0x0000),
     OwnerDefaulted,
     GroupDefaulted,
     DiscretionaryAclPresent,

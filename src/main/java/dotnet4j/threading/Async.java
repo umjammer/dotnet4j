@@ -214,9 +214,9 @@ public enum Async {
                                                        Function<? super T, ? extends CompletableFuture<?>> body) {
         AtomicReference<T> value = new AtomicReference<>();
         return forAsync(() -> value.set(initializer.get()),
-                        () -> condition.test(value.get()),
-                        () -> value.set(increment.apply(value.get())),
-                        () -> body.apply(value.get()));
+                () -> condition.test(value.get()),
+                () -> value.set(increment.apply(value.get())),
+                () -> body.apply(value.get()));
     }
 
     public static <T> CompletableFuture<Void> forAsync(Supplier<? extends T> initializer,

@@ -34,6 +34,7 @@ import dotnet4j.io.compression.CompressionMode;
  * Wrapper Stream for lzo compression
  */
 public class LzoStream extends Stream {
+
     protected Stream _source;
 
     private long _length;
@@ -79,7 +80,7 @@ public class LzoStream extends Stream {
      * creates a new lzo stream for decompression
      *
      * @param stream the compressed stream @param mode currently only
-     *            decompression is supported
+     *               decompression is supported
      */
     public LzoStream(Stream stream, CompressionMode mode) {
         this(stream, mode, false);
@@ -88,10 +89,10 @@ public class LzoStream extends Stream {
     /**
      * creates a new lzo stream for decompression
      *
-     * @param stream the compressed stream
-     * @param mode currently only decompression is supported
+     * @param stream    the compressed stream
+     * @param mode      currently only decompression is supported
      * @param leaveOpen true to leave the stream open after disposing the
-     *            LzoStream object; otherwise, false
+     *                  LzoStream object; otherwise, false
      */
     public LzoStream(Stream stream, CompressionMode mode, boolean leaveOpen) {
         if (mode != CompressionMode.Decompress)
@@ -405,36 +406,36 @@ public class LzoStream extends Stream {
         return count;
     }
 
-    public boolean canRead() {
+    @Override public boolean canRead() {
         return true;
     }
 
-    public boolean canSeek() {
+    @Override public boolean canSeek() {
         return false;
     }
 
-    public boolean canWrite() {
+    @Override public boolean canWrite() {
         return false;
     }
 
-    public long getLength() {
+    @Override public long getLength() {
         return _length;
     }
 
-    public long position() {
+    @Override public long position() {
         return _outputPosition;
     }
 
-    public void position(long value) {
+    @Override public void position(long value) {
         if (_outputPosition == value)
             return;
         seek(value, SeekOrigin.Begin);
     }
 
-    public void flush() {
+    @Override public void flush() {
     }
 
-    public int read(byte[] buffer, int offset, int count) {
+    @Override public int read(byte[] buffer, int offset, int count) {
         if (_outputPosition >= _length)
             return 0;
         int result = 0;
@@ -449,19 +450,19 @@ public class LzoStream extends Stream {
         return result;
     }
 
-    public long seek(long offset, SeekOrigin origin) {
+    @Override public long seek(long offset, SeekOrigin origin) {
         throw new UnsupportedOperationException();
     }
 
-    public void setLength(long value) {
+    @Override public void setLength(long value) {
         _length = value;
     }
 
-    public void write(byte[] buffer, int offset, int count) {
+    @Override public void write(byte[] buffer, int offset, int count) {
         throw new IOException("cannot write to final stream");
     }
 
-    public void close() throws java.io.IOException {
+    @Override public void close() throws java.io.IOException {
         if (!_leaveOpen)
             _source.close();
     }

@@ -27,6 +27,7 @@ package dotnet4j.io.lzo;
  * fixed sized ring buffer
  */
 public class RingBuffer {
+
     private final byte[] _buffer;
 
     private int _position;
@@ -45,9 +46,9 @@ public class RingBuffer {
 
     /**
      * set the position relative to the current position
-     * 
+     *
      * <remarks>wraps the position of the end is reached</remarks>
-     * 
+     *
      * @param offset relative offset
      */
     public void seek(int offset) {
@@ -67,14 +68,14 @@ public class RingBuffer {
      * copies as sequence of bytes from the RingBuffer at the specified distance
      * into the buffer and also the RingBuffer itself
      *
-     * @param buffer An array of bytes. When this method returns, the buffer
-     *            contains the specified byte array with the values between
-     *            offset and (offset + count - 1) replaced by the bytes read
-     *            from the RingBuffer
-     * @param offset The zero-based byte offset in buffer at which to begin
-     *            storing the data read from the RingBuffer
+     * @param buffer   An array of bytes. When this method returns, the buffer
+     *                 contains the specified byte array with the values between
+     *                 offset and (offset + count - 1) replaced by the bytes read
+     *                 from the RingBuffer
+     * @param offset   The zero-based byte offset in buffer at which to begin
+     *                 storing the data read from the RingBuffer
      * @param distance The distance to seek backwards before starting to copy
-     * @param count The maximum number of bytes to be read from the RingBuffer
+     * @param count    The maximum number of bytes to be read from the RingBuffer
      */
     public void copy(byte[] buffer, int offset, int distance, int count) {
         if (_position - distance > 0 && _position + count < _size) {
@@ -102,12 +103,12 @@ public class RingBuffer {
      * within the RingBuffer by the number of bytes read
      *
      * @param buffer An array of bytes. When this method returns, the buffer
-     *            contains the specified byte array with the values between
-     *            offset and (offset + count - 1) replaced by the bytes read
-     *            from the RingBuffer
+     *               contains the specified byte array with the values between
+     *               offset and (offset + count - 1) replaced by the bytes read
+     *               from the RingBuffer
      * @param offset The zero-based byte offset in buffer at which to begin
-     *            storing the data read from the RingBuffer
-     * @param count The maximum number of bytes to be read from the RingBuffer
+     *               storing the data read from the RingBuffer
+     * @param count  The maximum number of bytes to be read from the RingBuffer
      */
     public void read(byte[] buffer, int offset, int count) {
         if (count < 10 && (_position + count) < _size) {
@@ -133,12 +134,12 @@ public class RingBuffer {
     /**
      * writes a sequence of bytes to the RingBuffer and advances the current
      * position within this RingBuffer by the number of bytes written
-     * 
+     *
      * @param buffer An array of bytes. This method copies count bytes from
-     *            buffer to the RingBuffer.
+     *               buffer to the RingBuffer.
      * @param offset The zero-based byte offset in buffer at which to begin
-     *            copying bytes to the RingBuffer.
-     * @param count The number of bytes to be written to the RingBuffer.
+     *               copying bytes to the RingBuffer.
+     * @param count  The number of bytes to be written to the RingBuffer.
      */
     public void write(byte[] buffer, int offset, int count) {
         if (count < 10 && (_position + count) < _size) {
@@ -164,7 +165,7 @@ public class RingBuffer {
     /**
      * creates a deep clone
      */
-    public RingBuffer clone() {
+    @Override public RingBuffer clone() {
         RingBuffer result = new RingBuffer(_size);
         result._position = _position;
         System.arraycopy(_buffer, 0, result._buffer, 0, _size);

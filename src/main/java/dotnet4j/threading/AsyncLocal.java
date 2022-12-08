@@ -16,6 +16,7 @@ import java.util.function.Consumer;
  * @param <T> The type of value to store.
  */
 public final class AsyncLocal<T> {
+
     private final Consumer<? super AsyncLocalValueChangedEventArgs<T>> valueChangedHandler;
 
     public AsyncLocal() {

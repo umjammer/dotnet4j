@@ -23,6 +23,7 @@ public class RegistrySecurity extends Permission {
     RawSecurityDescriptor descriptor;
 
     /**
+     *
      */
     public RegistrySecurity() {
         super("RegistrySecurity");

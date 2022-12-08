@@ -20,7 +20,7 @@ import dotnet4j.io.compat.StreamOutputStream;
 
 /**
  * DeflateStream.
- *
+ * <p>
  * *** WARNING ***
  * this class decompression needs zip header (0x78, 0x9c)
  * so spec. is different from original C# DeflateStream

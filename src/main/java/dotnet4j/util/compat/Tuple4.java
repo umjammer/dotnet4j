@@ -1,6 +1,6 @@
 package dotnet4j.util.compat;
 
-public class Tuple4<A, B, C, D> extends Tuple3< A, B, C> {
+public class Tuple4<A, B, C, D> extends Tuple3<A, B, C> {
 
     protected D Item4;
 
@@ -9,8 +9,12 @@ public class Tuple4<A, B, C, D> extends Tuple3< A, B, C> {
         Item4 = d;
     }
 
-    public D getItem4() { return Item4; }
+    public D getItem4() {
+        return Item4;
+    }
 
-    public void setItem4(D d) { Item4 = d; }
+    public void setItem4(D d) {
+        Item4 = d;
+    }
 }
 

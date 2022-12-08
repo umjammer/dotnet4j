@@ -1,4 +1,3 @@
-
 package dotnet4j.security.accessControl;
 
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import dotnet4j.util.compat.Utilities;
  * @author Kenneth Bell
  */
 class SddlAccessRight {
+
     public String _name;
 
     public int _value;
@@ -32,7 +32,7 @@ class SddlAccessRight {
         for (SddlAccessRight right : rights) {
             if (mask == right._value)
                 return new SddlAccessRight[] {
-                    right
+                        right
                 };
         }
 

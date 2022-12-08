@@ -42,9 +42,9 @@ public enum AwaitExtensions {
     /**
      * Gets an awaitable that schedules continuations on the specified executor.
      *
-     * @param executor The executor used to execute continuations.
+     * @param executor    The executor used to execute continuations.
      * @param alwaysYield A value indicating whether the caller should yield
-     *            even if already executing on the desired executor.
+     *                    even if already executing on the desired executor.
      * @return An awaitable.
      */
     public static ExecutorAwaitable switchTo(Executor executor, boolean alwaysYield) {
@@ -71,9 +71,9 @@ public enum AwaitExtensions {
         /**
          * Constructs a new instance of the {@link ExecutorAwaitable} class.
          *
-         * @param executor The executor used to execute continuations.
+         * @param executor    The executor used to execute continuations.
          * @param alwaysYield A value indicating whether the caller should yield
-         *            even if already executing on the desired executor.
+         *                    even if already executing on the desired executor.
          */
         public ExecutorAwaitable(Executor executor, boolean alwaysYield) {
             Objects.nonNull(executor);
@@ -113,9 +113,9 @@ public enum AwaitExtensions {
         /**
          * Constructs a new instance of the {@link ExecutorAwaiter} class.
          *
-         * @param executor The executor for continuations.
+         * @param executor    The executor for continuations.
          * @param alwaysYield A value indicating whether the caller should yield
-         *            even if already executing on the desired executor.
+         *                    even if already executing on the desired executor.
          */
         public ExecutorAwaiter(Executor executor, boolean alwaysYield) {
             this.executor = executor;
@@ -126,7 +126,7 @@ public enum AwaitExtensions {
          * Gets a value indicating whether no yield is necessary.
          *
          * @return {@code true} if the caller is already running on that
-         *         {@link Executor}.
+         * {@link Executor}.
          */
         @Override
         public boolean isDone() {

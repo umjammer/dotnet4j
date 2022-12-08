@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 
 
 class ExecutionContext {
+
     private static final AsyncLocal<?>[] EMPTY_NOTIFICATIONS = {};
 
     static final ExecutionContext DEFAULT = new ExecutionContext();
@@ -27,8 +28,8 @@ class ExecutionContext {
     }
 
     private ExecutionContext(AsyncLocalValueMap localValues,
-            AsyncLocal<?>[] localChangeNotifications,
-            boolean isFlowSuppressed) {
+                             AsyncLocal<?>[] localChangeNotifications,
+                             boolean isFlowSuppressed) {
         this.localValues = localValues;
         this.localChangeNotifications = localChangeNotifications;
         this.isFlowSuppressed = isFlowSuppressed;
@@ -51,7 +52,7 @@ class ExecutionContext {
         assert isFlowSuppressed != this.isFlowSuppressed;
 
         if (!isFlowSuppressed && localValues == DEFAULT.localValues &&
-            localChangeNotifications == DEFAULT.localChangeNotifications) {
+                localChangeNotifications == DEFAULT.localChangeNotifications) {
             // implies the default context
             return null;
         }
@@ -221,7 +222,7 @@ class ExecutionContext {
         }
 
         ThreadProperties.setExecutionContext(Thread.currentThread(),
-                                             new ExecutionContext(newValues, newChangeNotifications, current.isFlowSuppressed));
+                new ExecutionContext(newValues, newChangeNotifications, current.isFlowSuppressed));
 
         if (needChangeNotifications) {
             local.onValueChanged(previousValue, newValue, false);

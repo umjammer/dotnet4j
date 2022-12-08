@@ -1,4 +1,5 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 package dotnet4j.threading;
 
 import java.io.Closeable;
@@ -8,60 +9,62 @@ import java.util.function.Consumer;
 
 import org.jetbrains.annotations.NotNull;
 
+
 public final class CancellationTokenRegistration implements Closeable {
-	private static final CancellationTokenRegistration NONE = new CancellationTokenRegistration(null, null);
 
-	private final WeakReference<CancellationTokenSource> weakSource;
-	private final AtomicReference<Runnable> runnable;
+    private static final CancellationTokenRegistration NONE = new CancellationTokenRegistration(null, null);
 
-	private CancellationTokenRegistration(CancellationTokenSource source, Runnable runnable) {
-		this.weakSource = new WeakReference<>(source);
-		this.runnable = new AtomicReference<>(runnable);
-	}
+    private final WeakReference<CancellationTokenSource> weakSource;
+    private final AtomicReference<Runnable> runnable;
 
-	static <T> CancellationTokenRegistration create(CancellationTokenSource source, Consumer<T> callback, T state, boolean useSynchronizationContext) {
-		Runnable runnable = null;
-		if (useSynchronizationContext) {
-			SynchronizationContext synchronizationContext = SynchronizationContext.getCurrent();
-			if (synchronizationContext != null && synchronizationContext.getClass() != SynchronizationContext.class) {
-				runnable = ExecutionContext.wrap(() -> synchronizationContext.send(callback, state));
-			}
-		}
+    private CancellationTokenRegistration(CancellationTokenSource source, Runnable runnable) {
+        this.weakSource = new WeakReference<>(source);
+        this.runnable = new AtomicReference<>(runnable);
+    }
 
-		if (runnable == null) {
-			runnable = ExecutionContext.wrap(() -> callback.accept(state));
-		}
+    static <T> CancellationTokenRegistration create(CancellationTokenSource source, Consumer<T> callback, T state, boolean useSynchronizationContext) {
+        Runnable runnable = null;
+        if (useSynchronizationContext) {
+            SynchronizationContext synchronizationContext = SynchronizationContext.getCurrent();
+            if (synchronizationContext != null && synchronizationContext.getClass() != SynchronizationContext.class) {
+                runnable = ExecutionContext.wrap(() -> synchronizationContext.send(callback, state));
+            }
+        }
 
-		return new CancellationTokenRegistration(source, runnable);
-	}
+        if (runnable == null) {
+            runnable = ExecutionContext.wrap(() -> callback.accept(state));
+        }
 
-	@NotNull
-	static CancellationTokenRegistration none() {
-		return NONE;
-	}
+        return new CancellationTokenRegistration(source, runnable);
+    }
 
-	void tryExecute() {
-		Runnable currentRunnable = runnable.getAndSet(null);
-		if (currentRunnable == null) {
-			return;
-		}
+    @NotNull
+    static CancellationTokenRegistration none() {
+        return NONE;
+    }
 
-		weakSource.clear();
-		currentRunnable.run();
-	}
+    void tryExecute() {
+        Runnable currentRunnable = runnable.getAndSet(null);
+        if (currentRunnable == null) {
+            return;
+        }
 
-	@Override
-	public void close() {
-		Runnable currentRunnable = runnable.getAndSet(null);
-		if (currentRunnable == null) {
-			return;
-		}
+        weakSource.clear();
+        currentRunnable.run();
+    }
 
-		CancellationTokenSource source = weakSource.get();
-		if (source == null) {
-			return;
-		}
+    @Override
+    public void close() {
+        Runnable currentRunnable = runnable.getAndSet(null);
+        if (currentRunnable == null) {
+            return;
+        }
 
-		source.unregister(this);
-	}
+        CancellationTokenSource source = weakSource.get();
+        if (source == null) {
+            return;
+        }
+
+        source.unregister(this);
+    }
 }

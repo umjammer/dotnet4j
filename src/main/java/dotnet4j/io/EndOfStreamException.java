@@ -14,6 +14,7 @@ package dotnet4j.io;
  * @version 0.00 2019/11/19 umjammer initial version <br>
  */
 public class EndOfStreamException extends IOException {
+
     public EndOfStreamException() {
         super("end of file.");
     }

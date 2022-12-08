@@ -11,4 +11,5 @@ public enum CompressionMode {
     Decompress,
     Compress
 }
+
 /* */

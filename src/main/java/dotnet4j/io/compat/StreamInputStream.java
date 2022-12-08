@@ -29,14 +29,14 @@ public class StreamInputStream extends InputStream implements Seekable {
 
     @Override
     public int read() {
-         int r = stream.readByte();
-         return r;
+        int r = stream.readByte();
+        return r;
     }
 
     @Override
     public int read(byte[] b, int ofs, int len) {
-         int r = stream.read(b, ofs, len);
-         return r == 0 ? -1 : r;
+        int r = stream.read(b, ofs, len);
+        return r == 0 ? -1 : r;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package dotnet4j.io;
 
-import java.io.*;
+import java.io.Closeable;
 import java.io.IOException;
 
 

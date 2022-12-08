@@ -1,4 +1,3 @@
-
 package dotnet4j.security.principal;
 
 import dotnet4j.util.compat.Utilities;

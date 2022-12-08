@@ -39,14 +39,12 @@ public class NetworkStream extends JavaIOStream {
         }
     }
 
-    /**
-     */
+    /** */
     public NetworkStream(Socket socket, boolean b) {
         super(toInputStream(socket), toOutputStream(socket));
     }
 
-    /**
-     */
+    /** */
     public NetworkStream(Socket socket) {
         this(socket, false);
     }

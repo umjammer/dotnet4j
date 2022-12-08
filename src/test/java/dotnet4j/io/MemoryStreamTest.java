@@ -41,6 +41,7 @@ import dotnet4j.io.compat.StreamOutputStream;
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  */
 public class MemoryStreamTest {
+
 //    class SignaledMemoryStream extends MemoryStream {
 //        WaitHandle w;
 //

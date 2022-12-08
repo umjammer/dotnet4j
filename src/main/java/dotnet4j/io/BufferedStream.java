@@ -13,7 +13,7 @@ import java.io.IOException;
  * always read & write for sizes greater than the buffer size, then this class
  * may not even allocate the buffer. See a large comment in Write for the
  * details of the write buffer heuristic.
- *
+ * <p>
  * This class buffers reads & writes in a shared buffer. (If you maintained two
  * buffers separately, one operation would always trash the other buffer
  * anyways, so we might as well use one buffer.) The assumption here is you will
@@ -548,8 +548,8 @@ public class BufferedStream extends Stream {
         }
 
         if (useBuffer) {
-            int[] _offset = new int[] { offset };
-            int[] _count = new int[] { count };
+            int[] _offset = new int[] {offset};
+            int[] _count = new int[] {count};
             writeToBuffer(array, _offset, _count);
             offset = _offset[0];
             count = _count[0];
@@ -567,8 +567,8 @@ public class BufferedStream extends Stream {
             _stream.write(_buffer, 0, _writePos);
             _writePos = 0;
 
-            _offset = new int[] { offset };
-            _count = new int[] { count };
+            _offset = new int[] {offset};
+            _count = new int[] {count};
             writeToBuffer(array, _offset, _count);
             offset = _offset[0];
             count = _count[0];

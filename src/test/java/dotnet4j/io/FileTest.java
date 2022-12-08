@@ -21,6 +21,7 @@ import dotnet4j.io.IOException;
  * Created by ft on 28.03.17.
  */
 public class FileTest {
+
     private static final String filename = "test.bin";
     private static final String dirname = "testdir";
 

@@ -28,6 +28,7 @@ import dotnet4j.io.StreamReader;
  * @author Christopher James Lahey <clahey@ximian.com>
  */
 public class DeflateStreamTest {
+
     private static void copyStream(Stream src, Stream dest) {
         byte[] array = new byte[1024];
         int bytes_read;

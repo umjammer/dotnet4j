@@ -1,12 +1,11 @@
-
 package dotnet4j.io;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.ResourceBundle;
 
 import org.jetbrains.annotations.Contract;
 import vavi.io.Seekable;
-
-import java.io.*;
-import java.io.IOException;
-import java.util.ResourceBundle;
 
 
 /**
@@ -90,9 +89,9 @@ public abstract class Stream implements Seekable, Closeable, AutoCloseable {
 
     /**
      * @return The total number of bytes read into the buffer. This can be less
-     *         than the number of bytes requested if that many bytes are not
-     *         currently available, or zero (0) if the end of the stream has
-     *         been reached.
+     * than the number of bytes requested if that many bytes are not
+     * currently available, or zero (0) if the end of the stream has
+     * been reached.
      */
     public abstract int read(byte[] buffer, int offset, int length);
 
@@ -114,12 +113,12 @@ public abstract class Stream implements Seekable, Closeable, AutoCloseable {
      *
      * @param buffer An array of bytes. This method copies count bytes from buffer to the current stream.
      * @param offset The zero-based byte offset in buffer at which to begin copying bytes to the current stream.
-     * @param count The number of bytes to be written to the current stream.
+     * @param count  The number of bytes to be written to the current stream.
      */
     public abstract void write(byte[] buffer, int offset, int count);
 
     public void writeByte(byte value) {
-        write(new byte[] { value }, 0, 1);
+        write(new byte[] {value}, 0, 1);
     }
 
     @Contract("null -> fail")

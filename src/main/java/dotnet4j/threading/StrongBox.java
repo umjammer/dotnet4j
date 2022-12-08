@@ -8,6 +8,7 @@ package dotnet4j.threading;
  * @param <T> The type of the value that the {@link StrongBox} references.
  */
 final class StrongBox<T> {
+
     /**
      * Represents the value that the {@link StrongBox} references.
      */

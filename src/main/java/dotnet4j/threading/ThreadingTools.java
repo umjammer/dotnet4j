@@ -5,6 +5,7 @@ package dotnet4j.threading;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
+
 /**
  * Utility methods for working across threads.
  *
@@ -56,10 +57,10 @@ public enum ThreadingTools {
      * cancellation token, allowing someone to await a task but be able to break
      * out early by canceling the token.
      *
-     * @param <T> The type of value returned by the future.
-     * @param future The future to wrap.
+     * @param <T>               The type of value returned by the future.
+     * @param future            The future to wrap.
      * @param cancellationToken The token that can be canceled to break out of
-     *            the await.
+     *                          the await.
      * @return The wrapping future.
      */
 
@@ -123,10 +124,10 @@ public enum ThreadingTools {
      * cancellation token, allowing someone to await a task but be able to break
      * out early by cancelling the token.
      *
-     * @param <T> The type of value returned by the future.
-     * @param future The future to wrap.
+     * @param <T>               The type of value returned by the future.
+     * @param future            The future to wrap.
      * @param cancellationToken The token that can be cancelled to break out of
-     *            the await.
+     *                          the await.
      * @return The wrapping future.
      */
     private static <T> CompletableFuture<T> withCancellationSlow(CompletableFuture<T> future,

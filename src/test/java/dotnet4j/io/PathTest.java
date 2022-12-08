@@ -44,6 +44,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 @Disabled
 public class PathTest {
+
     enum OsType {
         Windows,
         Unix,

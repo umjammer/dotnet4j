@@ -9,9 +9,8 @@ package dotnet4j.security.accessControl;
 import java.security.Permission;
 import java.util.EnumSet;
 
-import vavi.util.ByteUtil;
-
 import dotnet4j.security.principal.SecurityIdentifier;
+import vavi.util.ByteUtil;
 
 
 /**
@@ -106,10 +105,10 @@ public class RawSecurityDescriptor extends Permission {
 
     /** */
     public RawSecurityDescriptor(EnumSet<ControlFlags> controlFlags,
-            SecurityIdentifier owner,
-            SecurityIdentifier group,
-            RawAcl sacl,
-            RawAcl dacl) {
+                                 SecurityIdentifier owner,
+                                 SecurityIdentifier group,
+                                 RawAcl sacl,
+                                 RawAcl dacl) {
         super("RawSecurityDescriptor");
         this.controlFlags = controlFlags;
         this.owner = owner;

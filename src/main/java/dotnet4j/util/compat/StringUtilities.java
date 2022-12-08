@@ -68,8 +68,8 @@ public class StringUtilities {
     /** */
     public static int compare(String strA, int indexA, String strB, int indexB, int length, boolean ignoreCase) {
         return compare(strA.substring(indexA, Math.min(indexA + length, strA.length())),
-                       strB.substring(indexB, Math.min(indexB + length, strB.length())),
-                       ignoreCase);
+                strB.substring(indexB, Math.min(indexB + length, strB.length())),
+                ignoreCase);
     }
 
     /** */
