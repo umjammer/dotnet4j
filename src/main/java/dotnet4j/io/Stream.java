@@ -2,6 +2,7 @@
 package dotnet4j.io;
 
 import org.jetbrains.annotations.Contract;
+import vavi.io.Seekable;
 
 import java.io.*;
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.util.ResourceBundle;
 /**
  * Created by schiemas on 14.07.16.
  */
-public abstract class Stream implements Closeable, AutoCloseable {
+public abstract class Stream implements Seekable, Closeable, AutoCloseable {
     public static final Stream Null = new NullStream();
 
     private static ResourceBundle resourceBundle;
@@ -28,9 +29,9 @@ public abstract class Stream implements Closeable, AutoCloseable {
 
     public abstract long getLength();
 
-    public abstract long getPosition();
+    public abstract long position();
 
-    public abstract void setPosition(long value);
+    public abstract void position(long value);
 
     public int getReadTimeout() {
         throw new UnsupportedOperationException("timeout not supported");

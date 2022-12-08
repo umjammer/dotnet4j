@@ -421,11 +421,11 @@ public class LzoStream extends Stream {
         return _length;
     }
 
-    public long getPosition() {
+    public long position() {
         return _outputPosition;
     }
 
-    public void setPosition(long value) {
+    public void position(long value) {
         if (_outputPosition == value)
             return;
         seek(value, SeekOrigin.Begin);

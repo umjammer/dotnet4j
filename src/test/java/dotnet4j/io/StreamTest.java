@@ -31,7 +31,7 @@ class StreamTest {
         for (int i = 0; i < 256; i++) {
             ms.writeByte((byte) i);
         }
-        ms.setPosition(0);
+        ms.position(0);
         for (int i = 0; i < 256; i++) {
             int x = ms.readByte();
             assertEquals(i, x);

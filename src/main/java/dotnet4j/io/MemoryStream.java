@@ -191,7 +191,7 @@ public class MemoryStream extends Stream implements Serializable {
     }
 
     @Override
-    public long getPosition() {
+    public long position() {
         if (closed)
             throw new dotnet4j.io.IOException("object disposed");
 
@@ -199,7 +199,7 @@ public class MemoryStream extends Stream implements Serializable {
     }
 
     @Override
-    public void setPosition(long value) {
+    public void position(long value) {
         if (value < 0 || value > Integer.MAX_VALUE)
             throw new IndexOutOfBoundsException("value is negative or overflown");
         if (closed)

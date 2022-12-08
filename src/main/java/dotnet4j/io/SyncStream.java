@@ -45,16 +45,16 @@ class SyncStream extends Stream implements Closeable {
     }
 
     @Override
-    public long getPosition() {
+    public long position() {
         synchronized (_stream) {
-            return _stream.getPosition();
+            return _stream.position();
         }
     }
 
     @Override
-    public void setPosition(long value) {
+    public void position(long value) {
         synchronized (_stream) {
-            _stream.setPosition(value);
+            _stream.position(value);
         }
     }
 

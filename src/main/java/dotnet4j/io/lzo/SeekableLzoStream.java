@@ -140,13 +140,13 @@ public class SeekableLzoStream extends LzoStream {
                 total -= read(buffer, 0, count);
             } while (total > 0);
         }
-        return getPosition();
+        return position();
     }
 
     private void takeSnapshot() {
-        if (_snapshots.size() > 0 && (_snapshots.peek().InputPosition + _snapshotInterval) > _source.getPosition())
+        if (_snapshots.size() > 0 && (_snapshots.peek().InputPosition + _snapshotInterval) > _source.position())
             return;
-        _snapshots.push(new Snapshot(getPosition(), _source.getPosition(), _ringBuffer, _instruction, _state));
+        _snapshots.push(new Snapshot(position(), _source.position(), _ringBuffer, _instruction, _state));
     }
 }
 

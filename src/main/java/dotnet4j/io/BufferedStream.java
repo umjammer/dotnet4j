@@ -167,16 +167,16 @@ public class BufferedStream extends Stream {
         return _stream.getLength();
     }
 
-    public long getPosition() {
+    public long position() {
         ensureNotClosed();
         ensureCanSeek();
 
         assert !(_writePos > 0
                 && _readPos != _readLen) : "Read and Write buffers cannot both have data in them at the same time.";
-        return _stream.getPosition() + (_readPos - _readLen + _writePos);
+        return _stream.position() + (_readPos - _readLen + _writePos);
     }
 
-    public void setPosition(long value) {
+    public void position(long value) {
         if (value < 0)
             throw new IndexOutOfBoundsException("value is negative");
 
@@ -636,8 +636,8 @@ public class BufferedStream extends Stream {
             offset -= (_readLen - _readPos);
         }
 
-        long oldPos = getPosition();
-        assert oldPos == _stream.getPosition() + (_readPos - _readLen);
+        long oldPos = position();
+        assert oldPos == _stream.position() + (_readPos - _readLen);
 
         long newPos = _stream.seek(offset, origin);
 
@@ -664,7 +664,7 @@ public class BufferedStream extends Stream {
             _readPos = _readLen = 0;
         }
 
-        assert newPos == getPosition() : "newPos (=" + newPos + ") == Position (=" + getPosition() + ")";
+        assert newPos == position() : "newPos (=" + newPos + ") == Position (=" + position() + ")";
         return newPos;
     }
 

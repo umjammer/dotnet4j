@@ -250,7 +250,7 @@ public class DeflateStreamTest {
         assertThrows(UnsupportedOperationException.class, () -> {
             MemoryStream backing = new MemoryStream(compressed_data);
             DeflateStream decompressing = new DeflateStream(backing, CompressionMode.Decompress);
-            long position = decompressing.getPosition();
+            long position = decompressing.position();
         });
     }
 
@@ -282,7 +282,7 @@ public class DeflateStreamTest {
             // Junk
             ms.writeByte((byte) 2);
 
-            ms.setPosition(0);
+            ms.position(0);
             // Reading: this should not hang
             try (DeflateStream stream = new DeflateStream(ms, CompressionMode.Decompress)) {
                 byte[] buffer = new byte[512];
@@ -303,7 +303,7 @@ public class DeflateStreamTest {
             // blocks the thread waiting for at least a byte to return.
             // This assert guarantees that Read is called only when there
             // is something to be read.
-            assertTrue(getPosition() < getLength(), "Trying to read empty stream.");
+            assertTrue(position() < getLength(), "Trying to read empty stream.");
 
             return super.read(buffer, offset, count);
         }

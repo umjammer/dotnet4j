@@ -72,12 +72,12 @@ public class JavaIOStream extends Stream {
     }
 
     @Override
-    public long getPosition() {
+    public long position() {
         return position;
     }
 
     @Override
-    public void setPosition(long value) {
+    public void position(long value) {
         throw new UnsupportedOperationException();
     }
 

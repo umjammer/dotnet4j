@@ -68,7 +68,7 @@ public class DeflateStream extends JavaIOStream {
         throw new UnsupportedOperationException();
     }
 
-    public long getPosition() {
+    public long position() {
         throw new UnsupportedOperationException();
     }
 

@@ -129,7 +129,7 @@ public class FileStream extends Stream
     }
 
     @Override
-    public long getPosition() {
+    public long position() {
         try {
             return channel.position();
         } catch (IOException e) {
@@ -138,7 +138,7 @@ public class FileStream extends Stream
     }
 
     @Override
-    public void setPosition(long value)
+    public void position(long value)
     {
         try {
             channel.position(value);
@@ -201,7 +201,7 @@ public class FileStream extends Stream
         {
             throw new dotnet4j.io.IOException(e);
         }
-        return getPosition();
+        return position();
     }
 
     @Override
