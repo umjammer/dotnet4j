@@ -1,4 +1,3 @@
-
 package dotnet4j.security.accessControl;
 
 public enum AceType {

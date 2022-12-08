@@ -64,7 +64,7 @@ public enum Async {
             executor = awaiter::onCompleted;
         }
 
-        final Supplier<? extends CompletableFuture<U>> flowContinuation = ExecutionContext
+        Supplier<? extends CompletableFuture<U>> flowContinuation = ExecutionContext
                 .wrap(() -> continuation.apply(awaiter.getResult()));
         return Futures.supplyAsync(flowContinuation, executor);
     }
@@ -214,9 +214,9 @@ public enum Async {
                                                        Function<? super T, ? extends CompletableFuture<?>> body) {
         AtomicReference<T> value = new AtomicReference<>();
         return forAsync(() -> value.set(initializer.get()),
-                        () -> condition.test(value.get()),
-                        () -> value.set(increment.apply(value.get())),
-                        () -> body.apply(value.get()));
+                () -> condition.test(value.get()),
+                () -> value.set(increment.apply(value.get())),
+                () -> body.apply(value.get()));
     }
 
     public static <T> CompletableFuture<Void> forAsync(Supplier<? extends T> initializer,
@@ -235,8 +235,8 @@ public enum Async {
                 return Futures.completedNull();
             }
 
-            final ConcurrentLinkedQueue<Supplier<CompletableFuture<?>>> futures = new ConcurrentLinkedQueue<>();
-            final AtomicReference<Supplier<CompletableFuture<?>>> evaluateBody = new AtomicReference<>();
+            ConcurrentLinkedQueue<Supplier<CompletableFuture<?>>> futures = new ConcurrentLinkedQueue<>();
+            AtomicReference<Supplier<CompletableFuture<?>>> evaluateBody = new AtomicReference<>();
             evaluateBody.set(() -> {
                 CompletableFuture<?> bodyResult = body.get();
                 return bodyResult.thenRun(() -> {

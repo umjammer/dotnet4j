@@ -34,6 +34,7 @@ import java.util.EnumSet;
  * @author Kenneth Bell
  */
 public abstract class QualifiedAce extends KnownAce {
+
     private byte[] opaque;
 
     QualifiedAce(AceType type, EnumSet<AceFlags> flags, byte[] opaque) {

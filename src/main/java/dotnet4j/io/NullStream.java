@@ -1,16 +1,11 @@
 package dotnet4j.io;
 
-import java.io.IOException;
-
 /**
  * Created by schiemas on 14.07.16.
  */
-class NullStream extends Stream
-{
+class NullStream extends Stream {
 
-    public NullStream()
-    {
-
+    public NullStream() {
     }
 
     @Override
@@ -39,23 +34,20 @@ class NullStream extends Stream
     }
 
     @Override
-    public long getPosition() {
+    public long position() {
         return 0;
     }
 
     @Override
-    public void setPosition(long value) {
-
+    public void position(long value) {
     }
 
     @Override
     public void close() {
-
     }
 
     @Override
     public void flush() {
-
     }
 
     @Override
@@ -65,7 +57,6 @@ class NullStream extends Stream
 
     @Override
     public void setLength(long value) {
-
     }
 
     @Override
@@ -80,13 +71,9 @@ class NullStream extends Stream
 
     @Override
     public void write(byte[] buffer, int offset, int count) {
-
     }
 
     @Override
     public void writeByte(byte value) {
-
     }
-
-
 }

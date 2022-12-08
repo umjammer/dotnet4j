@@ -1,4 +1,3 @@
-
 package dotnet4j.security.accessControl;
 
 import java.util.Arrays;

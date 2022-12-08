@@ -32,13 +32,21 @@ public class Tuple<A, B> {
         return Item2;
     }
 
-    public A getItem1() { return Item1; }
+    public A getItem1() {
+        return Item1;
+    }
 
-    public B getItem2() { return Item2; }
+    public B getItem2() {
+        return Item2;
+    }
 
-    public void setItem1(A a) { Item1 = a; }
+    public void setItem1(A a) {
+        Item1 = a;
+    }
 
-    public void setItem2(B b) { Item2 = b; }
+    public void setItem2(B b) {
+        Item2 = b;
+    }
 }
 
 /* */

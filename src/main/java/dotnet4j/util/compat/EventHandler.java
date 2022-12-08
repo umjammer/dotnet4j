@@ -24,7 +24,9 @@ public class EventHandler<T extends EventObject> {
         listeners.add(listener);
     }
 
-    public void removeListener(EventListener<T> listener) { listeners.remove(listener); }
+    public void removeListener(EventListener<T> listener) {
+        listeners.remove(listener);
+    }
 
     public void fireEvent(T e) {
         listeners.forEach(l -> l.exec(e));

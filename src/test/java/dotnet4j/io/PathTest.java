@@ -44,6 +44,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 @Disabled
 public class PathTest {
+
     enum OsType {
         Windows,
         Unix,
@@ -1048,7 +1049,7 @@ public class PathTest {
         try {
             invalid[0] = 'a';
             // kind of scary
-            assertTrue(expected[0] == 'a', "expected");
+            assertEquals('a', expected[0], "expected");
             assertEquals(expected[0], Path.InvalidPathChars[0], "readonly");
         } finally {
             invalid[0] = original;

@@ -12,15 +12,14 @@ import java.io.OutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import vavi.io.InputEngine;
-import vavi.io.InputEngineOutputStream;
-import vavi.io.OutputEngine;
-import vavi.io.OutputEngineInputStream;
-
 import dotnet4j.io.Stream;
 import dotnet4j.io.compat.JavaIOStream;
 import dotnet4j.io.compat.StreamInputStream;
 import dotnet4j.io.compat.StreamOutputStream;
+import vavi.io.InputEngine;
+import vavi.io.InputEngineOutputStream;
+import vavi.io.OutputEngine;
+import vavi.io.OutputEngineInputStream;
 
 
 /**
@@ -35,23 +34,23 @@ public class GZipStream extends JavaIOStream {
         try {
             InputStream is = new StreamInputStream(stream);
             return compressionMode == CompressionMode.Decompress ? new GZIPInputStream(is)
-                                                                 : new OutputEngineInputStream(new OutputEngine() {
-                                                                     OutputStream out;
+                    : new OutputEngineInputStream(new OutputEngine() {
+                OutputStream out;
 
-                                                                     public void initialize(OutputStream out) throws IOException {
-                                                                         this.out = new GZIPOutputStream(out);
-                                                                     }
+                @Override public void initialize(OutputStream out) throws IOException {
+                    this.out = new GZIPOutputStream(out);
+                }
 
-                                                                     byte[] buf = new byte[8192];
+                byte[] buf = new byte[8192];
 
-                                                                     public void execute() throws IOException {
-                                                                         int r = is.read(buf);
-                                                                         out.write(buf, 0, r);
-                                                                     }
+                @Override public void execute() throws IOException {
+                    int r = is.read(buf);
+                    out.write(buf, 0, r);
+                }
 
-                                                                     public void finish() {
-                                                                     }
-                                                                 });
+                @Override public void finish() {
+                }
+            });
         } catch (IOException e) {
             throw new dotnet4j.io.IOException(e);
         }
@@ -61,31 +60,32 @@ public class GZipStream extends JavaIOStream {
         try {
             OutputStream os = new StreamOutputStream(stream);
             return compressionMode == CompressionMode.Compress ? new GZIPOutputStream(os)
-                                                               : new InputEngineOutputStream(new InputEngine() {
-                                                                   InputStream in;
+                    : new InputEngineOutputStream(new InputEngine() {
+                InputStream in;
 
-                                                                   public void initialize(InputStream in) {
-                                                                   }
+                @Override public void initialize(InputStream in) {
+                }
 
-                                                                   byte[] buf = new byte[8192];
+                byte[] buf = new byte[8192];
 
-                                                                   public void execute() throws IOException {
-                                                                       if (in == null) {
-                                                                           this.in = new GZIPInputStream(in);
-                                                                       }
-                                                                       int r = in.read(buf);
-                                                                       os.write(buf, 0, r);
-                                                                   }
+                @Override public void execute() throws IOException {
+                    if (in == null) {
+                        this.in = new GZIPInputStream(in);
+                    }
+                    int r = in.read(buf);
+                    os.write(buf, 0, r);
+                }
 
-                                                                   public void finish() {
-                                                                   }
-                                                               });
+                @Override public void finish() {
+                }
+            });
         } catch (IOException e) {
             throw new dotnet4j.io.IOException(e);
         }
     }
 
     /**
+     *
      */
     public GZipStream(Stream stream, CompressionMode compressionMode) {
         super(toInputStream(stream, compressionMode), toOutputStream(stream, compressionMode));

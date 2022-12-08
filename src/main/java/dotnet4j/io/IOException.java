@@ -3,10 +3,10 @@ package dotnet4j.io;
 /**
  * Created by ft on 28.03.17.
  */
-public class IOException extends RuntimeException
-{
+public class IOException extends RuntimeException {
+
     public IOException() {
-        super("dotnetIo4j encountered an I/O error!");
+        super("dotnet4j encountered an I/O error!");
     }
 
     public IOException(String message) {

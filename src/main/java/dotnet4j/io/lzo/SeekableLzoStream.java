@@ -23,6 +23,7 @@ import dotnet4j.io.compression.CompressionMode;
 public class SeekableLzoStream extends LzoStream {
 
     static class Snapshot {
+
         public final long OutputPosition;
 
         public final long InputPosition;
@@ -54,7 +55,7 @@ public class SeekableLzoStream extends LzoStream {
      * creates a new seekable lzo stream for decompression
      *
      * @param stream the compressed stream
-     * @param mode currently only decompression is supported
+     * @param mode   currently only decompression is supported
      */
     public SeekableLzoStream(Stream stream, CompressionMode mode) {
         this(stream, mode, false);
@@ -63,10 +64,10 @@ public class SeekableLzoStream extends LzoStream {
     /**
      * creates a new seekable lzo stream for decompression
      *
-     * @param stream the compressed stream
-     * @param mode currently only decompression is supported
+     * @param stream    the compressed stream
+     * @param mode      currently only decompression is supported
      * @param leaveOpen true to leave the stream open after disposing the
-     *            LzoStream object; otherwise, false
+     *                  LzoStream object; otherwise, false
      */
     public SeekableLzoStream(Stream stream, CompressionMode mode, boolean leaveOpen) {
         this(stream, mode, leaveOpen, 10 * MaxWindowSize);
@@ -75,12 +76,12 @@ public class SeekableLzoStream extends LzoStream {
     /**
      * creates a new seekable lzo stream for decompression
      *
-     * @param stream the compressed stream
-     * @param mode currently only decompression is supported
-     * @param leaveOpen true to leave the stream open after disposing the
-     *            LzoStream object; otherwise, false
+     * @param stream           the compressed stream
+     * @param mode             currently only decompression is supported
+     * @param leaveOpen        true to leave the stream open after disposing the
+     *                         LzoStream object; otherwise, false
      * @param snapshotInterval specifies the interval for creating snapshots of
-     *            internal state.
+     *                         internal state.
      */
     public SeekableLzoStream(Stream stream, CompressionMode mode, boolean leaveOpen, int snapshotInterval) {
         super(stream, mode, leaveOpen);
@@ -100,7 +101,7 @@ public class SeekableLzoStream extends LzoStream {
         return false;
     }
 
-    public long seek(long offset, SeekOrigin origin) {
+    @Override public long seek(long offset, SeekOrigin origin) {
         long position = _outputPosition;
         long targetPosition = offset;
         switch (origin) {
@@ -140,13 +141,13 @@ public class SeekableLzoStream extends LzoStream {
                 total -= read(buffer, 0, count);
             } while (total > 0);
         }
-        return getPosition();
+        return position();
     }
 
     private void takeSnapshot() {
-        if (_snapshots.size() > 0 && (_snapshots.peek().InputPosition + _snapshotInterval) > _source.getPosition())
+        if (_snapshots.size() > 0 && (_snapshots.peek().InputPosition + _snapshotInterval) > _source.position())
             return;
-        _snapshots.push(new Snapshot(getPosition(), _source.getPosition(), _ringBuffer, _instruction, _state));
+        _snapshots.push(new Snapshot(position(), _source.position(), _ringBuffer, _instruction, _state));
     }
 }
 

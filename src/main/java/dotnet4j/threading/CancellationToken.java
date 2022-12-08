@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 
 
 public final class CancellationToken {
+
     private static final CancellationToken NONE = new CancellationToken();
 
     private final WeakReference<CancellationTokenSource> weakSource;

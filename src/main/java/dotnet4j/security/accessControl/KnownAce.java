@@ -36,6 +36,7 @@ import dotnet4j.security.principal.SecurityIdentifier;
  * @author Kenneth Bell
  */
 public abstract class KnownAce extends GenericAce {
+
     protected int accessMask;
 
     protected SecurityIdentifier securityIdentifier;

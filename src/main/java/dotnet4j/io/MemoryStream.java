@@ -4,7 +4,6 @@
 
 package dotnet4j.io;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -23,17 +22,12 @@ public class MemoryStream extends Stream implements Serializable {
     private byte[] buffer;
 
     private int capacity;
-
     private int position;
-
     private int origin;
-
     private int length;
 
     private boolean seekable;
-
     private boolean writable;
-
     private boolean expandable;
 
     private boolean closed;
@@ -192,7 +186,7 @@ public class MemoryStream extends Stream implements Serializable {
     }
 
     @Override
-    public long getPosition() {
+    public long position() {
         if (closed)
             throw new dotnet4j.io.IOException("object disposed");
 
@@ -200,7 +194,7 @@ public class MemoryStream extends Stream implements Serializable {
     }
 
     @Override
-    public void setPosition(long value) {
+    public void position(long value) {
         if (value < 0 || value > Integer.MAX_VALUE)
             throw new IndexOutOfBoundsException("value is negative or overflown");
         if (closed)
@@ -323,6 +317,7 @@ public class MemoryStream extends Stream implements Serializable {
         closed = true;
     }
 
+    @Override
     public int readByte() {
         if (closed)
             throw new dotnet4j.io.IOException("object disposed");
@@ -334,6 +329,7 @@ public class MemoryStream extends Stream implements Serializable {
         return this.buffer[position++] & 0xff;
     }
 
+    @Override
     public void writeByte(byte value) {
         if (closed)
             throw new dotnet4j.io.IOException("object disposed");

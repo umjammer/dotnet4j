@@ -13,7 +13,7 @@ import java.io.IOException;
  * always read & write for sizes greater than the buffer size, then this class
  * may not even allocate the buffer. See a large comment in Write for the
  * details of the write buffer heuristic.
- *
+ * <p>
  * This class buffers reads & writes in a shared buffer. (If you maintained two
  * buffers separately, one operation would always trash the other buffer
  * anyways, so we might as well use one buffer.) The assumption here is you will
@@ -146,18 +146,22 @@ public class BufferedStream extends Stream {
         return _bufferSize;
     }
 
+    @Override
     public boolean canRead() {
         return _stream != null && _stream.canRead();
     }
 
+    @Override
     public boolean canWrite() {
         return _stream != null && _stream.canWrite();
     }
 
+    @Override
     public boolean canSeek() {
         return _stream != null && _stream.canSeek();
     }
 
+    @Override
     public long getLength() {
         ensureNotClosed();
 
@@ -167,16 +171,18 @@ public class BufferedStream extends Stream {
         return _stream.getLength();
     }
 
-    public long getPosition() {
+    @Override
+    public long position() {
         ensureNotClosed();
         ensureCanSeek();
 
         assert !(_writePos > 0
                 && _readPos != _readLen) : "Read and Write buffers cannot both have data in them at the same time.";
-        return _stream.getPosition() + (_readPos - _readLen + _writePos);
+        return _stream.position() + (_readPos - _readLen + _writePos);
     }
 
-    public void setPosition(long value) {
+    @Override
+    public void position(long value) {
         if (value < 0)
             throw new IndexOutOfBoundsException("value is negative");
 
@@ -191,6 +197,7 @@ public class BufferedStream extends Stream {
         _stream.seek(value, SeekOrigin.Begin);
     }
 
+    @Override
     public void close() throws IOException {
         try {
             if (_stream != null) {
@@ -206,6 +213,7 @@ public class BufferedStream extends Stream {
         }
     }
 
+    @Override
     public void flush() {
         ensureNotClosed();
 
@@ -229,7 +237,7 @@ public class BufferedStream extends Stream {
             if (!_stream.canSeek())
                 return;
 
-            FlushRead();
+            flushRead();
 
             // User streams may have opted to throw from Flush if CanWrite is false
             // (although the abstract Stream does not do so).
@@ -257,7 +265,7 @@ public class BufferedStream extends Stream {
      * this stream's position. All write functions should call this function to
      * ensure that the buffered data is not lost.
      */
-    private void FlushRead() {
+    private void flushRead() {
         assert _writePos == 0 : "BufferedStream: Write buffer must be empty in FlushRead!";
 
         if (_readPos - _readLen != 0)
@@ -290,7 +298,7 @@ public class BufferedStream extends Stream {
         if (!_stream.canSeek())
             throw new UnsupportedOperationException();
 
-        FlushRead();
+        flushRead();
     }
 
     private void flushWrite() {
@@ -321,6 +329,7 @@ public class BufferedStream extends Stream {
         return readbytes;
     }
 
+    @Override
     public int read(byte[] array, int offset, int count) {
         if (array == null)
             throw new NullPointerException("array");
@@ -431,6 +440,7 @@ public class BufferedStream extends Stream {
         offset[0] += bytesToWrite;
     }
 
+    @Override
     public void write(byte[] array, int offset, int count) {
         if (array == null)
             throw new NullPointerException("array");
@@ -538,8 +548,8 @@ public class BufferedStream extends Stream {
         }
 
         if (useBuffer) {
-            int[] _offset = new int[] { offset };
-            int[] _count = new int[] { count };
+            int[] _offset = new int[] {offset};
+            int[] _count = new int[] {count};
             writeToBuffer(array, _offset, _count);
             offset = _offset[0];
             count = _count[0];
@@ -557,8 +567,8 @@ public class BufferedStream extends Stream {
             _stream.write(_buffer, 0, _writePos);
             _writePos = 0;
 
-            _offset = new int[] { offset };
-            _count = new int[] { count };
+            _offset = new int[] {offset};
+            _count = new int[] {count};
             writeToBuffer(array, _offset, _count);
             offset = _offset[0];
             count = _count[0];
@@ -592,7 +602,8 @@ public class BufferedStream extends Stream {
         }
     }
 
-    public void writebyte(byte value) {
+    @Override
+    public void writeByte(byte value) {
         ensureNotClosed();
 
         if (_writePos == 0) {
@@ -612,6 +623,7 @@ public class BufferedStream extends Stream {
         assert _writePos < _bufferSize;
     }
 
+    @Override
     public long seek(long offset, SeekOrigin origin) {
         ensureNotClosed();
         ensureCanSeek();
@@ -636,8 +648,8 @@ public class BufferedStream extends Stream {
             offset -= (_readLen - _readPos);
         }
 
-        long oldPos = getPosition();
-        assert oldPos == _stream.getPosition() + (_readPos - _readLen);
+        long oldPos = position();
+        assert oldPos == _stream.position() + (_readPos - _readLen);
 
         long newPos = _stream.seek(offset, origin);
 
@@ -664,10 +676,11 @@ public class BufferedStream extends Stream {
             _readPos = _readLen = 0;
         }
 
-        assert newPos == getPosition() : "newPos (=" + newPos + ") == Position (=" + getPosition() + ")";
+        assert newPos == position() : "newPos (=" + newPos + ") == Position (=" + position() + ")";
         return newPos;
     }
 
+    @Override
     public void setLength(long value) {
         if (value < 0)
             throw new IndexOutOfBoundsException("value is negative");

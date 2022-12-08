@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import dotnet4j.io.Stream;
+import vavi.io.Seekable;
 
 
 /**
@@ -18,7 +19,7 @@ import dotnet4j.io.Stream;
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (umjammer)
  * @version 0.00 2019/09/30 umjammer initial version <br>
  */
-public class StreamOutputStream extends OutputStream {
+public class StreamOutputStream extends OutputStream implements Seekable {
 
     private Stream stream;
 
@@ -45,6 +46,16 @@ public class StreamOutputStream extends OutputStream {
     @Override
     public void close() throws IOException {
         stream.close();
+    }
+
+    @Override
+    public void position(long l) throws IOException {
+        stream.position(l);
+    }
+
+    @Override
+    public long position() throws IOException {
+        return stream.position();
     }
 }
 

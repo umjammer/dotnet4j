@@ -3,6 +3,7 @@
 package dotnet4j.threading;
 
 public class AsyncLocalValueChangedEventArgs<T> {
+
     private final T previousValue;
     private final T currentValue;
     private final boolean threadContextChanged;

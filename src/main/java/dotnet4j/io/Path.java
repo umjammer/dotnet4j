@@ -26,9 +26,8 @@ package dotnet4j.io;
 import java.util.Arrays;
 import java.util.Random;
 
-import vavi.util.StringUtil;
-
 import dotnet4j.util.compat.StringUtilities;
+import vavi.util.StringUtil;
 
 
 /**
@@ -45,7 +44,7 @@ import dotnet4j.util.compat.StringUtilities;
  * @author Ben Maurer (bmaurer@users.sourceforge.net)
  * @author Sebastien Pouliot <sebastien@ximian.com>
  * @version Saturday, August 11, 2001
- *
+ * <p>
  * TODO test not passed, don't use
  */
 public class Path {
@@ -138,7 +137,7 @@ public class Path {
      * <li> Removes the trailing path separator.
      * <li> Returns the DirectorySeparatorChar for the single input
      * DirectorySeparatorChar or AltDirectorySeparatorChar
-     *
+     * <p>
      * Unlike CanonicalizePath, this does not do any path resolution
      * (which GetDirectoryName is not supposed to do).
      */
@@ -230,7 +229,7 @@ public class Path {
             if (l >= 2 && DirectorySeparatorChar == '\\' && ret.charAt(l - 1) == VolumeSeparatorChar)
                 return ret + DirectorySeparatorChar;
             else if (l == 1 && DirectorySeparatorChar == '\\' && path.length() >= 2 &&
-                     path.charAt(nLast) == VolumeSeparatorChar)
+                    path.charAt(nLast) == VolumeSeparatorChar)
                 return ret + VolumeSeparatorChar;
             else {
                 //
@@ -322,7 +321,7 @@ public class Path {
                 else
                     path = cwd + DirectorySeparatorChar + path;
             } else if (DirectorySeparatorChar == '\\' && path.length() >= 2 && isDirectorySeparator(path.charAt(0)) &&
-                       !isDirectorySeparator(path.charAt(1))) { // like `\abc\def'
+                    !isDirectorySeparator(path.charAt(1))) { // like `\abc\def'
                 String current = System.getProperty("user.dir").replace(java.io.File.separatorChar, DirectorySeparatorChar);
                 if (current.charAt(1) == VolumeSeparatorChar)
                     path = current.substring(0, 2) + path;
@@ -382,7 +381,7 @@ public class Path {
                 }
 
                 return DirectorySeparatorStr + DirectorySeparatorStr +
-                       path.substring(2, len).replace(AltDirectorySeparatorChar, DirectorySeparatorChar);
+                        path.substring(2, len).replace(AltDirectorySeparatorChar, DirectorySeparatorChar);
             } else if (isDirectorySeparator(path.charAt(0))) {
                 // path starts with '\' or '/'
                 return DirectorySeparatorStr;
@@ -392,7 +391,7 @@ public class Path {
                     len++;
             } else
                 return System.getenv("user.dir").replace(java.io.File.separatorChar, DirectorySeparatorChar).substring(0, 2);
-                // + path.substring(0, len);
+            // + path.substring(0, len);
             return path.substring(0, len);
         }
     }
@@ -413,12 +412,12 @@ public class Path {
 
             try {
                 f = new FileStream(path,
-                                   FileMode.CreateNew,
-                                   FileAccess.ReadWrite,
-                                   FileShare.Read,
-                                   8192,
-                                   false,
-                                   FileOptions.values()[1]);
+                        FileMode.CreateNew,
+                        FileAccess.ReadWrite,
+                        FileShare.Read,
+                        8192,
+                        false,
+                        FileOptions.values()[1]);
             } catch (IOException ex) {
                 if (count++ > 65536)
                     throw ex;
@@ -471,14 +470,14 @@ public class Path {
         // values
         if (System.getProperty("os.name").startsWith("Windows")) {
             return new char[] {
-                '\u0000', '\u0001', '\u0002', '\u0003', '\u0004', '\u0005', '\u0006', '\u0007', '\u0008', '\u0009', '\n',
-                '\u000B', '\u000C', '\r', '\u000E', '\u000F', '\u0010', '\u0011', '\u0012', '\u0013', '\u0014', '\u0015',
-                '\u0016', '\u0017', '\u0018', '\u0019', '\u001A', '\u001B', '\u001C', '\u001D', '\u001E', '\u001F', '\u0022',
-                '\u003C', '\u003E', '\u007C', ':', '*', '?', '\\', '/'
+                    '\u0000', '\u0001', '\u0002', '\u0003', '\u0004', '\u0005', '\u0006', '\u0007', '\u0008', '\u0009', '\n',
+                    '\u000B', '\u000C', '\r', '\u000E', '\u000F', '\u0010', '\u0011', '\u0012', '\u0013', '\u0014', '\u0015',
+                    '\u0016', '\u0017', '\u0018', '\u0019', '\u001A', '\u001B', '\u001C', '\u001D', '\u001E', '\u001F', '\u0022',
+                    '\u003C', '\u003E', '\u007C', ':', '*', '?', '\\', '/'
             };
         } else {
             return new char[] {
-                '\u0000', '/'
+                    '\u0000', '/'
             };
         }
     }
@@ -488,14 +487,14 @@ public class Path {
         // values
         if (System.getProperty("os.name").startsWith("Windows")) {
             return new char[] {
-                '\u0022', '\u003C', '\u003E', '\u007C', '\u0000', '\u0001', '\u0002', '\u0003', '\u0004', '\u0005', '\u0006',
-                '\u0007', '\u0008', '\u0009', '\n', '\u000B', '\u000C', '\r', '\u000E', '\u000F', '\u0010', '\u0011', '\u0012',
-                '\u0013', '\u0014', '\u0015', '\u0016', '\u0017', '\u0018', '\u0019', '\u001A', '\u001B', '\u001C', '\u001D',
-                '\u001E', '\u001F'
+                    '\u0022', '\u003C', '\u003E', '\u007C', '\u0000', '\u0001', '\u0002', '\u0003', '\u0004', '\u0005', '\u0006',
+                    '\u0007', '\u0008', '\u0009', '\n', '\u000B', '\u000C', '\r', '\u000E', '\u000F', '\u0010', '\u0011', '\u0012',
+                    '\u0013', '\u0014', '\u0015', '\u0016', '\u0017', '\u0018', '\u0019', '\u001A', '\u001B', '\u001C', '\u001D',
+                    '\u001E', '\u001F'
             };
         } else {
             return new char[] {
-                '\u0000'
+                    '\u0000'
             };
         }
     }
@@ -546,7 +545,7 @@ public class Path {
 
         DirectorySeparatorStr = String.valueOf(DirectorySeparatorChar);
         PathSeparatorChars = new char[] {
-            DirectorySeparatorChar, AltDirectorySeparatorChar, VolumeSeparatorChar
+                DirectorySeparatorChar, AltDirectorySeparatorChar, VolumeSeparatorChar
         };
 
         dirEqualsVolume = (DirectorySeparatorChar == VolumeSeparatorChar);
@@ -718,7 +717,7 @@ public class Path {
             throw new NullPointerException("path3");
 
         return combine(new String[] {
-            path1, path2, path3
+                path1, path2, path3
         });
     }
 
@@ -736,7 +735,7 @@ public class Path {
             throw new NullPointerException("path4");
 
         return combine(new String[] {
-            path1, path2, path3, path4
+                path1, path2, path3, path4
         });
     }
 
@@ -757,11 +756,11 @@ public class Path {
         return DirectorySeparatorStr;
     }
 
-    final int MAX_PATH = 260; // From WinDef.h
+    static final int MAX_PATH = 260; // From WinDef.h
 
     // this was copied from corefx since it's not available in referencesource
     static final char[] trimEndCharsWindows = {
-        (char) 0x9, (char) 0xA, (char) 0xB, (char) 0xC, (char) 0xD, (char) 0x20, (char) 0x85, (char) 0xA0
+            (char) 0x9, (char) 0xA, (char) 0xB, (char) 0xC, (char) 0xD, (char) 0x20, (char) 0x85, (char) 0xA0
     };
 
     static final char[] trimEndCharsUnix = {};
@@ -783,7 +782,7 @@ public class Path {
                 throw new IllegalArgumentException(System.getenv("Arg_InvalidSearchPattern"));
 
             if ((searchPattern.charAt(index + 2) == DirectorySeparatorChar) ||
-                (searchPattern.charAt(index + 2) == AltDirectorySeparatorChar))
+                    (searchPattern.charAt(index + 2) == AltDirectorySeparatorChar))
                 throw new IllegalArgumentException(System.getenv("Arg_InvalidSearchPattern"));
 
             searchPattern = searchPattern.substring(index + 2);
@@ -826,7 +825,7 @@ public class Path {
         // but we *do* want "C:Foo" => "Foo". This necessitates checking for the
         // root.
 
-        for (int i = path.length(); --i >= 0;) {
+        for (int i = path.length(); --i >= 0; ) {
             if (i < root || isDirectorySeparator(path.charAt(i)))
                 return path.subSequence(i + 1, path.length());
         }

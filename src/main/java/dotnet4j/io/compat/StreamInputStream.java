@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import dotnet4j.io.Stream;
+import vavi.io.Seekable;
 
 
 /**
@@ -18,7 +19,7 @@ import dotnet4j.io.Stream;
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (umjammer)
  * @version 0.00 2019/09/30 umjammer initial version <br>
  */
-public class StreamInputStream extends InputStream {
+public class StreamInputStream extends InputStream implements Seekable {
 
     private Stream stream;
 
@@ -28,19 +29,29 @@ public class StreamInputStream extends InputStream {
 
     @Override
     public int read() {
-         int r = stream.readByte();
-         return r;
+        int r = stream.readByte();
+        return r;
     }
 
     @Override
     public int read(byte[] b, int ofs, int len) {
-         int r = stream.read(b, ofs, len);
-         return r == 0 ? -1 : r;
+        int r = stream.read(b, ofs, len);
+        return r == 0 ? -1 : r;
     }
 
     @Override
     public void close() throws IOException {
         stream.close();
+    }
+
+    @Override
+    public void position(long l) throws IOException {
+        stream.position(l);
+    }
+
+    @Override
+    public long position() throws IOException {
+        return stream.position();
     }
 }
 

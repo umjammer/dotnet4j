@@ -1,4 +1,3 @@
-
 package dotnet4j.win32;
 
 public enum RegistryValueOptions {

@@ -57,7 +57,7 @@ public class StreamWriter extends Writer {
     public void writeLine(Object obj) {
         byte[] bytes = obj.toString().getBytes(encoding);
         stream.write(bytes, 0, bytes.length);
-        
+
     }
 
     /**

@@ -10,7 +10,11 @@ public class Tuple3<A, B, C> extends Tuple<A, B> {
         Item3 = c;
     }
 
-    public C getItem3() { return Item3; }
+    public C getItem3() {
+        return Item3;
+    }
 
-    public void setItem3(C c) { Item3 = c; }
+    public void setItem3(C c) {
+        Item3 = c;
+    }
 }

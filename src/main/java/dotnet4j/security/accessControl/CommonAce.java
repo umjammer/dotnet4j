@@ -25,9 +25,8 @@ package dotnet4j.security.accessControl;
 
 import java.util.EnumSet;
 
-import vavi.util.ByteUtil;
-
 import dotnet4j.security.principal.SecurityIdentifier;
+import vavi.util.ByteUtil;
 
 
 /**
@@ -39,11 +38,11 @@ import dotnet4j.security.principal.SecurityIdentifier;
  */
 public class CommonAce extends QualifiedAce {
     public CommonAce(EnumSet<AceFlags> flags,
-            AceQualifier qualifier,
-            int accessMask,
-            SecurityIdentifier sid,
-            boolean isCallback,
-            byte[] opaque) {
+                     AceQualifier qualifier,
+                     int accessMask,
+                     SecurityIdentifier sid,
+                     boolean isCallback,
+                     byte[] opaque) {
         super(convertType(qualifier, isCallback), flags, opaque);
 
         this.accessMask = accessMask;
@@ -106,10 +105,10 @@ public class CommonAce extends QualifiedAce {
             throw new UnsupportedOperationException("Unable to convert conditional ACEs to SDDL");
 
         return String.format("(%s;%s;%s;;;%s)",
-                             getSddlAceType(aceType),
-                             getSddlAceFlags(aceFlags),
-                             getSddlAccessRights(accessMask),
-                             securityIdentifier.getSddlForm());
+                getSddlAceType(aceType),
+                getSddlAceFlags(aceFlags),
+                getSddlAccessRights(accessMask),
+                securityIdentifier.getSddlForm());
     }
 
     private static AceType convertType(AceQualifier qualifier, boolean isCallback) {

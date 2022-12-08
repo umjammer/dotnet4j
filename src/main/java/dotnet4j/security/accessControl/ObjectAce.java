@@ -27,9 +27,8 @@ package dotnet4j.security.accessControl;
 import java.util.EnumSet;
 import java.util.UUID;
 
-import vavi.util.ByteUtil;
-
 import dotnet4j.security.principal.SecurityIdentifier;
+import vavi.util.ByteUtil;
 
 
 /**
@@ -41,6 +40,7 @@ import dotnet4j.security.principal.SecurityIdentifier;
  * @author James Bellinger <jfb@zer7.com>
  */
 public class ObjectAce extends QualifiedAce {
+
     private UUID objectAceType;
 
     private UUID inheritedObjectAceType;
@@ -48,14 +48,14 @@ public class ObjectAce extends QualifiedAce {
     private EnumSet<ObjectAceFlags> objectAceFlags;
 
     public ObjectAce(EnumSet<AceFlags> aceFlags,
-            AceQualifier qualifier,
-            int accessMask,
-            SecurityIdentifier sid,
-            EnumSet<ObjectAceFlags> flags,
-            UUID type,
-            UUID inheritedType,
-            boolean isCallback,
-            byte[] opaque) {
+                     AceQualifier qualifier,
+                     int accessMask,
+                     SecurityIdentifier sid,
+                     EnumSet<ObjectAceFlags> flags,
+                     UUID type,
+                     UUID inheritedType,
+                     boolean isCallback,
+                     byte[] opaque) {
         super(convertType(qualifier, isCallback), aceFlags, opaque);
 
         this.accessMask = accessMask;
@@ -66,13 +66,13 @@ public class ObjectAce extends QualifiedAce {
     }
 
     ObjectAce(AceType type,
-            EnumSet<AceFlags> flags,
-            int accessMask,
-            SecurityIdentifier sid,
-            EnumSet<ObjectAceFlags> objFlags,
-            UUID objType,
-            UUID inheritedType,
-            byte[] opaque) {
+              EnumSet<AceFlags> flags,
+              int accessMask,
+              SecurityIdentifier sid,
+              EnumSet<ObjectAceFlags> objFlags,
+              UUID objType,
+              UUID inheritedType,
+              byte[] opaque) {
         super(type, flags, opaque);
 
         this.accessMask = accessMask;
@@ -165,7 +165,7 @@ public class ObjectAce extends QualifiedAce {
         return objectAceFlags.contains(ObjectAceFlags.ObjectAceTypePresent);
     }
 
-    public void getBinaryForm(byte[] binaryForm, int offset) {
+    @Override public void getBinaryForm(byte[] binaryForm, int offset) {
         int len = getBinaryLength();
         binaryForm[offset++] = (byte) this.aceType.ordinal();
         binaryForm[offset++] = (byte) AceFlags.valueOf(this.aceFlags);
@@ -200,25 +200,25 @@ public class ObjectAce extends QualifiedAce {
         return 65423;
     }
 
-    String getSddlForm() {
+    @Override String getSddlForm() {
         if (getOpaqueLength() != 0)
             throw new UnsupportedOperationException("Unable to convert conditional ACEs to SDDL");
 
         String objType = "";
-        if (objectAceFlags.contains( ObjectAceFlags.ObjectAceTypePresent) )
+        if (objectAceFlags.contains(ObjectAceFlags.ObjectAceTypePresent))
             objType = objectAceType.toString();
 
         String inhObjType = "";
-        if (objectAceFlags.contains( ObjectAceFlags.InheritedObjectAceTypePresent) )
+        if (objectAceFlags.contains(ObjectAceFlags.InheritedObjectAceTypePresent))
             inhObjType = inheritedObjectAceType.toString();
 
         return String.format("(%s;%s;%s;%s;%s;%s)",
-                             getSddlAceType(aceType),
-                             getSddlAceFlags(aceFlags),
-                             getSddlAccessRights(accessMask),
-                             objType,
-                             inhObjType,
-                             securityIdentifier.getSddlForm());
+                getSddlAceType(aceType),
+                getSddlAceFlags(aceFlags),
+                getSddlAccessRights(accessMask),
+                objType,
+                inhObjType,
+                securityIdentifier.getSddlForm());
     }
 
     private static AceType convertType(AceQualifier qualifier, boolean isCallback) {

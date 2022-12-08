@@ -99,7 +99,7 @@ public class SecurityIdentifier implements Principal {
 
     private long getSidAuthority() {
         return (((long) buffer[2]) << 40) | (((long) buffer[3]) << 32) | (((long) buffer[4]) << 24) |
-            (((long) buffer[5]) << 16) | (((long) buffer[6]) << 8) | (((long) buffer[7]) << 0);
+                (((long) buffer[5]) << 16) | (((long) buffer[6]) << 8) | (((long) buffer[7]) << 0);
     }
 
     private byte getSidSubAuthorityCount() {
@@ -111,7 +111,7 @@ public class SecurityIdentifier implements Principal {
         int offset = 8 + (index * 4);
 
         return ((buffer[offset + 0] & 0xff) << 0) | ((buffer[offset + 1] & 0xff) << 8) | ((buffer[offset + 2] & 0xff) << 16) |
-            ((buffer[offset + 3] & 0xff) << 24);
+                ((buffer[offset + 3] & 0xff) << 24);
     }
 
     /** */
@@ -149,7 +149,7 @@ public class SecurityIdentifier implements Principal {
                     sid = String.format(acct.Sid, domainSid);
                 } else {
                     throw new IllegalArgumentException(SecurityIdentifier.class + " unable to convert account to SID: " +
-                        (acct.Name != null ? acct.Name : sddlForm));
+                            (acct.Name != null ? acct.Name : sddlForm));
                 }
             } else {
                 sid = acct.Sid;

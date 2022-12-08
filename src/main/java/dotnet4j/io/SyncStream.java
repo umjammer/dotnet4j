@@ -1,6 +1,6 @@
 package dotnet4j.io;
 
-import java.io.*;
+import java.io.Closeable;
 import java.io.IOException;
 
 
@@ -9,11 +9,12 @@ import java.io.IOException;
  */
 class SyncStream extends Stream implements Closeable {
 
-    private Stream _stream;
+    private final Stream _stream;
 
     public SyncStream(Stream stream) {
         if (stream == null)
             throw new RuntimeException("stream is null");
+        _stream = stream;
     }
 
     @Override
@@ -44,16 +45,16 @@ class SyncStream extends Stream implements Closeable {
     }
 
     @Override
-    public long getPosition() {
+    public long position() {
         synchronized (_stream) {
-            return _stream.getPosition();
+            return _stream.position();
         }
     }
 
     @Override
-    public void setPosition(long value) {
+    public void position(long value) {
         synchronized (_stream) {
-            _stream.setPosition(value);
+            _stream.position(value);
         }
     }
 

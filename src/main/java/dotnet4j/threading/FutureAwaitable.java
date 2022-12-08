@@ -8,6 +8,7 @@ import java.util.concurrent.ForkJoinPool;
 
 
 public final class FutureAwaitable<T> implements Awaitable<T> {
+
     private final CompletableFuture<? extends T> future;
 
     private final boolean continueOnCapturedContext;

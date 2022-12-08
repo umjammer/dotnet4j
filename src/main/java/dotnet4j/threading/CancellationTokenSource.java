@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 
 
 public class CancellationTokenSource implements Closeable {
+
     private final CancellationToken token = new CancellationToken(this);
 
     private final List<CancellationTokenRegistration> registrations = new ArrayList<>();

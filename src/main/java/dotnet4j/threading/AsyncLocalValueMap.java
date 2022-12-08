@@ -55,7 +55,7 @@ abstract class AsyncLocalValueMap {
                 // otherwise create
                 // a two-element map with the additional key/value.
                 return key == key1 ? new OneElementAsyncLocalValueMap(key, value)
-                                   : new TwoElementAsyncLocalValueMap(key1, value1, key, value);
+                        : new TwoElementAsyncLocalValueMap(key1, value1, key, value);
             } else {
                 // The value is null. If the key exists in this map, remove it
                 // by downgrading to an empty map.
@@ -110,15 +110,15 @@ abstract class AsyncLocalValueMap {
                 // otherwise create
                 // a three-element map with the additional key/value.
                 return key == key1 ? new TwoElementAsyncLocalValueMap(key, value, key2, value2)
-                                   : key == key2 ? new TwoElementAsyncLocalValueMap(key1, value1, key, value)
-                                                 : new ThreeElementAsyncLocalValueMap(key1, value1, key2, value2, key, value);
+                        : key == key2 ? new TwoElementAsyncLocalValueMap(key1, value1, key, value)
+                        : new ThreeElementAsyncLocalValueMap(key1, value1, key2, value2, key, value);
             } else {
                 // The value is null. If the key exists in this map, remove it
                 // by downgrading to a one-element map
                 // without the key. Otherwise, there's nothing to add or remove,
                 // so just return this map.
                 return key == key1 ? new OneElementAsyncLocalValueMap(key2, value2)
-                                   : key == key2 ? new OneElementAsyncLocalValueMap(key1, value1) : this;
+                        : key == key2 ? new OneElementAsyncLocalValueMap(key1, value1) : this;
             }
         }
 
@@ -154,11 +154,11 @@ abstract class AsyncLocalValueMap {
         private final Object value3;
 
         public <T, U, V> ThreeElementAsyncLocalValueMap(AsyncLocal<T> key1,
-                T value1,
-                AsyncLocal<U> key2,
-                U value2,
-                AsyncLocal<V> key3,
-                V value3) {
+                                                        T value1,
+                                                        AsyncLocal<U> key2,
+                                                        U value2,
+                                                        AsyncLocal<V> key3,
+                                                        V value3) {
             this.key1 = key1;
             this.value1 = value1;
             this.key2 = key2;
@@ -206,9 +206,9 @@ abstract class AsyncLocalValueMap {
                 // without the key. Otherwise, there's nothing to add or remove,
                 // so just return this map.
                 return key == key1 ? new TwoElementAsyncLocalValueMap(key2, value2, key3, value3)
-                                   : key == key2 ? new TwoElementAsyncLocalValueMap(key1, value1, key3, value3)
-                                                 : key == key3 ? new TwoElementAsyncLocalValueMap(key1, value1, key2, value2)
-                                                               : this;
+                        : key == key2 ? new TwoElementAsyncLocalValueMap(key1, value1, key3, value3)
+                        : key == key3 ? new TwoElementAsyncLocalValueMap(key1, value1, key2, value2)
+                        : this;
             }
         }
 
@@ -279,29 +279,29 @@ abstract class AsyncLocalValueMap {
                         // so downgrade to a three-element map, without the
                         // matching element.
                         return i == 0 ? new ThreeElementAsyncLocalValueMap(keys[1],
-                                                                           values[1],
-                                                                           keys[2],
-                                                                           values[2],
-                                                                           keys[3],
-                                                                           values[3])
-                                      : i == 1 ? new ThreeElementAsyncLocalValueMap(keys[0],
-                                                                                    values[0],
-                                                                                    keys[2],
-                                                                                    values[2],
-                                                                                    keys[3],
-                                                                                    values[3])
-                                               : i == 2 ? new ThreeElementAsyncLocalValueMap(keys[0],
-                                                                                             values[0],
-                                                                                             keys[1],
-                                                                                             values[1],
-                                                                                             keys[3],
-                                                                                             values[3])
-                                                        : new ThreeElementAsyncLocalValueMap(keys[0],
-                                                                                             values[0],
-                                                                                             keys[1],
-                                                                                             values[1],
-                                                                                             keys[2],
-                                                                                             values[2]);
+                                values[1],
+                                keys[2],
+                                values[2],
+                                keys[3],
+                                values[3])
+                                : i == 1 ? new ThreeElementAsyncLocalValueMap(keys[0],
+                                values[0],
+                                keys[2],
+                                values[2],
+                                keys[3],
+                                values[3])
+                                : i == 2 ? new ThreeElementAsyncLocalValueMap(keys[0],
+                                values[0],
+                                keys[1],
+                                values[1],
+                                keys[3],
+                                values[3])
+                                : new ThreeElementAsyncLocalValueMap(keys[0],
+                                values[0],
+                                keys[1],
+                                values[1],
+                                keys[2],
+                                values[2]);
                     } else {
                         // The value is null, and we have enough elements
                         // remaining to warrant a multi map.

@@ -20,7 +20,7 @@ import dotnet4j.io.compat.StreamOutputStream;
 
 /**
  * DeflateStream.
- *
+ * <p>
  * *** WARNING ***
  * this class decompression needs zip header (0x78, 0x9c)
  * so spec. is different from original C# DeflateStream
@@ -64,11 +64,13 @@ public class DeflateStream extends JavaIOStream {
         this.stream = stream;
     }
 
+    @Override
     public long getLength() {
         throw new UnsupportedOperationException();
     }
 
-    public long getPosition() {
+    @Override
+    public long position() {
         throw new UnsupportedOperationException();
     }
 

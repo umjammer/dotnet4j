@@ -6,11 +6,11 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+
 /**
  * Created by FT on 27.11.14.
  */
-public class FileStream extends Stream
-{
+public class FileStream extends Stream {
     private RandomAccessFile raf;
     private FileChannel channel;
     private FileMode myMode;
@@ -18,48 +18,41 @@ public class FileStream extends Stream
     private FileShare myShare;
     private String myPath;
 
-    public FileStream(String path, FileMode mode)
-    {
-        this(path,mode,(mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite));
+    public FileStream(String path, FileMode mode) {
+        this(path, mode, (mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite));
     }
 
-    public FileStream(String path, FileMode mode, FileAccess access)
-    {
-        this(path,mode,access,access == FileAccess.Write ? FileShare.None : FileShare.Read);
+    public FileStream(String path, FileMode mode, FileAccess access) {
+        this(path, mode, access, access == FileAccess.Write ? FileShare.None : FileShare.Read);
     }
 
-    public FileStream(String path, FileMode mode, FileAccess access, FileShare share)
-    {
+    public FileStream(String path, FileMode mode, FileAccess access, FileShare share) {
         myPath = path;
         myMode = mode;
         myAccess = access;
         myShare = share;
 
         String rafMode = "";
-        switch (access)
-        {
+        switch (access) {
 
-            case Read:
-                rafMode = "r";
-                break;
-            case Write:
-                rafMode = "rw";
-                break;
-            case ReadWrite:
-                rafMode = "rw";
-                break;
+        case Read:
+            rafMode = "r";
+            break;
+        case Write:
+            rafMode = "rw";
+            break;
+        case ReadWrite:
+            rafMode = "rw";
+            break;
         }
-        try
-        {
+        try {
             java.io.File f = new java.io.File(path);
-            if (mode == FileMode.Create || mode == FileMode.CreateNew || mode == FileMode.OpenOrCreate)
-            {
-                if (!f.exists())
-                {
+            if (mode == FileMode.Create || mode == FileMode.CreateNew || mode == FileMode.OpenOrCreate) {
+                if (!f.exists()) {
                     f.createNewFile();
                 }
             }
-            raf = new RandomAccessFile(path,rafMode);
+            raf = new RandomAccessFile(path, rafMode);
             channel = raf.getChannel();
 
         } catch (FileNotFoundException e) {
@@ -70,11 +63,11 @@ public class FileStream extends Stream
     }
 
     public FileStream(String path,
-            FileMode mode,
-            FileAccess access,
-            FileShare share,
-            int bufferSize,
-            FileOptions options) {
+                      FileMode mode,
+                      FileAccess access,
+                      FileShare share,
+                      int bufferSize,
+                      FileOptions options) {
         this(path, mode, access, share);
         if (options == FileOptions.DeleteOnClose) {
             java.io.File f = new java.io.File(path);
@@ -85,12 +78,12 @@ public class FileStream extends Stream
 
     /** */
     public FileStream(String path,
-            FileMode mode,
-            FileAccess access,
-            FileShare share,
-            int bufferSize,
-            boolean b,
-            FileOptions options) {
+                      FileMode mode,
+                      FileAccess access,
+                      FileShare share,
+                      int bufferSize,
+                      boolean b,
+                      FileOptions options) {
         this(path, mode, access, share);
         // TODO Auto-generated constructor stub
     }
@@ -100,21 +93,18 @@ public class FileStream extends Stream
     }
 
     @Override
-    public boolean canRead()
-    {
+    public boolean canRead() {
         if (channel == null) return false;
         return myAccess == FileAccess.Read || myAccess == FileAccess.ReadWrite;
     }
 
     @Override
-    public boolean canSeek()
-    {
+    public boolean canSeek() {
         return channel != null;
     }
 
     @Override
-    public boolean canWrite()
-    {
+    public boolean canWrite() {
         if (channel == null) return false;
         return myAccess == FileAccess.Write || myAccess == FileAccess.ReadWrite;
     }
@@ -129,7 +119,7 @@ public class FileStream extends Stream
     }
 
     @Override
-    public long getPosition() {
+    public long position() {
         try {
             return channel.position();
         } catch (IOException e) {
@@ -138,8 +128,7 @@ public class FileStream extends Stream
     }
 
     @Override
-    public void setPosition(long value)
-    {
+    public void position(long value) {
         try {
             channel.position(value);
         } catch (IOException e) {
@@ -168,8 +157,8 @@ public class FileStream extends Stream
 
     @Override
     public int read(byte[] buffer, int offset, int length) {
-        ByteBuffer tmp = ByteBuffer.wrap(buffer,offset,length);
-        int m = 0;
+        ByteBuffer tmp = ByteBuffer.wrap(buffer, offset, length);
+        int m;
         try {
             m = channel.read(tmp);
 //Debug.println(m + ", " + offset + ", " + length + " / " + channel.size() + ", " + channel.size() + ", " + channel.position());
@@ -187,33 +176,29 @@ public class FileStream extends Stream
     public long seek(long offset, SeekOrigin origin) {
         try {
             switch (origin) {
-                case Begin:
-                    channel.position(offset);
-                case Current:
-                    channel.position(offset + channel.position());
-                    break;
-                case End:
-                    channel.position(channel.size() + offset);
-                    break;
+            case Begin:
+                channel.position(offset);
+            case Current:
+                channel.position(offset + channel.position());
+                break;
+            case End:
+                channel.position(channel.size() + offset);
+                break;
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new dotnet4j.io.IOException(e);
         }
-        return getPosition();
+        return position();
     }
 
     @Override
-    public void setLength(long value)
-    {
+    public void setLength(long value) {
         throw new RuntimeException("This method is not implemented (yet).");
     }
 
     @Override
-    public void write(byte[] buffer, int offset, int count)
-    {
-        ByteBuffer temp = ByteBuffer.wrap(buffer,offset,count);
+    public void write(byte[] buffer, int offset, int count) {
+        ByteBuffer temp = ByteBuffer.wrap(buffer, offset, count);
         try {
             channel.write(temp);
         } catch (IOException e) {
