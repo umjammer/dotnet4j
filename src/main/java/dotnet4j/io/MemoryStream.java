@@ -311,7 +311,6 @@ public class MemoryStream extends Stream implements Serializable {
 
     @Override
     public void close() {
-        buffer = null;
         writable = false;
         expandable = false;
         closed = true;
