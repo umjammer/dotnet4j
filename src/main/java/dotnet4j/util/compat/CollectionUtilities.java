@@ -35,12 +35,20 @@ public class CollectionUtilities {
         return a;
     }
 
+    /**
+     * @deprecated use {@link vavi.util.ByteUtil#toList}
+     */
+    @Deprecated
     public static List<Byte> toList(byte[] o) {
         List<Byte> a = new ArrayList<>(o.length);
         IntStream.range(0, o.length).forEach(i -> a.add(o[i]));
         return a;
     }
 
+    /**
+     * @deprecated use {@link vavi.util.ByteUtil#toByteArray}
+     */
+    @Deprecated
     public static byte[] toByteArray(List<Byte> o) {
         byte[] a = new byte[o.size()];
         IntStream.range(0, o.size()).forEach(i -> a[i] = o.get(i));
