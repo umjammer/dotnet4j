@@ -11,7 +11,6 @@ import java.nio.channels.FileChannel;
  * Created by FT on 27.11.14.
  */
 public class FileStream extends Stream {
-    private RandomAccessFile raf;
     private FileChannel channel;
     private FileMode myMode;
     private FileAccess myAccess;
@@ -52,7 +51,7 @@ public class FileStream extends Stream {
                     f.createNewFile();
                 }
             }
-            raf = new RandomAccessFile(path, rafMode);
+            RandomAccessFile raf = new RandomAccessFile(path, rafMode);
             channel = raf.getChannel();
 
         } catch (FileNotFoundException e) {
@@ -139,8 +138,10 @@ public class FileStream extends Stream {
     @Override
     public void close() {
         try {
-            channel.close();
-            channel = null;
+            if (channel != null) {
+                channel.close();
+                channel = null;
+            }
         } catch (IOException e) {
             throw new dotnet4j.io.IOException(e);
         }
