@@ -18,9 +18,13 @@ Helper library for .Net to Java migration.
 
 Note: this is a fork of [feyris-tan/dotnetIo4j](https://github.com/feyris-tan/dotnetIo4j)
 
+## Install
+
+ * [maven](https://jitpack.io/#umjammer/dotnet4j)
+
 ## Usage
 
-### Projects that use this library
+### user
 
  * [vavi-nio-file-discutils](https://github.com/umjammer/vavi-nio-file-discutils)
  * [vavi-apps-z80](https://github.com/umjammer/vavi-apps-z80)
