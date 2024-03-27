@@ -117,5 +117,3 @@ public enum WellKnownSidType {
         return Arrays.stream(values()).filter(v -> value == v.ordinal()).findFirst().get();
     }
 }
-
-/* */

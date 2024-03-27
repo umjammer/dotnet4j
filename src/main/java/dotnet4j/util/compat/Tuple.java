@@ -48,5 +48,3 @@ public class Tuple<A, B> {
         Item2 = b;
     }
 }
-
-/* */

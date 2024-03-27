@@ -283,5 +283,3 @@ public abstract class GenericAce implements Cloneable {
         return ret;
     }
 }
-
-/* */

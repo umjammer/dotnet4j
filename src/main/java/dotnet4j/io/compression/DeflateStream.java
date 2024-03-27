@@ -86,5 +86,3 @@ public class DeflateStream extends JavaIOStream {
         }
     }
 }
-
-/* */

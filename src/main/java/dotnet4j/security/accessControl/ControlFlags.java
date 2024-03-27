@@ -59,5 +59,3 @@ public enum ControlFlags {
         return flags.stream().collect(Collectors.summarizingInt(e -> e.supplier().get())).getSum();
     }
 }
-
-/* */

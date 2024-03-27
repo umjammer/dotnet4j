@@ -91,5 +91,3 @@ public class GZipStream extends JavaIOStream {
         super(toInputStream(stream, compressionMode), toOutputStream(stream, compressionMode));
     }
 }
-
-/* */

@@ -406,5 +406,3 @@ class StringUtilitiesTest {
         assertNull(ex.getCause(), "#3");
     }
 }
-
-/* */

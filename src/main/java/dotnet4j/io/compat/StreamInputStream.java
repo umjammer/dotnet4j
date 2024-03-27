@@ -54,5 +54,3 @@ public class StreamInputStream extends InputStream implements Seekable {
         return stream.position();
     }
 }
-
-/* */

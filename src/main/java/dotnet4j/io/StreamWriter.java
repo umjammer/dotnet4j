@@ -67,5 +67,3 @@ public class StreamWriter extends Writer {
         writeLine(s);
     }
 }
-
-/* */

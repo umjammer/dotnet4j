@@ -184,5 +184,3 @@ public class JavaIOStream extends Stream {
         position++;
     }
 }
-
-/* */

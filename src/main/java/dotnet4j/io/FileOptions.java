@@ -32,5 +32,3 @@ public enum FileOptions {
         this.value = value;
     }
 }
-
-/* */

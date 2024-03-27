@@ -248,5 +248,3 @@ public class SecurityIdentifier implements Principal {
         return ret;
     }
 }
-
-/* */

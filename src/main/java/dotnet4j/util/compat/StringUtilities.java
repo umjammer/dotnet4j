@@ -142,5 +142,3 @@ public class StringUtilities {
         return str == null || str.isEmpty();
     }
 }
-
-/* */
