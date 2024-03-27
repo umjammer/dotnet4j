@@ -66,7 +66,7 @@ public class BinaryReader implements Closeable {
         // For Encodings that always use 2 bytes per char (or more),
         // special case them here to make read() & Peek() faster.
         this.twoBytesPerChar = encoding.contains(StandardCharsets.UTF_16); // is UnicodeEncoding;
-        // check if BinaryReader is based on MemoryStream, and keep this for it's life
+        // check if BinaryReader is based on MemoryStream, and keep this for its life
         // we cannot use "as" operator, since derived classes are not allowed
         this.isMemoryStream = this.stream instanceof MemoryStream;
         this.leaveOpen = leaveOpen;

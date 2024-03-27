@@ -80,11 +80,11 @@ public class Path {
 
         if (extension == null)
             return iExt < 0 ? path : path.substring(0, iExt);
-        else if (extension.length() == 0)
+        else if (extension.isEmpty())
             return iExt < 0 ? path + '.' : path.substring(0, iExt + 1);
 
-        else if (path.length() != 0) {
-            if (extension.length() > 0 && extension.charAt(0) != '.')
+        else if (!path.isEmpty()) {
+            if (!extension.isEmpty() && extension.charAt(0) != '.')
                 extension = "." + extension;
         } else
             extension = "";
@@ -106,10 +106,10 @@ public class Path {
         if (path2 == null)
             throw new NullPointerException("path2");
 
-        if (path1.length() == 0)
+        if (path1.isEmpty())
             return path2;
 
-        if (path2.length() == 0)
+        if (path2.isEmpty())
             return path1;
 
         if (StringUtilities.indexOfAny(path1, InvalidPathChars) != -1)
@@ -212,7 +212,7 @@ public class Path {
         if (path == null || getPathRoot(path).equals(path))
             return null;
 
-        if (path.trim().length() == 0)
+        if (path.trim().isEmpty())
             throw new IllegalArgumentException("Argument String consists of whitespace characters only.");
 
         if (StringUtilities.indexOfAny(path, InvalidPathChars) > -1)
@@ -265,7 +265,7 @@ public class Path {
     }
 
     public static String getFileName(String path) {
-        if (path == null || path.length() == 0)
+        if (path == null || path.isEmpty())
             return path;
 
         if (StringUtilities.indexOfAny(path, InvalidPathChars) != -1)
@@ -297,7 +297,7 @@ public class Path {
         if (path == null)
             throw new NullPointerException("path");
 
-        if (path.trim().length() == 0) {
+        if (path.trim().isEmpty()) {
             String msg = "The specified path is not of a legal form (empty).";
             throw new IllegalArgumentException(msg);
         }
@@ -349,7 +349,7 @@ public class Path {
         if (path == null)
             return null;
 
-        if (path.length() == 0)
+        if (path.isEmpty())
             throw new IllegalArgumentException("The specified path is not of a legal form.");
 
         if (!isPathRooted(path))
@@ -430,14 +430,14 @@ public class Path {
 
     public static String getTempPath() {
         String p = System.getenv("TMPDIR");
-        if (p.length() > 0 && p.charAt(p.length() - 1) != DirectorySeparatorChar)
+        if (!p.isEmpty() && p.charAt(p.length() - 1) != DirectorySeparatorChar)
             return p + DirectorySeparatorChar;
 
         return p;
     }
 
     public static boolean hasExtension(String path) {
-        if (path == null || path.trim().length() == 0)
+        if (path == null || path.trim().isEmpty())
             return false;
 
         if (StringUtilities.indexOfAny(path, InvalidPathChars) != -1)
@@ -448,7 +448,7 @@ public class Path {
     }
 
     public static boolean isPathRooted(CharSequence path) {
-        if (path.length() == 0)
+        if (path.isEmpty())
             return false;
 
         char c = path.charAt(0);
@@ -457,7 +457,7 @@ public class Path {
     }
 
     public static boolean isPathRooted(String path) {
-        if (path == null || path.length() == 0)
+        if (path == null || path.isEmpty())
             return false;
 
         if (StringUtilities.indexOfAny(path, InvalidPathChars) != -1)
@@ -601,7 +601,7 @@ public class Path {
         if (path == null)
             return path;
 
-        if (path.length() == 0)
+        if (path.isEmpty())
             return path;
 
         // STEP 2: Check to see if this is only a root
@@ -623,7 +623,7 @@ public class Path {
 
         for (int i = 0; i < dirs.length; i++) {
 
-            if ((i != 0 && dirs[i].length() == 0)) {
+            if ((i != 0 && dirs[i].isEmpty())) {
                 // continue;
             } else if (dirs[i].equals("..")) {
                 // don't overwrite path segments below the limit
@@ -638,7 +638,7 @@ public class Path {
             return root;
         else {
             String ret = String.join(DirectorySeparatorStr, Arrays.copyOfRange(dirs, 0, target));
-            if (!root.equals("") && ret.length() > 0 && ret.charAt(0) != '/')
+            if (!root.isEmpty() && !ret.isEmpty() && ret.charAt(0) != '/')
                 ret = root + ret;
             return ret;
         }
@@ -680,7 +680,7 @@ public class Path {
         for (String s : paths) {
             if (s == null)
                 throw new NullPointerException("One of the paths contains a null value: paths");
-            if (s.length() == 0)
+            if (s.isEmpty())
                 continue;
             if (StringUtilities.indexOfAny(s, InvalidPathChars) != -1)
                 throw new IllegalArgumentException("Illegal characters in path.");
@@ -804,7 +804,7 @@ public class Path {
         checkInvalidPathChars(path1, false);
         checkInvalidPathChars(path2, false);
 
-        if (path2.length() == 0)
+        if (path2.isEmpty())
             throw new IllegalArgumentException(System.getenv("Argument_PathEmpty") + ": path2");
         if (isPathRooted(path2))
             throw new IllegalArgumentException(System.getenv("Arg_Path2IsRooted") + ": path2");
@@ -834,22 +834,22 @@ public class Path {
     }
 
     public static String join(CharSequence path1, CharSequence path2) {
-        if (path1.length() == 0)
+        if (path1.isEmpty())
             return path2.toString();
-        if (path2.length() == 0)
+        if (path2.isEmpty())
             return path1.toString();
 
         return path1.toString() + path2;
     }
 
     public static String join(CharSequence path1, CharSequence path2, CharSequence path3) {
-        if (path1.length() == 0)
+        if (path1.isEmpty())
             return join(path2, path3);
 
-        if (path2.length() == 0)
+        if (path2.isEmpty())
             return join(path1, path3);
 
-        if (path3.length() == 0)
+        if (path3.isEmpty())
             return join(path1, path2);
 
         return path1.toString() + path2 + path3;

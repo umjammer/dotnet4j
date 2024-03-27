@@ -136,8 +136,7 @@ public enum AwaitExtensions {
 
             if (executor instanceof ForkJoinPool) {
                 Thread currentThread = Thread.currentThread();
-                if (currentThread instanceof ForkJoinWorkerThread) {
-                    ForkJoinWorkerThread forkJoinWorkerThread = (ForkJoinWorkerThread) currentThread;
+                if (currentThread instanceof ForkJoinWorkerThread forkJoinWorkerThread) {
                     return forkJoinWorkerThread.getPool() == executor;
                 }
             }

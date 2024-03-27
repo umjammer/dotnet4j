@@ -16,7 +16,7 @@ import java.io.IOException;
  * <p>
  * This class buffers reads & writes in a shared buffer. (If you maintained two
  * buffers separately, one operation would always trash the other buffer
- * anyways, so we might as well use one buffer.) The assumption here is you will
+ * anyway, so we might as well use one buffer.) The assumption here is you will
  * almost always be doing a series of reads or writes, but rarely alternate
  * between the two of them on the same stream. /// Class Invariants: The class
  * has one buffer, shared for reading & writing. It can only be used for one or

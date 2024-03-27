@@ -21,7 +21,7 @@ import vavi.io.Seekable;
  */
 public class StreamOutputStream extends OutputStream implements Seekable {
 
-    private Stream stream;
+    private final Stream stream;
 
     public StreamOutputStream(Stream stream) {
         this.stream = stream;

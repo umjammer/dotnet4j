@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class StreamWriter extends Writer {
 
-    private Stream stream;
+    private final Stream stream;
 
     // TODO
     private Charset encoding = StandardCharsets.UTF_8;

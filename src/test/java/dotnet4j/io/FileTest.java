@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import dotnet4j.io.Directory;
@@ -34,23 +35,22 @@ public class FileTest {
 
     @Test
     public void deleteFileThatDoesNotExistsShouldFail() {
-        try {
-            File.delete("inexistant.file");
-            fail();
-        } catch (FileNotFoundException ignored) {
-        }
+        assertThrows(FileNotFoundException.class, () -> {
+            File.delete("inexistent.file");
+        });
     }
 
     @Test
     public void fileClassShouldNotDeleteDirectories() {
         Directory.createDirectory(dirname);
-        try {
-            File.delete(dirname);
-            fail();
-        } catch (IOException ioe) {
-            if (ioe instanceof FileNotFoundException) fail("Got FileNotFound instead of IO!");
-            Directory.deleteDirectory(dirname);
-        }
+        assertThrows(IOException.class, () -> {
+            try {
+                File.delete(dirname);
+            } catch (FileNotFoundException e) {
+                Directory.deleteDirectory(dirname);
+                fail("Got FileNotFound instead of IO!");
+            }
+        });
     }
 
     @Test

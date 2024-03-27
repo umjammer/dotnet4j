@@ -23,7 +23,7 @@ public class SecurityIdentifier implements Principal {
 
     public static final int MinBinaryLength = 8;
 
-    private byte[] buffer;
+    private final byte[] buffer;
 
     // @see
     // "https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/c92a27b1-c772-4fa7-a432-15df5f1b66a1"

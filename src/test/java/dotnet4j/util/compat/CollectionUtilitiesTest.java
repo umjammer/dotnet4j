@@ -21,6 +21,7 @@ public class CollectionUtilitiesTest {
 
     @Test
     void test1() throws Exception {
+        @SuppressWarnings("deprecation")
         byte[] r = CollectionUtilities.toByteArray(Arrays.asList((byte) 0x30, (byte) 0x31, (byte) 0x32));
         assertArrayEquals(new byte[] {'0', '1', '2'}, r);
     }
@@ -37,6 +38,7 @@ public class CollectionUtilitiesTest {
 
     @Test
     void test3() throws Exception {
+        @SuppressWarnings("deprecation")
         List<Byte> r = CollectionUtilities.toList(new byte[] {'0', '1', '2'});
         assertIterableEquals(Arrays.asList((byte) '0', (byte) '1', (byte) '2'), r);
     }

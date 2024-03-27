@@ -4,6 +4,7 @@
 
 package dotnet4j.io;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -17,6 +18,7 @@ import java.util.Arrays;
  */
 public class MemoryStream extends Stream implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -7301303954168934077L;
 
     private byte[] buffer;

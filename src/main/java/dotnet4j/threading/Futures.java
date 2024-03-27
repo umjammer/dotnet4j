@@ -17,7 +17,7 @@ enum Futures {
     private static final CompletableFuture<?> COMPLETED_NULL;
 
     static {
-        COMPLETED_CANCELLED = new CompletableFuture<Object>() {
+        COMPLETED_CANCELLED = new CompletableFuture<>() {
             @Override
             public void obtrudeValue(Object value) {
                 throw new UnsupportedOperationException("Not supported");
@@ -29,7 +29,7 @@ enum Futures {
             }
         };
 
-        COMPLETED_NULL = new CompletableFuture<Object>() {
+        COMPLETED_NULL = new CompletableFuture<>() {
             @Override
             public void obtrudeValue(Object value) {
                 throw new UnsupportedOperationException("Not supported");
@@ -97,7 +97,7 @@ enum Futures {
             return future;
         }
 
-        secondaryHandler.value = new CompletableFuture<T>() {
+        secondaryHandler.value = new CompletableFuture<>() {
             @Override
             public boolean cancel(boolean mayInterruptIfRunning) {
                 if (future.isCancelled()) {
@@ -108,7 +108,7 @@ enum Futures {
             }
         };
 
-        CompletableFuture<T> priorityHandler = new CompletableFuture<T>() {
+        CompletableFuture<T> priorityHandler = new CompletableFuture<>() {
             @Override
             public boolean cancel(boolean mayInterruptIfRunning) {
                 if (future.isCancelled()) {
@@ -145,7 +145,7 @@ enum Futures {
     }
 
     public static <T> CompletableFuture<T> unwrap(CompletableFuture<? extends CompletableFuture<T>> future) {
-        CompletableFuture<T> result = new CompletableFuture<T>() {
+        CompletableFuture<T> result = new CompletableFuture<>() {
             @Override
             public boolean cancel(boolean mayInterruptIfRunning) {
                 if (!future.cancel(mayInterruptIfRunning)) {

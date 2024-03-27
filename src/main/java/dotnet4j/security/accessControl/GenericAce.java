@@ -139,58 +139,38 @@ public abstract class GenericAce implements Cloneable {
                 || type == AceType.SystemAuditCallbackObject || type == AceType.SystemAuditObject;
     }
 
+    /** @return sddl type */
     static String getSddlAceType(AceType type) {
-        switch (type) {
-        case AccessAllowed:
-            return "A";
-        case AccessDenied:
-            return "D";
-        case AccessAllowedObject:
-            return "OA";
-        case AccessDeniedObject:
-            return "OD";
-        case SystemAudit:
-            return "AU";
-        case SystemAlarm:
-            return "AL";
-        case SystemAuditObject:
-            return "OU";
-        case SystemAlarmObject:
-            return "OL";
-        case AccessAllowedCallback:
-            return "XA";
-        case AccessDeniedCallback:
-            return "XD";
-        default:
-            throw new IllegalArgumentException("Unable to convert to SDDL ACE type: " + type);
-        }
+        return switch (type) {
+            case AccessAllowed -> "A";
+            case AccessDenied -> "D";
+            case AccessAllowedObject -> "OA";
+            case AccessDeniedObject -> "OD";
+            case SystemAudit -> "AU";
+            case SystemAlarm -> "AL";
+            case SystemAuditObject -> "OU";
+            case SystemAlarmObject -> "OL";
+            case AccessAllowedCallback -> "XA";
+            case AccessDeniedCallback -> "XD";
+            default -> throw new IllegalArgumentException("Unable to convert to SDDL ACE type: " + type);
+        };
     }
 
+    /** @param type sddl type */
     static AceType parseSddlAceType(String type) {
-        switch (type) {
-        case "A":
-            return AceType.AccessAllowed;
-        case "D":
-            return AceType.AccessDenied;
-        case "OA":
-            return AceType.AccessAllowedObject;
-        case "OD":
-            return AceType.AccessDeniedObject;
-        case "AU":
-            return AceType.SystemAudit;
-        case "AL":
-            return AceType.SystemAlarm;
-        case "OU":
-            return AceType.SystemAuditObject;
-        case "OL":
-            return AceType.SystemAlarmObject;
-        case "XA":
-            return AceType.AccessAllowedCallback;
-        case "XD":
-            return AceType.AccessDeniedCallback;
-        default:
-            throw new IllegalArgumentException("Unable to convert SDDL to ACE type: " + type);
-        }
+        return switch (type) {
+            case "A" -> AceType.AccessAllowed;
+            case "D" -> AceType.AccessDenied;
+            case "OA" -> AceType.AccessAllowedObject;
+            case "OD" -> AceType.AccessDeniedObject;
+            case "AU" -> AceType.SystemAudit;
+            case "AL" -> AceType.SystemAlarm;
+            case "OU" -> AceType.SystemAuditObject;
+            case "OL" -> AceType.SystemAlarmObject;
+            case "XA" -> AceType.AccessAllowedCallback;
+            case "XD" -> AceType.AccessDeniedCallback;
+            default -> throw new IllegalArgumentException("Unable to convert SDDL to ACE type: " + type);
+        };
     }
 
     static String getSddlAceFlags(EnumSet<AceFlags> flags) {
