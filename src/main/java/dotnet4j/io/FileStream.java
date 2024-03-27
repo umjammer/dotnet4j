@@ -6,16 +6,18 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+import vavi.util.Debug;
+
 
 /**
  * Created by FT on 27.11.14.
  */
 public class FileStream extends Stream {
     private FileChannel channel;
-    private FileMode myMode;
-    private FileAccess myAccess;
-    private FileShare myShare;
-    private String myPath;
+    private final FileMode myMode;
+    private final FileAccess myAccess;
+    private final FileShare myShare;
+    private final String myPath;
 
     public FileStream(String path, FileMode mode) {
         this(path, mode, (mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite));
@@ -31,19 +33,11 @@ public class FileStream extends Stream {
         myAccess = access;
         myShare = share;
 
-        String rafMode = "";
-        switch (access) {
-
-        case Read:
-            rafMode = "r";
-            break;
-        case Write:
-            rafMode = "rw";
-            break;
-        case ReadWrite:
-            rafMode = "rw";
-            break;
-        }
+        String rafMode = switch (access) {
+            case Read -> "r";
+            case Write -> "rw";
+            case ReadWrite -> "rw";
+        };
         try {
             java.io.File f = new java.io.File(path);
             if (mode == FileMode.Create || mode == FileMode.CreateNew || mode == FileMode.OpenOrCreate) {
@@ -167,7 +161,7 @@ public class FileStream extends Stream {
                 return 0;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Debug.printStackTrace(e);
             throw new dotnet4j.io.IOException(e);
         }
         return m;

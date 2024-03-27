@@ -48,31 +48,17 @@ public abstract class QualifiedAce extends KnownAce {
     }
 
     public AceQualifier getAceQualifier() {
-        switch (aceType) {
-        case AccessAllowed:
-        case AccessAllowedCallback:
-        case AccessAllowedCallbackObject:
-        case AccessAllowedCompound:
-        case AccessAllowedObject:
-            return AceQualifier.AccessAllowed;
-        case AccessDenied:
-        case AccessDeniedCallback:
-        case AccessDeniedCallbackObject:
-        case AccessDeniedObject:
-            return AceQualifier.AccessDenied;
-        case SystemAlarm:
-        case SystemAlarmCallback:
-        case SystemAlarmCallbackObject:
-        case SystemAlarmObject:
-            return AceQualifier.SystemAlarm;
-        case SystemAudit:
-        case SystemAuditCallback:
-        case SystemAuditCallbackObject:
-        case SystemAuditObject:
-            return AceQualifier.SystemAudit;
-        default:
-            throw new IllegalArgumentException("Unrecognised ACE type: " + aceType);
-        }
+        return switch (aceType) {
+            case AccessAllowed, AccessAllowedCallback, AccessAllowedCallbackObject, AccessAllowedCompound, AccessAllowedObject ->
+                    AceQualifier.AccessAllowed;
+            case AccessDenied, AccessDeniedCallback, AccessDeniedCallbackObject, AccessDeniedObject ->
+                    AceQualifier.AccessDenied;
+            case SystemAlarm, SystemAlarmCallback, SystemAlarmCallbackObject, SystemAlarmObject ->
+                    AceQualifier.SystemAlarm;
+            case SystemAudit, SystemAuditCallback, SystemAuditCallbackObject, SystemAuditObject ->
+                    AceQualifier.SystemAudit;
+            default -> throw new IllegalArgumentException("Unrecognised ACE type: " + aceType);
+        };
     }
 
     public boolean isCallback() {

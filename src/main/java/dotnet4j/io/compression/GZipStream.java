@@ -41,7 +41,7 @@ public class GZipStream extends JavaIOStream {
                     this.out = new GZIPOutputStream(out);
                 }
 
-                byte[] buf = new byte[8192];
+                final byte[] buf = new byte[8192];
 
                 @Override public void execute() throws IOException {
                     int r = is.read(buf);
@@ -66,7 +66,7 @@ public class GZipStream extends JavaIOStream {
                 @Override public void initialize(InputStream in) {
                 }
 
-                byte[] buf = new byte[8192];
+                final byte[] buf = new byte[8192];
 
                 @Override public void execute() throws IOException {
                     if (in == null) {
@@ -91,5 +91,3 @@ public class GZipStream extends JavaIOStream {
         super(toInputStream(stream, compressionMode), toOutputStream(stream, compressionMode));
     }
 }
-
-/* */

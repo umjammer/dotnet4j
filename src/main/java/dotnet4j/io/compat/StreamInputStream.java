@@ -21,7 +21,7 @@ import vavi.io.Seekable;
  */
 public class StreamInputStream extends InputStream implements Seekable {
 
-    private Stream stream;
+    private final Stream stream;
 
     public StreamInputStream(Stream stream) {
         this.stream = stream;
@@ -54,5 +54,3 @@ public class StreamInputStream extends InputStream implements Seekable {
         return stream.position();
     }
 }
-
-/* */

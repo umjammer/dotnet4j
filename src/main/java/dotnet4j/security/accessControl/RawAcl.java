@@ -26,9 +26,9 @@ public class RawAcl implements Iterable<GenericAce> {
 
     public static final byte AclRevisionDS = 4;
 
-    private byte revision;
+    private final byte revision;
 
-    private List<GenericAce> genericAces;
+    private final List<GenericAce> genericAces;
 
     /** */
     public RawAcl(byte revision, int capacity) {
@@ -195,5 +195,3 @@ public class RawAcl implements Iterable<GenericAce> {
         }
     }
 }
-
-/* */

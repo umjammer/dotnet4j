@@ -342,7 +342,7 @@ public class BinaryWriter implements Serializable, Closeable {
 int totalBytes = 0;
             while (numLeft > 0) {
                 // Figure out how many chars to process this round.
-                int charCount = (numLeft > this.maxChars) ? this.maxChars : numLeft;
+                int charCount = Math.min(numLeft, this.maxChars);
                 int byteLen;
 
                 if (charStart < 0 || charCount < 0 || charStart + charCount > value.length()) {

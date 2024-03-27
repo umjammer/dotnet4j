@@ -18,7 +18,7 @@ public class EventHandler<T extends EventObject> {
         void exec(T e);
     }
 
-    private List<EventListener<T>> listeners = new ArrayList<>();
+    private final List<EventListener<T>> listeners = new ArrayList<>();
 
     public void addListener(EventListener<T> listener) {
         listeners.add(listener);

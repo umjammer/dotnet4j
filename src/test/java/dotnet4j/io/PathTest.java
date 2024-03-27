@@ -85,15 +85,15 @@ public class PathTest {
         System.err.println(os);
     }
 
-    boolean isWindows() {
+    static boolean isWindows() {
         return os == OsType.Windows;
     }
 
-    boolean isUnix() {
+    static boolean isUnix() {
         return os == OsType.Unix;
     }
 
-    boolean isMac() {
+    static boolean isMac() {
         return os == OsType.Mac;
     }
 
@@ -1187,7 +1187,7 @@ public class PathTest {
         }
     }
 
-    String concat(String sep, String... parms) {
+    static String concat(String sep, String... parms) {
         return String.join(sep, parms);
     }
 

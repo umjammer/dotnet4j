@@ -316,7 +316,7 @@ public enum Async {
             onCompletedImpl(continuation, false);
         }
 
-        private void onCompletedImpl(Runnable continuation, boolean useExecutionContext) {
+        private static void onCompletedImpl(Runnable continuation, boolean useExecutionContext) {
             Objects.nonNull(continuation);
 
             Executor executor = ForkJoinPool.commonPool();

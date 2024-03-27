@@ -150,5 +150,3 @@ public class SeekableLzoStream extends LzoStream {
         _snapshots.push(new Snapshot(position(), _source.position(), _ringBuffer, _instruction, _state));
     }
 }
-
-/* */

@@ -54,5 +54,3 @@ public enum AceFlags {
         return flags.stream().collect(Collectors.summarizingInt(e -> e.supplier().get())).getSum();
     }
 }
-
-/* */

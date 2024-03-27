@@ -31,7 +31,7 @@ import dotnet4j.io.compat.StreamOutputStream;
 public class DeflateStream extends JavaIOStream {
 
     /** */
-    private Stream stream;
+    private final Stream stream;
 
     /** */
     private static InputStream toInputStream(Stream stream, CompressionMode compressionMode) {
@@ -86,5 +86,3 @@ public class DeflateStream extends JavaIOStream {
         }
     }
 }
-
-/* */
