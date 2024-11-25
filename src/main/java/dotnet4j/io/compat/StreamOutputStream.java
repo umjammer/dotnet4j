@@ -34,7 +34,7 @@ public class StreamOutputStream extends OutputStream implements Seekable {
 
     @Override
     public void write(byte[] buffer, int offset, int count) {
-//Debug.println("w: " + count + ", " + stream);
+//logger.log(Level.TRACE, "w: " + count + ", " + stream);
         stream.write(buffer, offset, count);
     }
 

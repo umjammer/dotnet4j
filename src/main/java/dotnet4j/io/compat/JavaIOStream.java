@@ -125,17 +125,17 @@ public class JavaIOStream extends Stream {
         }
 
         try {
-//Debug.println(buffer.length + ", " + offset + ", " + length + ", " + is.available());
+//logger.log(Level.TRACE, buffer.length + ", " + offset + ", " + length + ", " + is.available());
             int r = is.read(buffer, offset, length);
-//Debug.println(StringUtil.getDump(buffer, 16));
+//logger.log(Level.TRACE, StringUtil.getDump(buffer, 16));
             if (r > 0) {
                 position += r;
             }
             if (r == -1) {
-//Debug.println("EOF");
+//logger.log(Level.TRACE, "EOF");
                 return 0; // C# Spec.
             }
-//Debug.println("position: " + position);
+//logger.log(Level.TRACE, "position: " + position);
             return r;
         } catch (IOException e) {
             throw new dotnet4j.io.IOException(e);
@@ -166,7 +166,7 @@ public class JavaIOStream extends Stream {
         }
 
         try {
-//Debug.println("w: " + count + ", " + os);
+//logger.log(Level.TRACE, "w: " + count + ", " + os);
             os.write(buffer, offset, count);
             position += count;
         } catch (IOException e) {

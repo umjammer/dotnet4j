@@ -425,14 +425,14 @@ public class BinaryReader implements Closeable {
             charsRead = this.singleChar.length;
 
             assert charsRead < 2 : "InternalReadOneChar - assuming we only got 0 or 1 char, not 2!";
-//          System.err.println("That became: " + charsRead + " characters.");
+//logger.log(Level.TRACE, "That became: " + charsRead + " characters.");
         }
         if (charsRead == 0)
             return -1;
         return this.singleChar[0];
     }
 
-    //[SecuritySafeCritical]
+    // [SecuritySafeCritical]
     public char[] readChars(int count) throws java.io.IOException {
         if (count < 0) {
             throw new IndexOutOfBoundsException("count: " + count);
