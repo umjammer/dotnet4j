@@ -15,7 +15,7 @@ import dotnet4j.io.Stream;
 
 
 /**
- * JavaIOStream.
+ * InputStream + OutputStream = Stream.
  *
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (umjammer)
  * @version 0.00 2019/10/09 umjammer initial version <br>
@@ -118,6 +118,9 @@ public class JavaIOStream extends Stream {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @return 0 when EOF (it's C# spec) ⚠️⚠️⚠️ CAUTION not same as the java specs. ⚠️⚠️⚠️
+     */
     @Override
     public int read(byte[] buffer, int offset, int length) {
         if (is == null) {
