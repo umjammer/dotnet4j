@@ -6,7 +6,7 @@
 
   <groupId>moe.yo3explorer</groupId>
   <artifactId>dotnet4j</artifactId>
-  <version>1.2.4</version>
+  <version>1.2.5</version>
 
   <packaging>jar</packaging>
 
@@ -15,7 +15,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
+        <version>3.12.1</version>
         <configuration>
           <release>17</release>
         </configuration>
@@ -23,7 +23,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.5</version>
         <configuration>
           <argLine>
             -Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
@@ -34,7 +34,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>3.2.1</version>
+        <version>3.3.0</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -47,7 +47,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.5.0</version>
+        <version>3.7.0</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -63,7 +63,7 @@
                 <additionalOption>-Xdoclint:-missing</additionalOption>
               </additionalOptions>
               <locale>en_US</locale> <!-- doesn't work why ??? -->
-              <debug>true</debug>
+              <debug>false</debug>
               <verbose>false</verbose>
               <failOnWarnings>false</failOnWarnings>
               <failOnError>false</failOnError>
@@ -80,7 +80,7 @@
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.10.2</version>
+        <version>5.10.3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -104,7 +104,7 @@
     <dependency>
       <groupId>com.github.umjammer</groupId>
       <artifactId>vavi-commons</artifactId>
-      <version>1.1.11</version>
+      <version>1.1.14</version>
     </dependency>
 
     <dependency>

@@ -14,7 +14,7 @@ import vavi.io.Seekable;
 
 
 /**
- * StreamOutputStream.
+ * Treats Stream as OutputStream.
  *
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (umjammer)
  * @version 0.00 2019/09/30 umjammer initial version <br>
@@ -34,7 +34,7 @@ public class StreamOutputStream extends OutputStream implements Seekable {
 
     @Override
     public void write(byte[] buffer, int offset, int count) {
-//Debug.println("w: " + count + ", " + stream);
+//logger.log(Level.TRACE, "w: " + count + ", " + stream);
         stream.write(buffer, offset, count);
     }
 

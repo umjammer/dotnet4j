@@ -14,7 +14,7 @@ import vavi.io.Seekable;
 
 
 /**
- * StreamInputStream.
+ * Treats Stream as InputStream.
  *
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (umjammer)
  * @version 0.00 2019/09/30 umjammer initial version <br>

@@ -20,6 +20,7 @@ import vavi.io.InputEngine;
 import vavi.io.InputEngineOutputStream;
 import vavi.io.OutputEngine;
 import vavi.io.OutputEngineInputStream;
+import vavi.util.Debug;
 
 
 /**
@@ -30,10 +31,14 @@ import vavi.io.OutputEngineInputStream;
  */
 public class GZipStream extends JavaIOStream {
 
+    /**
+     * @param stream assume as input stream
+     * @param compressionMode {@link CompressionMode}
+     */
     static InputStream toInputStream(Stream stream, CompressionMode compressionMode) {
         try {
             InputStream is = new StreamInputStream(stream);
-            return compressionMode == CompressionMode.Decompress ? new GZIPInputStream(is)
+            return compressionMode == CompressionMode.Decompress ? new GZIPInputStream(is) // TODO should be null stream? this maybe no mean
                     : new OutputEngineInputStream(new OutputEngine() {
                 OutputStream out;
 
@@ -45,35 +50,8 @@ public class GZipStream extends JavaIOStream {
 
                 @Override public void execute() throws IOException {
                     int r = is.read(buf);
-                    out.write(buf, 0, r);
-                }
-
-                @Override public void finish() {
-                }
-            });
-        } catch (IOException e) {
-            throw new dotnet4j.io.IOException(e);
-        }
-    }
-
-    static OutputStream toOutputStream(Stream stream, CompressionMode compressionMode) {
-        try {
-            OutputStream os = new StreamOutputStream(stream);
-            return compressionMode == CompressionMode.Compress ? new GZIPOutputStream(os)
-                    : new InputEngineOutputStream(new InputEngine() {
-                InputStream in;
-
-                @Override public void initialize(InputStream in) {
-                }
-
-                final byte[] buf = new byte[8192];
-
-                @Override public void execute() throws IOException {
-                    if (in == null) {
-                        this.in = new GZIPInputStream(in);
-                    }
-                    int r = in.read(buf);
-                    os.write(buf, 0, r);
+                    if (r < 0) out.close();
+                    else out.write(buf, 0, r);
                 }
 
                 @Override public void finish() {
@@ -85,8 +63,40 @@ public class GZipStream extends JavaIOStream {
     }
 
     /**
-     *
+     * @param stream assume as output stream
+     * @param compressionMode {@link CompressionMode}
      */
+    static OutputStream toOutputStream(Stream stream, CompressionMode compressionMode) {
+        try {
+            OutputStream os = new StreamOutputStream(stream);
+            return compressionMode == CompressionMode.Compress ? new GZIPOutputStream(os)
+                    : new InputEngineOutputStream(new InputEngine() { // TODO should be null stream? this maybe no mean
+                InputStream in;
+
+                @Override public void initialize(InputStream in) throws IOException {
+                    if (this.in == null && in.available() > 0 /* means stream is for input */) {
+Debug.println(in + ", " + in.available());
+                        this.in = new GZIPInputStream(in);
+                    }
+                }
+
+                final byte[] buf = new byte[8192];
+
+                @Override public void execute() throws IOException {
+                    int r = in.read(buf);
+                    if (r < 0) in.close();
+                    else os.write(buf, 0, r);
+                }
+
+                @Override public void finish() {
+                }
+            });
+        } catch (IOException e) {
+            throw new dotnet4j.io.IOException(e);
+        }
+    }
+
+    /** @throws dotnet4j.io.IOException when an error occurs */
     public GZipStream(Stream stream, CompressionMode compressionMode) {
         super(toInputStream(stream, compressionMode), toOutputStream(stream, compressionMode));
     }

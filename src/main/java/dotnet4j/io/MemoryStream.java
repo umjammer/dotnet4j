@@ -273,8 +273,6 @@ public class MemoryStream extends Stream implements Serializable {
         return n;
     }
 
-//public static boolean debug;
-
     @Override
     public void write(byte[] buffer, int offset, int count) {
         if (buffer == null)
@@ -289,7 +287,7 @@ public class MemoryStream extends Stream implements Serializable {
             throw new dotnet4j.io.IOException("object disposed");
         if (!canWrite())
             throw new dotnet4j.io.IOException("not writable");
-//if (debug) { Debug.println(offset + ", " + count + "\n" + StringUtil.getDump(buffer, offset, Math.min(count, 64))); new Exception().printStackTrace(); }
+//logger.log(Level.TRACE, offset + ", " + count + "\n" + StringUtil.getDump(buffer, offset, Math.min(count, 64))); new Exception().printStackTrace(); }
 
         int i = position + count;
         // Check for overflow

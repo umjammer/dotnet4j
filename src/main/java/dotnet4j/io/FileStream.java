@@ -3,16 +3,21 @@ package dotnet4j.io;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-import vavi.util.Debug;
+import static java.lang.System.getLogger;
 
 
 /**
  * Created by FT on 27.11.14.
  */
 public class FileStream extends Stream {
+
+    private static final Logger logger = getLogger(FileStream.class.getName());
+
     private FileChannel channel;
     private final FileMode myMode;
     private final FileAccess myAccess;
@@ -156,12 +161,12 @@ public class FileStream extends Stream {
         int m;
         try {
             m = channel.read(tmp);
-//Debug.println(m + ", " + offset + ", " + length + " / " + channel.size() + ", " + channel.size() + ", " + channel.position());
+//logger.log(Level.TRACE, m + ", " + offset + ", " + length + " / " + channel.size() + ", " + channel.size() + ", " + channel.position());
             if (m == -1) {
                 return 0;
             }
         } catch (IOException e) {
-            Debug.printStackTrace(e);
+            logger.log(Level.TRACE, e.getMessage(), e);
             throw new dotnet4j.io.IOException(e);
         }
         return m;

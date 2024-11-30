@@ -15,7 +15,7 @@ import dotnet4j.io.Stream;
 
 
 /**
- * JavaIOStream.
+ * InputStream + OutputStream = Stream.
  *
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (umjammer)
  * @version 0.00 2019/10/09 umjammer initial version <br>
@@ -118,6 +118,9 @@ public class JavaIOStream extends Stream {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @return 0 when EOF (it's C# spec) ⚠️⚠️⚠️ CAUTION not same as the java specs. ⚠️⚠️⚠️
+     */
     @Override
     public int read(byte[] buffer, int offset, int length) {
         if (is == null) {
@@ -125,17 +128,17 @@ public class JavaIOStream extends Stream {
         }
 
         try {
-//Debug.println(buffer.length + ", " + offset + ", " + length + ", " + is.available());
+//logger.log(Level.TRACE, buffer.length + ", " + offset + ", " + length + ", " + is.available());
             int r = is.read(buffer, offset, length);
-//Debug.println(StringUtil.getDump(buffer, 16));
+//logger.log(Level.TRACE, StringUtil.getDump(buffer, 16));
             if (r > 0) {
                 position += r;
             }
             if (r == -1) {
-//Debug.println("EOF");
+//logger.log(Level.TRACE, "EOF");
                 return 0; // C# Spec.
             }
-//Debug.println("position: " + position);
+//logger.log(Level.TRACE, "position: " + position);
             return r;
         } catch (IOException e) {
             throw new dotnet4j.io.IOException(e);
@@ -166,7 +169,7 @@ public class JavaIOStream extends Stream {
         }
 
         try {
-//Debug.println("w: " + count + ", " + os);
+//logger.log(Level.TRACE, "w: " + count + ", " + os);
             os.write(buffer, offset, count);
             position += count;
         } catch (IOException e) {

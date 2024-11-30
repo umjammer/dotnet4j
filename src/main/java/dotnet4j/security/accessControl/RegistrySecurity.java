@@ -72,7 +72,7 @@ public class RegistrySecurity extends Permission {
 
     /** TODO impl */
     public void setSecurityDescriptorSddlForm(String form, EnumSet<AccessControlSections> sections) {
-//System.err.println(form);
+//logger.log(Level.TRACE, form);
         binaryForm = form.getBytes(StandardCharsets.US_ASCII);
     }
 }
